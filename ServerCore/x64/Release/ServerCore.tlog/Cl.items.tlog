@@ -1,0 +1,7 @@
+X:\캡스톤\서버\Server\ServerCore\CoreGlobal.cpp;X:\캡스톤\서버\Server\ServerCore\x64\Release\CoreGlobal.obj
+X:\캡스톤\서버\Server\ServerCore\CorePch.cpp;X:\캡스톤\서버\Server\ServerCore\x64\Release\CorePch.obj
+X:\캡스톤\서버\Server\ServerCore\CoreTLS.cpp;X:\캡스톤\서버\Server\ServerCore\x64\Release\CoreTLS.obj
+X:\캡스톤\서버\Server\ServerCore\DeadLockProfiler.cpp;X:\캡스톤\서버\Server\ServerCore\x64\Release\DeadLockProfiler.obj
+X:\캡스톤\서버\Server\ServerCore\Lock.cpp;X:\캡스톤\서버\Server\ServerCore\x64\Release\Lock.obj
+X:\캡스톤\서버\Server\ServerCore\pch.cpp;X:\캡스톤\서버\Server\ServerCore\x64\Release\pch.obj
+X:\캡스톤\서버\Server\ServerCore\ThreadManager.cpp;X:\캡스톤\서버\Server\ServerCore\x64\Release\ThreadManager.obj

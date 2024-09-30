@@ -1,0 +1,14 @@
+﻿  pch.cpp
+  Allocator.cpp
+  CoreGlobal.cpp
+  CorePch.cpp
+  CoreTLS.cpp
+  DeadLockProfiler.cpp
+  Lock.cpp
+  Memory.cpp
+  MemoryPool.cpp
+X:\캡스톤\서버\Server\ServerCore\Memory.cpp(91,2): warning C4804: '>': 연산에 'bool' 형식을 사용하는 것은 안전하지 않습니다.
+  RefCounting.cpp
+  ThreadManager.cpp
+  코드를 생성하고 있습니다...
+  ServerCore.vcxproj -> X:\캡스톤\서버\Server\Libraries\Debug\ServerCore.lib
