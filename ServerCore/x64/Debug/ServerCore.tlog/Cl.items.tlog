@@ -3,6 +3,8 @@ X:\Github\Server_std\ServerCore\CoreGlobal.cpp;X:\Github\Server_std\ServerCore\x
 X:\Github\Server_std\ServerCore\CorePch.cpp;X:\Github\Server_std\ServerCore\x64\Debug\CorePch.obj
 X:\Github\Server_std\ServerCore\CoreTLS.cpp;X:\Github\Server_std\ServerCore\x64\Debug\CoreTLS.obj
 X:\Github\Server_std\ServerCore\DeadLockProfiler.cpp;X:\Github\Server_std\ServerCore\x64\Debug\DeadLockProfiler.obj
+X:\Github\Server_std\ServerCore\IocpCore.cpp;X:\Github\Server_std\ServerCore\x64\Debug\IocpCore.obj
+X:\Github\Server_std\ServerCore\IocpEvent.cpp;X:\Github\Server_std\ServerCore\x64\Debug\IocpEvent.obj
 X:\Github\Server_std\ServerCore\Lock.cpp;X:\Github\Server_std\ServerCore\x64\Debug\Lock.obj
 X:\Github\Server_std\ServerCore\Memory.cpp;X:\Github\Server_std\ServerCore\x64\Debug\Memory.obj
 X:\Github\Server_std\ServerCore\MemoryPool.cpp;X:\Github\Server_std\ServerCore\x64\Debug\MemoryPool.obj
