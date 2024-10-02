@@ -23,7 +23,7 @@
 	*crash = 0xBADEDCFE;					\
 }
 
-//조건에 따라 크래시
+//조건을 만족하지 않으면 크래시
 #define ASSERT_CRASH(expr)					\
 {											\
 	if(!expr)								\
