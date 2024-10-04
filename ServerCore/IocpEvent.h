@@ -1,5 +1,7 @@
 #pragma once
 
+class Session;
+
 enum class EventType : uint8
 {
 	Connect,
@@ -47,9 +49,13 @@ class AcceptEvent : public IocpEvent
 public:
 	AcceptEvent() : IocpEvent(EventType::Accept) {}
 
+	void		SetSession(Session* session) { _session = session; }
+	Session*	GetSession() { return _session; }
+
 private:
 	// Accept할 때 추가적으로 필요한 인자가 있을 수 있음
-	// TODO
+	// 클라이언트 세션
+	Session*	_session = nullptr;
 };
 
 //--------------
