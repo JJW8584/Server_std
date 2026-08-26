@@ -2,7 +2,7 @@
 <Project>
   <ProjectOutputs>
     <ProjectOutput>
-      <FullPath>X:\GitHub\Server_std\Binary\Debug\DummyClient.exe</FullPath>
+      <FullPath>X:\Github\Server_std\Binary\Debug\DummyClient.exe</FullPath>
     </ProjectOutput>
   </ProjectOutputs>
   <ContentFiles />

@@ -3,10 +3,9 @@
 
 Player::Player()
 {
-	playerInfo = new Protocol::PlayerInfo();
 }
 
 Player::~Player()
 {
-	delete playerInfo;
+	delete moveInfo;
 }

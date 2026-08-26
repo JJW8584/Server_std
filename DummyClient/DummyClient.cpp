@@ -71,11 +71,13 @@ int main()
 			});
 	}
 
+	std::this_thread::sleep_for(1s);
+
 	Protocol::C_CHAT chatPkt;
-	chatPkt.set_msg(u8"Hello World!");
+	chatPkt.set_msg("Hello World!");
 	auto sendBuffer = ServerPacketHandler::MakeSendBuffer(chatPkt);
 
-	while (true)
+	//while (true)
 	{
 		service->Broadcast(sendBuffer);
 		std::this_thread::sleep_for(1s);

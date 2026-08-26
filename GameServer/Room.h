@@ -1,15 +1,22 @@
 #pragma once
+#include "pch.h"
 #include "JobQueue.h"
 
 class Room : public JobQueue
 {
 public:
-	Room();
+	Room(GameSessionRef session, uint64 roomId,	string roomName, uint32 maxPlayerCount);
 	virtual ~Room();
+
+	uint64 GetRoomId();
+	Protocol::RoomInfo GetRoomInfo();
 
 	bool HandleEnterPlayer(PlayerRef player);
 	bool HandleLeavePlayer(PlayerRef player);
-	void HandleMove(Protocol::C_MOVE pkt);
+	bool HandleChangeTeam(PlayerRef player, Protocol::C_CHANGE_TEAM pkt);
+	bool HandleReadyState(PlayerRef player, bool ready);
+	bool HandleStartMatch(PlayerRef player);
+	void HandleMove(Protocol::C_MOVE pkt, const uint64 objectId);
 
 public:
 	void UpdateTick();
@@ -24,7 +31,28 @@ private:
 	void Broadcast(SendBufferRef sendBuffer, uint64 exceptId = 0);
 
 private:
+	bool _isClosing = false;
 	unordered_map<uint64, PlayerRef> _players;
+
+	USE_LOCK;
+	Protocol::RoomInfo _roomInfo;
 };
 
-extern RoomRef GRoom;
+class RoomManager : public JobQueue
+{
+public:
+	void HandleRoomList(GameSessionRef session);
+	void HandleCreateRoom(GameSessionRef session, Protocol::C_CREATE_ROOM pkt);
+	void HandleEnterRoom(GameSessionRef session, Protocol::C_ENTER_ROOM pkt);
+
+	void RemoveRoom(uint64 roomId);
+
+private:
+	uint64 CreateRoomId();
+
+private:
+	atomic<uint64> _roomIdGenerator = 1;
+	unordered_map<uint64, RoomRef> _rooms;
+};
+
+extern RoomManagerRef GRoomManager;

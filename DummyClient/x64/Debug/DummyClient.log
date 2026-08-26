@@ -1,5 +1,4 @@
-﻿Protocol.proto(4,1): warning G1A4DC0EC: Import Enum.proto is unused.
-  X:Enum.pb.h
+﻿  X:Enum.pb.h
   1개 파일이 복사되었습니다.
   X:Enum.pb.cc
   1개 파일이 복사되었습니다.
@@ -27,18 +26,15 @@
   1개 파일이 복사되었습니다.
   X:ServerPacketHandler.h
   1개 파일이 복사되었습니다.
-  파일 삭제 - X:\GitHub\Server_std\Common\Protobuf\bin\Enum.pb.h
-  파일 삭제 - X:\GitHub\Server_std\Common\Protobuf\bin\Protocol.pb.h
-  파일 삭제 - X:\GitHub\Server_std\Common\Protobuf\bin\Struct.pb.h
-  파일 삭제 - X:\GitHub\Server_std\Common\Protobuf\bin\Enum.pb.cc
-  파일 삭제 - X:\GitHub\Server_std\Common\Protobuf\bin\Protocol.pb.cc
-  파일 삭제 - X:\GitHub\Server_std\Common\Protobuf\bin\Struct.pb.cc
+  파일 삭제 - X:\Github\Server_std\Common\Protobuf\bin\Enum.pb.h
+  파일 삭제 - X:\Github\Server_std\Common\Protobuf\bin\Protocol.pb.h
+  파일 삭제 - X:\Github\Server_std\Common\Protobuf\bin\Struct.pb.h
+  파일 삭제 - X:\Github\Server_std\Common\Protobuf\bin\Enum.pb.cc
+  파일 삭제 - X:\Github\Server_std\Common\Protobuf\bin\Protocol.pb.cc
+  파일 삭제 - X:\Github\Server_std\Common\Protobuf\bin\Struct.pb.cc
+  libprotoc 3.21.12
   계속하려면 아무 키나 누르십시오 . . . 
-  Enum.pb.cc
-  Protocol.pb.cc
-  Struct.pb.cc
-  코드를 생성하고 있습니다...
   DummyClient.cpp
   ServerPacketHandler.cpp
   코드를 생성하고 있습니다...
-  DummyClient.vcxproj -> X:\GitHub\Server_std\Binary\Debug\DummyClient.exe
+  DummyClient.vcxproj -> X:\Github\Server_std\Binary\Debug\DummyClient.exe

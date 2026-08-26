@@ -1,18 +1,32 @@
 syntax = "proto3";
 package Protocol;
 
+enum Team
+{
+	TEAM_NONE = 0;
+	TEAM_RED = 1;
+	TEAM_BLUE = 2;
+}
+
+enum RoomState
+{
+	ROOM_STATE_NONE = 0;
+    ROOM_STATE_WAITING = 1;
+    ROOM_STATE_LOADING = 2;
+    ROOM_STATE_PLAYING = 3;
+    ROOM_STATE_RESULT = 4;
+}
+
 enum PlayerType
 {
 	PLAYER_TYPE_NONE = 0;
 	PLAYER_TYPE_KNIGHT = 1;
-	PLAYER_TYPE_MAGE = 2;
-	PLAYER_TYPE_ACHER = 3;
+	PLAYER_TYPE_ARCHER = 2;
 }
 
 enum MoveState
 {
-	MOVE_STATE_NOVE = 0;
+	MOVE_STATE_NONE = 0;
 	MOVE_STATE_IDLE = 1;
-	MOVE_STATE_RUN = 2;
-	MOVE_STATE_JUMP = 3;
+	MOVE_STATE_MOVE = 2;
 }

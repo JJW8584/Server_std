@@ -47,17 +47,70 @@ PROTOBUF_NAMESPACE_OPEN
 PROTOBUF_NAMESPACE_CLOSE
 namespace Protocol {
 
+enum Team : int {
+  TEAM_NONE = 0,
+  TEAM_RED = 1,
+  TEAM_BLUE = 2,
+  Team_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::min(),
+  Team_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::max()
+};
+bool Team_IsValid(int value);
+constexpr Team Team_MIN = TEAM_NONE;
+constexpr Team Team_MAX = TEAM_BLUE;
+constexpr int Team_ARRAYSIZE = Team_MAX + 1;
+
+const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* Team_descriptor();
+template<typename T>
+inline const std::string& Team_Name(T enum_t_value) {
+  static_assert(::std::is_same<T, Team>::value ||
+    ::std::is_integral<T>::value,
+    "Incorrect type passed to function Team_Name.");
+  return ::PROTOBUF_NAMESPACE_ID::internal::NameOfEnum(
+    Team_descriptor(), enum_t_value);
+}
+inline bool Team_Parse(
+    ::PROTOBUF_NAMESPACE_ID::ConstStringParam name, Team* value) {
+  return ::PROTOBUF_NAMESPACE_ID::internal::ParseNamedEnum<Team>(
+    Team_descriptor(), name, value);
+}
+enum RoomState : int {
+  ROOM_STATE_NONE = 0,
+  ROOM_STATE_WAITING = 1,
+  ROOM_STATE_LOADING = 2,
+  ROOM_STATE_PLAYING = 3,
+  ROOM_STATE_RESULT = 4,
+  RoomState_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::min(),
+  RoomState_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::max()
+};
+bool RoomState_IsValid(int value);
+constexpr RoomState RoomState_MIN = ROOM_STATE_NONE;
+constexpr RoomState RoomState_MAX = ROOM_STATE_RESULT;
+constexpr int RoomState_ARRAYSIZE = RoomState_MAX + 1;
+
+const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* RoomState_descriptor();
+template<typename T>
+inline const std::string& RoomState_Name(T enum_t_value) {
+  static_assert(::std::is_same<T, RoomState>::value ||
+    ::std::is_integral<T>::value,
+    "Incorrect type passed to function RoomState_Name.");
+  return ::PROTOBUF_NAMESPACE_ID::internal::NameOfEnum(
+    RoomState_descriptor(), enum_t_value);
+}
+inline bool RoomState_Parse(
+    ::PROTOBUF_NAMESPACE_ID::ConstStringParam name, RoomState* value) {
+  return ::PROTOBUF_NAMESPACE_ID::internal::ParseNamedEnum<RoomState>(
+    RoomState_descriptor(), name, value);
+}
 enum PlayerType : int {
   PLAYER_TYPE_NONE = 0,
   PLAYER_TYPE_KNIGHT = 1,
-  PLAYER_TYPE_MAGE = 2,
-  PLAYER_TYPE_ACHER = 3,
+  PLAYER_TYPE_ARCHER = 2,
   PlayerType_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::min(),
   PlayerType_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::max()
 };
 bool PlayerType_IsValid(int value);
 constexpr PlayerType PlayerType_MIN = PLAYER_TYPE_NONE;
-constexpr PlayerType PlayerType_MAX = PLAYER_TYPE_ACHER;
+constexpr PlayerType PlayerType_MAX = PLAYER_TYPE_ARCHER;
 constexpr int PlayerType_ARRAYSIZE = PlayerType_MAX + 1;
 
 const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* PlayerType_descriptor();
@@ -75,16 +128,15 @@ inline bool PlayerType_Parse(
     PlayerType_descriptor(), name, value);
 }
 enum MoveState : int {
-  MOVE_STATE_NOVE = 0,
+  MOVE_STATE_NONE = 0,
   MOVE_STATE_IDLE = 1,
-  MOVE_STATE_RUN = 2,
-  MOVE_STATE_JUMP = 3,
+  MOVE_STATE_MOVE = 2,
   MoveState_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::min(),
   MoveState_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::max()
 };
 bool MoveState_IsValid(int value);
-constexpr MoveState MoveState_MIN = MOVE_STATE_NOVE;
-constexpr MoveState MoveState_MAX = MOVE_STATE_JUMP;
+constexpr MoveState MoveState_MIN = MOVE_STATE_NONE;
+constexpr MoveState MoveState_MAX = MOVE_STATE_MOVE;
 constexpr int MoveState_ARRAYSIZE = MoveState_MAX + 1;
 
 const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* MoveState_descriptor();
@@ -123,6 +175,16 @@ inline bool MoveState_Parse(
 
 PROTOBUF_NAMESPACE_OPEN
 
+template <> struct is_proto_enum< ::Protocol::Team> : ::std::true_type {};
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::Protocol::Team>() {
+  return ::Protocol::Team_descriptor();
+}
+template <> struct is_proto_enum< ::Protocol::RoomState> : ::std::true_type {};
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::Protocol::RoomState>() {
+  return ::Protocol::RoomState_descriptor();
+}
 template <> struct is_proto_enum< ::Protocol::PlayerType> : ::std::true_type {};
 template <>
 inline const EnumDescriptor* GetEnumDescriptor< ::Protocol::PlayerType>() {

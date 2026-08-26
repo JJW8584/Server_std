@@ -4,6 +4,9 @@ package Protocol;
 import "Enum.proto";
 import "Struct.proto";
 
+//------------
+//	로그인
+//------------
 message C_LOGIN
 {
 
@@ -12,50 +15,170 @@ message C_LOGIN
 message S_LOGIN
 {
 	bool success = 1;
-	repeated PlayerInfo players = 2;
+	uint64 object_id = 2;
 }
 
-message C_ENTER_GAME
+//------------
+//	  방
+//------------
+message C_ROOM_LIST
 {
-	uint64 playerIndex= 1;
+
 }
 
-message S_ENTER_GAME
+message S_ROOM_LIST
+{
+    repeated RoomInfo rooms = 1;
+}
+
+// 생성
+message C_CREATE_ROOM
+{
+	string room_name = 1;
+    uint32 max_player_count = 2;
+}
+
+message S_CREATE_ROOM
 {
 	bool success = 1;
-	PlayerInfo player = 2;
+	RoomInfo room_info = 2;
 }
 
-message C_LEAVE_GAME
+// 입장
+message C_ENTER_ROOM
+{
+	uint64 room_id = 1;
+}
+
+message S_ENTER_ROOM
+{
+	bool success = 1;
+	RoomInfo room_info = 2;
+}
+
+// 퇴장
+message C_LEAVE_ROOM
 {
 
 }
 
-message S_LEAVE_GAME
+message S_LEAVE_ROOM
 {
-
+	bool success = 1;
 }
 
-message S_SPAWN
+// 직업 바꾸기
+message C_CHANGE_PLAYER_TYPE
 {
-	repeated PlayerInfo players = 1;
+	bool success = 1;
+    PlayerType player_type = 2;
 }
 
-message S_DESPAWN
+message C_CHANGE_TEAM
 {
-	repeated uint64 object_ids = 1;
+	Team team = 1;
+}
+
+message C_READY
+{
+	bool ready = 1;
+}
+
+message S_ROOM_STATE
+{
+	RoomInfo room_info = 1;
+}
+
+message C_START_MATCH
+{
+}
+
+//------------
+//	인게임
+//------------
+message S_MATCH_PREPARE
+{
+    MatchInfo match_info = 1;
+}
+
+message C_MATCH_PREPARE
+{
+}
+
+message S_MATCH_START
+{
+    MatchStateInfo match_state = 1;
+}
+
+// 매치 상태, 주기적으로 보냄
+message S_MATCH_STATE
+{
+    MatchStateInfo match_state = 1;
+}
+
+message S_PLAYER_STATE
+{
+    MatchPlayerState player_state = 1;
+}
+
+message S_PLAYER_RESPAWN
+{
+    MatchPlayerInfo player_info = 1;
+    MatchPlayerState player_state = 2;
 }
 
 message C_MOVE
 {
-	PlayerInfo info = 1;
+	MoveInfo move_info = 1;
 }
 
 message S_MOVE
 {
-	PlayerInfo info = 1;
+	PlayerInfo player_info = 1;
 }
 
+message C_FIRE
+{
+	uint32 client_fire_id = 1;
+
+	float spawn_x = 2;
+    float spawn_y = 3;
+    float spawn_z = 4;
+
+    float direction_x = 5;
+    float direction_y = 6;
+    float direction_z = 7;
+}
+
+message S_FIRE
+{	
+    uint32 client_fire_id = 1;
+
+	float spawn_x = 2;
+    float spawn_y = 3;
+    float spawn_z = 4;
+
+    float direction_x = 5;
+    float direction_y = 6;
+    float direction_z = 7;
+}
+
+message S_PLAYER_DESPAWN
+{
+    uint64 object_id = 1;
+}
+
+message S_MATCH_END
+{
+    MatchResult result = 1;
+}
+
+message S_RETURN_TO_ROOM
+{
+    RoomInfo room_info = 1;
+}
+
+//채팅
 message C_CHAT
 {
 	string msg = 1;
@@ -63,6 +186,6 @@ message C_CHAT
 
 message S_CHAT
 {
-	uint64 playerId = 1;
+	uint64 player_id = 1;
 	string msg = 2;
 }

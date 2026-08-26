@@ -66,12 +66,5 @@ int main()
 
 	//Main Thread
 
-	GRoom->DoAsync(&Room::UpdateTick);
-
-	while (true)
-	{
-
-	}
-
 	GThreadManager->Join();
 }
