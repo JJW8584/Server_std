@@ -318,7 +318,7 @@ struct S_MOVEDefaultTypeInternal {
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 S_MOVEDefaultTypeInternal _S_MOVE_default_instance_;
 PROTOBUF_CONSTEXPR C_FIRE::C_FIRE(
     ::_pbi::ConstantInitialized): _impl_{
-    /*decltype(_impl_.client_fire_id_)*/0u
+    /*decltype(_impl_.object_id_)*/uint64_t{0u}
   , /*decltype(_impl_.spawn_x_)*/0
   , /*decltype(_impl_.spawn_y_)*/0
   , /*decltype(_impl_.spawn_z_)*/0
@@ -337,7 +337,7 @@ struct C_FIREDefaultTypeInternal {
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 C_FIREDefaultTypeInternal _C_FIRE_default_instance_;
 PROTOBUF_CONSTEXPR S_FIRE::S_FIRE(
     ::_pbi::ConstantInitialized): _impl_{
-    /*decltype(_impl_.client_fire_id_)*/0u
+    /*decltype(_impl_.object_id_)*/uint64_t{0u}
   , /*decltype(_impl_.spawn_x_)*/0
   , /*decltype(_impl_.spawn_y_)*/0
   , /*decltype(_impl_.spawn_z_)*/0
@@ -594,7 +594,7 @@ const uint32_t TableStruct_Protocol_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
   ~0u,  // no _inlined_string_donated_
-  PROTOBUF_FIELD_OFFSET(::Protocol::C_FIRE, _impl_.client_fire_id_),
+  PROTOBUF_FIELD_OFFSET(::Protocol::C_FIRE, _impl_.object_id_),
   PROTOBUF_FIELD_OFFSET(::Protocol::C_FIRE, _impl_.spawn_x_),
   PROTOBUF_FIELD_OFFSET(::Protocol::C_FIRE, _impl_.spawn_y_),
   PROTOBUF_FIELD_OFFSET(::Protocol::C_FIRE, _impl_.spawn_z_),
@@ -607,7 +607,7 @@ const uint32_t TableStruct_Protocol_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
   ~0u,  // no _inlined_string_donated_
-  PROTOBUF_FIELD_OFFSET(::Protocol::S_FIRE, _impl_.client_fire_id_),
+  PROTOBUF_FIELD_OFFSET(::Protocol::S_FIRE, _impl_.object_id_),
   PROTOBUF_FIELD_OFFSET(::Protocol::S_FIRE, _impl_.spawn_x_),
   PROTOBUF_FIELD_OFFSET(::Protocol::S_FIRE, _impl_.spawn_y_),
   PROTOBUF_FIELD_OFFSET(::Protocol::S_FIRE, _impl_.spawn_z_),
@@ -747,20 +747,20 @@ const char descriptor_table_protodef_Protocol_2eproto[] PROTOBUF_SECTION_VARIABL
   "player_state\030\002 \001(\0132\032.Protocol.MatchPlaye"
   "rState\"/\n\006C_MOVE\022%\n\tmove_info\030\001 \001(\0132\022.Pr"
   "otocol.MoveInfo\"3\n\006S_MOVE\022)\n\013player_info"
-  "\030\001 \001(\0132\024.Protocol.PlayerInfo\"\222\001\n\006C_FIRE\022"
-  "\026\n\016client_fire_id\030\001 \001(\r\022\017\n\007spawn_x\030\002 \001(\002"
-  "\022\017\n\007spawn_y\030\003 \001(\002\022\017\n\007spawn_z\030\004 \001(\002\022\023\n\013di"
-  "rection_x\030\005 \001(\002\022\023\n\013direction_y\030\006 \001(\002\022\023\n\013"
-  "direction_z\030\007 \001(\002\"\222\001\n\006S_FIRE\022\026\n\016client_f"
-  "ire_id\030\001 \001(\r\022\017\n\007spawn_x\030\002 \001(\002\022\017\n\007spawn_y"
-  "\030\003 \001(\002\022\017\n\007spawn_z\030\004 \001(\002\022\023\n\013direction_x\030\005"
-  " \001(\002\022\023\n\013direction_y\030\006 \001(\002\022\023\n\013direction_z"
-  "\030\007 \001(\002\"%\n\020S_PLAYER_DESPAWN\022\021\n\tobject_id\030"
-  "\001 \001(\004\"4\n\013S_MATCH_END\022%\n\006result\030\001 \001(\0132\025.P"
-  "rotocol.MatchResult\"9\n\020S_RETURN_TO_ROOM\022"
-  "%\n\troom_info\030\001 \001(\0132\022.Protocol.RoomInfo\"\025"
-  "\n\006C_CHAT\022\013\n\003msg\030\001 \001(\t\"(\n\006S_CHAT\022\021\n\tplaye"
-  "r_id\030\001 \001(\004\022\013\n\003msg\030\002 \001(\tb\006proto3"
+  "\030\001 \001(\0132\024.Protocol.PlayerInfo\"\215\001\n\006C_FIRE\022"
+  "\021\n\tobject_id\030\001 \001(\004\022\017\n\007spawn_x\030\002 \001(\002\022\017\n\007s"
+  "pawn_y\030\003 \001(\002\022\017\n\007spawn_z\030\004 \001(\002\022\023\n\013directi"
+  "on_x\030\005 \001(\002\022\023\n\013direction_y\030\006 \001(\002\022\023\n\013direc"
+  "tion_z\030\007 \001(\002\"\215\001\n\006S_FIRE\022\021\n\tobject_id\030\001 \001"
+  "(\004\022\017\n\007spawn_x\030\002 \001(\002\022\017\n\007spawn_y\030\003 \001(\002\022\017\n\007"
+  "spawn_z\030\004 \001(\002\022\023\n\013direction_x\030\005 \001(\002\022\023\n\013di"
+  "rection_y\030\006 \001(\002\022\023\n\013direction_z\030\007 \001(\002\"%\n\020"
+  "S_PLAYER_DESPAWN\022\021\n\tobject_id\030\001 \001(\004\"4\n\013S"
+  "_MATCH_END\022%\n\006result\030\001 \001(\0132\025.Protocol.Ma"
+  "tchResult\"9\n\020S_RETURN_TO_ROOM\022%\n\troom_in"
+  "fo\030\001 \001(\0132\022.Protocol.RoomInfo\"\025\n\006C_CHAT\022\013"
+  "\n\003msg\030\001 \001(\t\"(\n\006S_CHAT\022\021\n\tplayer_id\030\001 \001(\004"
+  "\022\013\n\003msg\030\002 \001(\tb\006proto3"
   ;
 static const ::_pbi::DescriptorTable* const descriptor_table_Protocol_2eproto_deps[2] = {
   &::descriptor_table_Enum_2eproto,
@@ -768,7 +768,7 @@ static const ::_pbi::DescriptorTable* const descriptor_table_Protocol_2eproto_de
 };
 static ::_pbi::once_flag descriptor_table_Protocol_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_Protocol_2eproto = {
-    false, false, 1711, descriptor_table_protodef_Protocol_2eproto,
+    false, false, 1701, descriptor_table_protodef_Protocol_2eproto,
     "Protocol.proto",
     &descriptor_table_Protocol_2eproto_once, descriptor_table_Protocol_2eproto_deps, 2, 30,
     schemas, file_default_instances, TableStruct_Protocol_2eproto::offsets,
@@ -4661,7 +4661,7 @@ C_FIRE::C_FIRE(const C_FIRE& from)
   : ::PROTOBUF_NAMESPACE_ID::Message() {
   C_FIRE* const _this = this; (void)_this;
   new (&_impl_) Impl_{
-      decltype(_impl_.client_fire_id_){}
+      decltype(_impl_.object_id_){}
     , decltype(_impl_.spawn_x_){}
     , decltype(_impl_.spawn_y_){}
     , decltype(_impl_.spawn_z_){}
@@ -4671,9 +4671,9 @@ C_FIRE::C_FIRE(const C_FIRE& from)
     , /*decltype(_impl_._cached_size_)*/{}};
 
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  ::memcpy(&_impl_.client_fire_id_, &from._impl_.client_fire_id_,
+  ::memcpy(&_impl_.object_id_, &from._impl_.object_id_,
     static_cast<size_t>(reinterpret_cast<char*>(&_impl_.direction_z_) -
-    reinterpret_cast<char*>(&_impl_.client_fire_id_)) + sizeof(_impl_.direction_z_));
+    reinterpret_cast<char*>(&_impl_.object_id_)) + sizeof(_impl_.direction_z_));
   // @@protoc_insertion_point(copy_constructor:Protocol.C_FIRE)
 }
 
@@ -4682,7 +4682,7 @@ inline void C_FIRE::SharedCtor(
   (void)arena;
   (void)is_message_owned;
   new (&_impl_) Impl_{
-      decltype(_impl_.client_fire_id_){0u}
+      decltype(_impl_.object_id_){uint64_t{0u}}
     , decltype(_impl_.spawn_x_){0}
     , decltype(_impl_.spawn_y_){0}
     , decltype(_impl_.spawn_z_){0}
@@ -4716,9 +4716,9 @@ void C_FIRE::Clear() {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  ::memset(&_impl_.client_fire_id_, 0, static_cast<size_t>(
+  ::memset(&_impl_.object_id_, 0, static_cast<size_t>(
       reinterpret_cast<char*>(&_impl_.direction_z_) -
-      reinterpret_cast<char*>(&_impl_.client_fire_id_)) + sizeof(_impl_.direction_z_));
+      reinterpret_cast<char*>(&_impl_.object_id_)) + sizeof(_impl_.direction_z_));
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
@@ -4728,10 +4728,10 @@ const char* C_FIRE::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
     uint32_t tag;
     ptr = ::_pbi::ReadTag(ptr, &tag);
     switch (tag >> 3) {
-      // uint32 client_fire_id = 1;
+      // uint64 object_id = 1;
       case 1:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 8)) {
-          _impl_.client_fire_id_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
+          _impl_.object_id_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
           CHK_(ptr);
         } else
           goto handle_unusual;
@@ -4813,10 +4813,10 @@ uint8_t* C_FIRE::_InternalSerialize(
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // uint32 client_fire_id = 1;
-  if (this->_internal_client_fire_id() != 0) {
+  // uint64 object_id = 1;
+  if (this->_internal_object_id() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteUInt32ToArray(1, this->_internal_client_fire_id(), target);
+    target = ::_pbi::WireFormatLite::WriteUInt64ToArray(1, this->_internal_object_id(), target);
   }
 
   // float spawn_x = 2;
@@ -4895,9 +4895,9 @@ size_t C_FIRE::ByteSizeLong() const {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  // uint32 client_fire_id = 1;
-  if (this->_internal_client_fire_id() != 0) {
-    total_size += ::_pbi::WireFormatLite::UInt32SizePlusOne(this->_internal_client_fire_id());
+  // uint64 object_id = 1;
+  if (this->_internal_object_id() != 0) {
+    total_size += ::_pbi::WireFormatLite::UInt64SizePlusOne(this->_internal_object_id());
   }
 
   // float spawn_x = 2;
@@ -4972,8 +4972,8 @@ void C_FIRE::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBU
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  if (from._internal_client_fire_id() != 0) {
-    _this->_internal_set_client_fire_id(from._internal_client_fire_id());
+  if (from._internal_object_id() != 0) {
+    _this->_internal_set_object_id(from._internal_object_id());
   }
   static_assert(sizeof(uint32_t) == sizeof(float), "Code assumes uint32_t and float are the same size.");
   float tmp_spawn_x = from._internal_spawn_x();
@@ -5037,9 +5037,9 @@ void C_FIRE::InternalSwap(C_FIRE* other) {
   ::PROTOBUF_NAMESPACE_ID::internal::memswap<
       PROTOBUF_FIELD_OFFSET(C_FIRE, _impl_.direction_z_)
       + sizeof(C_FIRE::_impl_.direction_z_)
-      - PROTOBUF_FIELD_OFFSET(C_FIRE, _impl_.client_fire_id_)>(
-          reinterpret_cast<char*>(&_impl_.client_fire_id_),
-          reinterpret_cast<char*>(&other->_impl_.client_fire_id_));
+      - PROTOBUF_FIELD_OFFSET(C_FIRE, _impl_.object_id_)>(
+          reinterpret_cast<char*>(&_impl_.object_id_),
+          reinterpret_cast<char*>(&other->_impl_.object_id_));
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata C_FIRE::GetMetadata() const {
@@ -5064,7 +5064,7 @@ S_FIRE::S_FIRE(const S_FIRE& from)
   : ::PROTOBUF_NAMESPACE_ID::Message() {
   S_FIRE* const _this = this; (void)_this;
   new (&_impl_) Impl_{
-      decltype(_impl_.client_fire_id_){}
+      decltype(_impl_.object_id_){}
     , decltype(_impl_.spawn_x_){}
     , decltype(_impl_.spawn_y_){}
     , decltype(_impl_.spawn_z_){}
@@ -5074,9 +5074,9 @@ S_FIRE::S_FIRE(const S_FIRE& from)
     , /*decltype(_impl_._cached_size_)*/{}};
 
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  ::memcpy(&_impl_.client_fire_id_, &from._impl_.client_fire_id_,
+  ::memcpy(&_impl_.object_id_, &from._impl_.object_id_,
     static_cast<size_t>(reinterpret_cast<char*>(&_impl_.direction_z_) -
-    reinterpret_cast<char*>(&_impl_.client_fire_id_)) + sizeof(_impl_.direction_z_));
+    reinterpret_cast<char*>(&_impl_.object_id_)) + sizeof(_impl_.direction_z_));
   // @@protoc_insertion_point(copy_constructor:Protocol.S_FIRE)
 }
 
@@ -5085,7 +5085,7 @@ inline void S_FIRE::SharedCtor(
   (void)arena;
   (void)is_message_owned;
   new (&_impl_) Impl_{
-      decltype(_impl_.client_fire_id_){0u}
+      decltype(_impl_.object_id_){uint64_t{0u}}
     , decltype(_impl_.spawn_x_){0}
     , decltype(_impl_.spawn_y_){0}
     , decltype(_impl_.spawn_z_){0}
@@ -5119,9 +5119,9 @@ void S_FIRE::Clear() {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  ::memset(&_impl_.client_fire_id_, 0, static_cast<size_t>(
+  ::memset(&_impl_.object_id_, 0, static_cast<size_t>(
       reinterpret_cast<char*>(&_impl_.direction_z_) -
-      reinterpret_cast<char*>(&_impl_.client_fire_id_)) + sizeof(_impl_.direction_z_));
+      reinterpret_cast<char*>(&_impl_.object_id_)) + sizeof(_impl_.direction_z_));
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
@@ -5131,10 +5131,10 @@ const char* S_FIRE::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
     uint32_t tag;
     ptr = ::_pbi::ReadTag(ptr, &tag);
     switch (tag >> 3) {
-      // uint32 client_fire_id = 1;
+      // uint64 object_id = 1;
       case 1:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 8)) {
-          _impl_.client_fire_id_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
+          _impl_.object_id_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
           CHK_(ptr);
         } else
           goto handle_unusual;
@@ -5216,10 +5216,10 @@ uint8_t* S_FIRE::_InternalSerialize(
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // uint32 client_fire_id = 1;
-  if (this->_internal_client_fire_id() != 0) {
+  // uint64 object_id = 1;
+  if (this->_internal_object_id() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteUInt32ToArray(1, this->_internal_client_fire_id(), target);
+    target = ::_pbi::WireFormatLite::WriteUInt64ToArray(1, this->_internal_object_id(), target);
   }
 
   // float spawn_x = 2;
@@ -5298,9 +5298,9 @@ size_t S_FIRE::ByteSizeLong() const {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  // uint32 client_fire_id = 1;
-  if (this->_internal_client_fire_id() != 0) {
-    total_size += ::_pbi::WireFormatLite::UInt32SizePlusOne(this->_internal_client_fire_id());
+  // uint64 object_id = 1;
+  if (this->_internal_object_id() != 0) {
+    total_size += ::_pbi::WireFormatLite::UInt64SizePlusOne(this->_internal_object_id());
   }
 
   // float spawn_x = 2;
@@ -5375,8 +5375,8 @@ void S_FIRE::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBU
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  if (from._internal_client_fire_id() != 0) {
-    _this->_internal_set_client_fire_id(from._internal_client_fire_id());
+  if (from._internal_object_id() != 0) {
+    _this->_internal_set_object_id(from._internal_object_id());
   }
   static_assert(sizeof(uint32_t) == sizeof(float), "Code assumes uint32_t and float are the same size.");
   float tmp_spawn_x = from._internal_spawn_x();
@@ -5440,9 +5440,9 @@ void S_FIRE::InternalSwap(S_FIRE* other) {
   ::PROTOBUF_NAMESPACE_ID::internal::memswap<
       PROTOBUF_FIELD_OFFSET(S_FIRE, _impl_.direction_z_)
       + sizeof(S_FIRE::_impl_.direction_z_)
-      - PROTOBUF_FIELD_OFFSET(S_FIRE, _impl_.client_fire_id_)>(
-          reinterpret_cast<char*>(&_impl_.client_fire_id_),
-          reinterpret_cast<char*>(&other->_impl_.client_fire_id_));
+      - PROTOBUF_FIELD_OFFSET(S_FIRE, _impl_.object_id_)>(
+          reinterpret_cast<char*>(&_impl_.object_id_),
+          reinterpret_cast<char*>(&other->_impl_.object_id_));
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata S_FIRE::GetMetadata() const {

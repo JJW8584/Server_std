@@ -118,8 +118,7 @@ struct MatchInfoDefaultTypeInternal {
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 MatchInfoDefaultTypeInternal _MatchInfo_default_instance_;
 PROTOBUF_CONSTEXPR MatchPlayerState::MatchPlayerState(
     ::_pbi::ConstantInitialized): _impl_{
-    /*decltype(_impl_.object_id_)*/uint64_t{0u}
-  , /*decltype(_impl_.hp_)*/0
+    /*decltype(_impl_.hp_)*/0
   , /*decltype(_impl_.max_hp_)*/0
   , /*decltype(_impl_.is_alive_)*/false
   , /*decltype(_impl_.kill_count_)*/0u
@@ -137,7 +136,7 @@ PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORIT
 PROTOBUF_CONSTEXPR MatchStateInfo::MatchStateInfo(
     ::_pbi::ConstantInitialized): _impl_{
     /*decltype(_impl_.match_id_)*/uint64_t{0u}
-  , /*decltype(_impl_.remaining_time_ms_)*/0u
+  , /*decltype(_impl_.remaining_time_seconds_)*/0u
   , /*decltype(_impl_.red_score_)*/0u
   , /*decltype(_impl_.blue_score_)*/0u
   , /*decltype(_impl_._cached_size_)*/{}} {}
@@ -238,7 +237,6 @@ const uint32_t TableStruct_Struct_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(p
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
   ~0u,  // no _inlined_string_donated_
-  PROTOBUF_FIELD_OFFSET(::Protocol::MatchPlayerState, _impl_.object_id_),
   PROTOBUF_FIELD_OFFSET(::Protocol::MatchPlayerState, _impl_.hp_),
   PROTOBUF_FIELD_OFFSET(::Protocol::MatchPlayerState, _impl_.max_hp_),
   PROTOBUF_FIELD_OFFSET(::Protocol::MatchPlayerState, _impl_.is_alive_),
@@ -251,7 +249,7 @@ const uint32_t TableStruct_Struct_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(p
   ~0u,  // no _weak_field_map_
   ~0u,  // no _inlined_string_donated_
   PROTOBUF_FIELD_OFFSET(::Protocol::MatchStateInfo, _impl_.match_id_),
-  PROTOBUF_FIELD_OFFSET(::Protocol::MatchStateInfo, _impl_.remaining_time_ms_),
+  PROTOBUF_FIELD_OFFSET(::Protocol::MatchStateInfo, _impl_.remaining_time_seconds_),
   PROTOBUF_FIELD_OFFSET(::Protocol::MatchStateInfo, _impl_.red_score_),
   PROTOBUF_FIELD_OFFSET(::Protocol::MatchStateInfo, _impl_.blue_score_),
   ~0u,  // no _has_bits_
@@ -274,8 +272,8 @@ static const ::_pbi::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protode
   { 41, -1, -1, sizeof(::Protocol::MatchPlayerInfo)},
   { 50, -1, -1, sizeof(::Protocol::MatchInfo)},
   { 59, -1, -1, sizeof(::Protocol::MatchPlayerState)},
-  { 71, -1, -1, sizeof(::Protocol::MatchStateInfo)},
-  { 81, -1, -1, sizeof(::Protocol::MatchResult)},
+  { 70, -1, -1, sizeof(::Protocol::MatchStateInfo)},
+  { 80, -1, -1, sizeof(::Protocol::MatchResult)},
 };
 
 static const ::_pb::Message* const file_default_instances[] = {
@@ -309,24 +307,24 @@ const char descriptor_table_protodef_Struct_2eproto[] PROTOBUF_SECTION_VARIABLE(
   ".PlayerType\022\034\n\004team\030\003 \001(\0162\016.Protocol.Tea"
   "m\"n\n\tMatchInfo\022\020\n\010match_id\030\001 \001(\004\022\030\n\020dura"
   "tion_seconds\030\002 \001(\r\0225\n\022match_players_info"
-  "\030\003 \003(\0132\031.Protocol.MatchPlayerInfo\"|\n\020Mat"
-  "chPlayerState\022\021\n\tobject_id\030\001 \001(\004\022\n\n\002hp\030\002"
-  " \001(\005\022\016\n\006max_hp\030\003 \001(\005\022\020\n\010is_alive\030\004 \001(\010\022\022"
-  "\n\nkill_count\030\005 \001(\r\022\023\n\013death_count\030\006 \001(\r\""
-  "d\n\016MatchStateInfo\022\020\n\010match_id\030\001 \001(\004\022\031\n\021r"
-  "emaining_time_ms\030\002 \001(\r\022\021\n\tred_score\030\003 \001("
-  "\r\022\022\n\nblue_score\030\004 \001(\r\"\237\001\n\013MatchResult\022\020\n"
-  "\010match_id\030\001 \001(\004\022#\n\013winner_team\030\002 \001(\0162\016.P"
-  "rotocol.Team\022\021\n\tred_score\030\003 \001(\r\022\022\n\nblue_"
-  "score\030\004 \001(\r\0222\n\016player_results\030\005 \003(\0132\032.Pr"
-  "otocol.MatchPlayerStateb\006proto3"
+  "\030\003 \003(\0132\031.Protocol.MatchPlayerInfo\"i\n\020Mat"
+  "chPlayerState\022\n\n\002hp\030\001 \001(\005\022\016\n\006max_hp\030\002 \001("
+  "\005\022\020\n\010is_alive\030\003 \001(\010\022\022\n\nkill_count\030\004 \001(\r\022"
+  "\023\n\013death_count\030\005 \001(\r\"i\n\016MatchStateInfo\022\020"
+  "\n\010match_id\030\001 \001(\004\022\036\n\026remaining_time_secon"
+  "ds\030\002 \001(\r\022\021\n\tred_score\030\003 \001(\r\022\022\n\nblue_scor"
+  "e\030\004 \001(\r\"\237\001\n\013MatchResult\022\020\n\010match_id\030\001 \001("
+  "\004\022#\n\013winner_team\030\002 \001(\0162\016.Protocol.Team\022\021"
+  "\n\tred_score\030\003 \001(\r\022\022\n\nblue_score\030\004 \001(\r\0222\n"
+  "\016player_results\030\005 \003(\0132\032.Protocol.MatchPl"
+  "ayerStateb\006proto3"
   ;
 static const ::_pbi::DescriptorTable* const descriptor_table_Struct_2eproto_deps[1] = {
   &::descriptor_table_Enum_2eproto,
 };
 static ::_pbi::once_flag descriptor_table_Struct_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_Struct_2eproto = {
-    false, false, 1151, descriptor_table_protodef_Struct_2eproto,
+    false, false, 1137, descriptor_table_protodef_Struct_2eproto,
     "Struct.proto",
     &descriptor_table_Struct_2eproto_once, descriptor_table_Struct_2eproto_deps, 1, 9,
     schemas, file_default_instances, TableStruct_Struct_2eproto::offsets,
@@ -2031,8 +2029,7 @@ MatchPlayerState::MatchPlayerState(const MatchPlayerState& from)
   : ::PROTOBUF_NAMESPACE_ID::Message() {
   MatchPlayerState* const _this = this; (void)_this;
   new (&_impl_) Impl_{
-      decltype(_impl_.object_id_){}
-    , decltype(_impl_.hp_){}
+      decltype(_impl_.hp_){}
     , decltype(_impl_.max_hp_){}
     , decltype(_impl_.is_alive_){}
     , decltype(_impl_.kill_count_){}
@@ -2040,9 +2037,9 @@ MatchPlayerState::MatchPlayerState(const MatchPlayerState& from)
     , /*decltype(_impl_._cached_size_)*/{}};
 
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  ::memcpy(&_impl_.object_id_, &from._impl_.object_id_,
+  ::memcpy(&_impl_.hp_, &from._impl_.hp_,
     static_cast<size_t>(reinterpret_cast<char*>(&_impl_.death_count_) -
-    reinterpret_cast<char*>(&_impl_.object_id_)) + sizeof(_impl_.death_count_));
+    reinterpret_cast<char*>(&_impl_.hp_)) + sizeof(_impl_.death_count_));
   // @@protoc_insertion_point(copy_constructor:Protocol.MatchPlayerState)
 }
 
@@ -2051,8 +2048,7 @@ inline void MatchPlayerState::SharedCtor(
   (void)arena;
   (void)is_message_owned;
   new (&_impl_) Impl_{
-      decltype(_impl_.object_id_){uint64_t{0u}}
-    , decltype(_impl_.hp_){0}
+      decltype(_impl_.hp_){0}
     , decltype(_impl_.max_hp_){0}
     , decltype(_impl_.is_alive_){false}
     , decltype(_impl_.kill_count_){0u}
@@ -2084,9 +2080,9 @@ void MatchPlayerState::Clear() {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  ::memset(&_impl_.object_id_, 0, static_cast<size_t>(
+  ::memset(&_impl_.hp_, 0, static_cast<size_t>(
       reinterpret_cast<char*>(&_impl_.death_count_) -
-      reinterpret_cast<char*>(&_impl_.object_id_)) + sizeof(_impl_.death_count_));
+      reinterpret_cast<char*>(&_impl_.hp_)) + sizeof(_impl_.death_count_));
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
@@ -2096,49 +2092,41 @@ const char* MatchPlayerState::_InternalParse(const char* ptr, ::_pbi::ParseConte
     uint32_t tag;
     ptr = ::_pbi::ReadTag(ptr, &tag);
     switch (tag >> 3) {
-      // uint64 object_id = 1;
+      // int32 hp = 1;
       case 1:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 8)) {
-          _impl_.object_id_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
-          CHK_(ptr);
-        } else
-          goto handle_unusual;
-        continue;
-      // int32 hp = 2;
-      case 2:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 16)) {
           _impl_.hp_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
           CHK_(ptr);
         } else
           goto handle_unusual;
         continue;
-      // int32 max_hp = 3;
-      case 3:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 24)) {
+      // int32 max_hp = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 16)) {
           _impl_.max_hp_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
           CHK_(ptr);
         } else
           goto handle_unusual;
         continue;
-      // bool is_alive = 4;
-      case 4:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 32)) {
+      // bool is_alive = 3;
+      case 3:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 24)) {
           _impl_.is_alive_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
           CHK_(ptr);
         } else
           goto handle_unusual;
         continue;
-      // uint32 kill_count = 5;
-      case 5:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 40)) {
+      // uint32 kill_count = 4;
+      case 4:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 32)) {
           _impl_.kill_count_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
           CHK_(ptr);
         } else
           goto handle_unusual;
         continue;
-      // uint32 death_count = 6;
-      case 6:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 48)) {
+      // uint32 death_count = 5;
+      case 5:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 40)) {
           _impl_.death_count_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
           CHK_(ptr);
         } else
@@ -2173,40 +2161,34 @@ uint8_t* MatchPlayerState::_InternalSerialize(
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // uint64 object_id = 1;
-  if (this->_internal_object_id() != 0) {
-    target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteUInt64ToArray(1, this->_internal_object_id(), target);
-  }
-
-  // int32 hp = 2;
+  // int32 hp = 1;
   if (this->_internal_hp() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteInt32ToArray(2, this->_internal_hp(), target);
+    target = ::_pbi::WireFormatLite::WriteInt32ToArray(1, this->_internal_hp(), target);
   }
 
-  // int32 max_hp = 3;
+  // int32 max_hp = 2;
   if (this->_internal_max_hp() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteInt32ToArray(3, this->_internal_max_hp(), target);
+    target = ::_pbi::WireFormatLite::WriteInt32ToArray(2, this->_internal_max_hp(), target);
   }
 
-  // bool is_alive = 4;
+  // bool is_alive = 3;
   if (this->_internal_is_alive() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteBoolToArray(4, this->_internal_is_alive(), target);
+    target = ::_pbi::WireFormatLite::WriteBoolToArray(3, this->_internal_is_alive(), target);
   }
 
-  // uint32 kill_count = 5;
+  // uint32 kill_count = 4;
   if (this->_internal_kill_count() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteUInt32ToArray(5, this->_internal_kill_count(), target);
+    target = ::_pbi::WireFormatLite::WriteUInt32ToArray(4, this->_internal_kill_count(), target);
   }
 
-  // uint32 death_count = 6;
+  // uint32 death_count = 5;
   if (this->_internal_death_count() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteUInt32ToArray(6, this->_internal_death_count(), target);
+    target = ::_pbi::WireFormatLite::WriteUInt32ToArray(5, this->_internal_death_count(), target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -2225,32 +2207,27 @@ size_t MatchPlayerState::ByteSizeLong() const {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  // uint64 object_id = 1;
-  if (this->_internal_object_id() != 0) {
-    total_size += ::_pbi::WireFormatLite::UInt64SizePlusOne(this->_internal_object_id());
-  }
-
-  // int32 hp = 2;
+  // int32 hp = 1;
   if (this->_internal_hp() != 0) {
     total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_hp());
   }
 
-  // int32 max_hp = 3;
+  // int32 max_hp = 2;
   if (this->_internal_max_hp() != 0) {
     total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_max_hp());
   }
 
-  // bool is_alive = 4;
+  // bool is_alive = 3;
   if (this->_internal_is_alive() != 0) {
     total_size += 1 + 1;
   }
 
-  // uint32 kill_count = 5;
+  // uint32 kill_count = 4;
   if (this->_internal_kill_count() != 0) {
     total_size += ::_pbi::WireFormatLite::UInt32SizePlusOne(this->_internal_kill_count());
   }
 
-  // uint32 death_count = 6;
+  // uint32 death_count = 5;
   if (this->_internal_death_count() != 0) {
     total_size += ::_pbi::WireFormatLite::UInt32SizePlusOne(this->_internal_death_count());
   }
@@ -2273,9 +2250,6 @@ void MatchPlayerState::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  if (from._internal_object_id() != 0) {
-    _this->_internal_set_object_id(from._internal_object_id());
-  }
   if (from._internal_hp() != 0) {
     _this->_internal_set_hp(from._internal_hp());
   }
@@ -2311,9 +2285,9 @@ void MatchPlayerState::InternalSwap(MatchPlayerState* other) {
   ::PROTOBUF_NAMESPACE_ID::internal::memswap<
       PROTOBUF_FIELD_OFFSET(MatchPlayerState, _impl_.death_count_)
       + sizeof(MatchPlayerState::_impl_.death_count_)
-      - PROTOBUF_FIELD_OFFSET(MatchPlayerState, _impl_.object_id_)>(
-          reinterpret_cast<char*>(&_impl_.object_id_),
-          reinterpret_cast<char*>(&other->_impl_.object_id_));
+      - PROTOBUF_FIELD_OFFSET(MatchPlayerState, _impl_.hp_)>(
+          reinterpret_cast<char*>(&_impl_.hp_),
+          reinterpret_cast<char*>(&other->_impl_.hp_));
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata MatchPlayerState::GetMetadata() const {
@@ -2339,7 +2313,7 @@ MatchStateInfo::MatchStateInfo(const MatchStateInfo& from)
   MatchStateInfo* const _this = this; (void)_this;
   new (&_impl_) Impl_{
       decltype(_impl_.match_id_){}
-    , decltype(_impl_.remaining_time_ms_){}
+    , decltype(_impl_.remaining_time_seconds_){}
     , decltype(_impl_.red_score_){}
     , decltype(_impl_.blue_score_){}
     , /*decltype(_impl_._cached_size_)*/{}};
@@ -2357,7 +2331,7 @@ inline void MatchStateInfo::SharedCtor(
   (void)is_message_owned;
   new (&_impl_) Impl_{
       decltype(_impl_.match_id_){uint64_t{0u}}
-    , decltype(_impl_.remaining_time_ms_){0u}
+    , decltype(_impl_.remaining_time_seconds_){0u}
     , decltype(_impl_.red_score_){0u}
     , decltype(_impl_.blue_score_){0u}
     , /*decltype(_impl_._cached_size_)*/{}
@@ -2407,10 +2381,10 @@ const char* MatchStateInfo::_InternalParse(const char* ptr, ::_pbi::ParseContext
         } else
           goto handle_unusual;
         continue;
-      // uint32 remaining_time_ms = 2;
+      // uint32 remaining_time_seconds = 2;
       case 2:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 16)) {
-          _impl_.remaining_time_ms_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
+          _impl_.remaining_time_seconds_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
           CHK_(ptr);
         } else
           goto handle_unusual;
@@ -2466,10 +2440,10 @@ uint8_t* MatchStateInfo::_InternalSerialize(
     target = ::_pbi::WireFormatLite::WriteUInt64ToArray(1, this->_internal_match_id(), target);
   }
 
-  // uint32 remaining_time_ms = 2;
-  if (this->_internal_remaining_time_ms() != 0) {
+  // uint32 remaining_time_seconds = 2;
+  if (this->_internal_remaining_time_seconds() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteUInt32ToArray(2, this->_internal_remaining_time_ms(), target);
+    target = ::_pbi::WireFormatLite::WriteUInt32ToArray(2, this->_internal_remaining_time_seconds(), target);
   }
 
   // uint32 red_score = 3;
@@ -2505,9 +2479,9 @@ size_t MatchStateInfo::ByteSizeLong() const {
     total_size += ::_pbi::WireFormatLite::UInt64SizePlusOne(this->_internal_match_id());
   }
 
-  // uint32 remaining_time_ms = 2;
-  if (this->_internal_remaining_time_ms() != 0) {
-    total_size += ::_pbi::WireFormatLite::UInt32SizePlusOne(this->_internal_remaining_time_ms());
+  // uint32 remaining_time_seconds = 2;
+  if (this->_internal_remaining_time_seconds() != 0) {
+    total_size += ::_pbi::WireFormatLite::UInt32SizePlusOne(this->_internal_remaining_time_seconds());
   }
 
   // uint32 red_score = 3;
@@ -2541,8 +2515,8 @@ void MatchStateInfo::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const :
   if (from._internal_match_id() != 0) {
     _this->_internal_set_match_id(from._internal_match_id());
   }
-  if (from._internal_remaining_time_ms() != 0) {
-    _this->_internal_set_remaining_time_ms(from._internal_remaining_time_ms());
+  if (from._internal_remaining_time_seconds() != 0) {
+    _this->_internal_set_remaining_time_seconds(from._internal_remaining_time_seconds());
   }
   if (from._internal_red_score() != 0) {
     _this->_internal_set_red_score(from._internal_red_score());

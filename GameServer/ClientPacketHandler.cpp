@@ -157,6 +157,18 @@ bool Handle_C_START_MATCH(PacketSessionRef& session, Protocol::C_START_MATCH& pk
 
 bool Handle_C_MATCH_PREPARE(PacketSessionRef& session, Protocol::C_MATCH_PREPARE& pkt)
 {
+	GameSessionRef gameSession = static_pointer_cast<GameSession>(session);
+
+	PlayerRef player = gameSession->player.load();
+	if (player == nullptr)
+		return false;
+
+	RoomRef room = player->room.load().lock();
+	if (room == nullptr)
+		return false;
+
+	room->DoAsync(&Room::HandlePrepareMatch, player);
+
 	return true;
 }
 
@@ -183,6 +195,18 @@ bool Handle_C_MOVE(PacketSessionRef& session, Protocol::C_MOVE& pkt)
 
 bool Handle_C_FIRE(PacketSessionRef& session, Protocol::C_FIRE& pkt)
 {
+	auto gameSession = static_pointer_cast<GameSession>(session);
+
+	PlayerRef player = gameSession->player.load();
+	if (player == nullptr)
+		return false;
+
+	RoomRef room = player->room.load().lock();
+	if (room == nullptr)
+		return false;
+
+	room->DoAsync(&Room::HandleFire, player, pkt);
+
 	return true;
 }
 

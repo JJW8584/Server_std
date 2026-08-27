@@ -19,6 +19,14 @@ public:
 
 	Protocol::MoveInfo* moveInfo;
 
+	static constexpr float FIRE_COOLDOWN_SECONDS = 1.0f;
+	float fireTimer = 0.0f;
+
+public:
+	bool isPrepareMatch = false;
+
+	Protocol::MatchPlayerState matchPlayerState;
+
 private:
 	uint64 _objectId = 0;
 };

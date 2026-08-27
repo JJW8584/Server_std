@@ -139,7 +139,7 @@ message S_MOVE
 
 message C_FIRE
 {
-	uint32 client_fire_id = 1;
+	uint64 object_id = 1;
 
 	float spawn_x = 2;
     float spawn_y = 3;
@@ -152,7 +152,7 @@ message C_FIRE
 
 message S_FIRE
 {	
-    uint32 client_fire_id = 1;
+    uint64 object_id = 1;
 
 	float spawn_x = 2;
     float spawn_y = 3;

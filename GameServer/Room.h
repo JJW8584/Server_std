@@ -17,6 +17,8 @@ public:
 	bool HandleReadyState(PlayerRef player, bool ready);
 	bool HandleStartMatch(PlayerRef player);
 	void HandleMove(Protocol::C_MOVE pkt, const uint64 objectId);
+	void HandleFire(PlayerRef player, Protocol::C_FIRE pkt);
+	void HandlePrepareMatch(PlayerRef player);
 
 public:
 	void UpdateTick();
@@ -36,6 +38,9 @@ private:
 
 	USE_LOCK;
 	Protocol::RoomInfo _roomInfo;
+
+	Protocol::MatchStateInfo _matchStateInfo;
+	Protocol::MatchResult _matchResult;
 };
 
 class RoomManager : public JobQueue

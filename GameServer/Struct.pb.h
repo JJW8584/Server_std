@@ -1326,23 +1326,13 @@ class MatchPlayerState final :
   // accessors -------------------------------------------------------
 
   enum : int {
-    kObjectIdFieldNumber = 1,
-    kHpFieldNumber = 2,
-    kMaxHpFieldNumber = 3,
-    kIsAliveFieldNumber = 4,
-    kKillCountFieldNumber = 5,
-    kDeathCountFieldNumber = 6,
+    kHpFieldNumber = 1,
+    kMaxHpFieldNumber = 2,
+    kIsAliveFieldNumber = 3,
+    kKillCountFieldNumber = 4,
+    kDeathCountFieldNumber = 5,
   };
-  // uint64 object_id = 1;
-  void clear_object_id();
-  uint64_t object_id() const;
-  void set_object_id(uint64_t value);
-  private:
-  uint64_t _internal_object_id() const;
-  void _internal_set_object_id(uint64_t value);
-  public:
-
-  // int32 hp = 2;
+  // int32 hp = 1;
   void clear_hp();
   int32_t hp() const;
   void set_hp(int32_t value);
@@ -1351,7 +1341,7 @@ class MatchPlayerState final :
   void _internal_set_hp(int32_t value);
   public:
 
-  // int32 max_hp = 3;
+  // int32 max_hp = 2;
   void clear_max_hp();
   int32_t max_hp() const;
   void set_max_hp(int32_t value);
@@ -1360,7 +1350,7 @@ class MatchPlayerState final :
   void _internal_set_max_hp(int32_t value);
   public:
 
-  // bool is_alive = 4;
+  // bool is_alive = 3;
   void clear_is_alive();
   bool is_alive() const;
   void set_is_alive(bool value);
@@ -1369,7 +1359,7 @@ class MatchPlayerState final :
   void _internal_set_is_alive(bool value);
   public:
 
-  // uint32 kill_count = 5;
+  // uint32 kill_count = 4;
   void clear_kill_count();
   uint32_t kill_count() const;
   void set_kill_count(uint32_t value);
@@ -1378,7 +1368,7 @@ class MatchPlayerState final :
   void _internal_set_kill_count(uint32_t value);
   public:
 
-  // uint32 death_count = 6;
+  // uint32 death_count = 5;
   void clear_death_count();
   uint32_t death_count() const;
   void set_death_count(uint32_t value);
@@ -1395,7 +1385,6 @@ class MatchPlayerState final :
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
   struct Impl_ {
-    uint64_t object_id_;
     int32_t hp_;
     int32_t max_hp_;
     bool is_alive_;
@@ -1530,7 +1519,7 @@ class MatchStateInfo final :
 
   enum : int {
     kMatchIdFieldNumber = 1,
-    kRemainingTimeMsFieldNumber = 2,
+    kRemainingTimeSecondsFieldNumber = 2,
     kRedScoreFieldNumber = 3,
     kBlueScoreFieldNumber = 4,
   };
@@ -1543,13 +1532,13 @@ class MatchStateInfo final :
   void _internal_set_match_id(uint64_t value);
   public:
 
-  // uint32 remaining_time_ms = 2;
-  void clear_remaining_time_ms();
-  uint32_t remaining_time_ms() const;
-  void set_remaining_time_ms(uint32_t value);
+  // uint32 remaining_time_seconds = 2;
+  void clear_remaining_time_seconds();
+  uint32_t remaining_time_seconds() const;
+  void set_remaining_time_seconds(uint32_t value);
   private:
-  uint32_t _internal_remaining_time_ms() const;
-  void _internal_set_remaining_time_ms(uint32_t value);
+  uint32_t _internal_remaining_time_seconds() const;
+  void _internal_set_remaining_time_seconds(uint32_t value);
   public:
 
   // uint32 red_score = 3;
@@ -1579,7 +1568,7 @@ class MatchStateInfo final :
   typedef void DestructorSkippable_;
   struct Impl_ {
     uint64_t match_id_;
-    uint32_t remaining_time_ms_;
+    uint32_t remaining_time_seconds_;
     uint32_t red_score_;
     uint32_t blue_score_;
     mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
@@ -2493,27 +2482,7 @@ MatchInfo::match_players_info() const {
 
 // MatchPlayerState
 
-// uint64 object_id = 1;
-inline void MatchPlayerState::clear_object_id() {
-  _impl_.object_id_ = uint64_t{0u};
-}
-inline uint64_t MatchPlayerState::_internal_object_id() const {
-  return _impl_.object_id_;
-}
-inline uint64_t MatchPlayerState::object_id() const {
-  // @@protoc_insertion_point(field_get:Protocol.MatchPlayerState.object_id)
-  return _internal_object_id();
-}
-inline void MatchPlayerState::_internal_set_object_id(uint64_t value) {
-  
-  _impl_.object_id_ = value;
-}
-inline void MatchPlayerState::set_object_id(uint64_t value) {
-  _internal_set_object_id(value);
-  // @@protoc_insertion_point(field_set:Protocol.MatchPlayerState.object_id)
-}
-
-// int32 hp = 2;
+// int32 hp = 1;
 inline void MatchPlayerState::clear_hp() {
   _impl_.hp_ = 0;
 }
@@ -2533,7 +2502,7 @@ inline void MatchPlayerState::set_hp(int32_t value) {
   // @@protoc_insertion_point(field_set:Protocol.MatchPlayerState.hp)
 }
 
-// int32 max_hp = 3;
+// int32 max_hp = 2;
 inline void MatchPlayerState::clear_max_hp() {
   _impl_.max_hp_ = 0;
 }
@@ -2553,7 +2522,7 @@ inline void MatchPlayerState::set_max_hp(int32_t value) {
   // @@protoc_insertion_point(field_set:Protocol.MatchPlayerState.max_hp)
 }
 
-// bool is_alive = 4;
+// bool is_alive = 3;
 inline void MatchPlayerState::clear_is_alive() {
   _impl_.is_alive_ = false;
 }
@@ -2573,7 +2542,7 @@ inline void MatchPlayerState::set_is_alive(bool value) {
   // @@protoc_insertion_point(field_set:Protocol.MatchPlayerState.is_alive)
 }
 
-// uint32 kill_count = 5;
+// uint32 kill_count = 4;
 inline void MatchPlayerState::clear_kill_count() {
   _impl_.kill_count_ = 0u;
 }
@@ -2593,7 +2562,7 @@ inline void MatchPlayerState::set_kill_count(uint32_t value) {
   // @@protoc_insertion_point(field_set:Protocol.MatchPlayerState.kill_count)
 }
 
-// uint32 death_count = 6;
+// uint32 death_count = 5;
 inline void MatchPlayerState::clear_death_count() {
   _impl_.death_count_ = 0u;
 }
@@ -2637,24 +2606,24 @@ inline void MatchStateInfo::set_match_id(uint64_t value) {
   // @@protoc_insertion_point(field_set:Protocol.MatchStateInfo.match_id)
 }
 
-// uint32 remaining_time_ms = 2;
-inline void MatchStateInfo::clear_remaining_time_ms() {
-  _impl_.remaining_time_ms_ = 0u;
+// uint32 remaining_time_seconds = 2;
+inline void MatchStateInfo::clear_remaining_time_seconds() {
+  _impl_.remaining_time_seconds_ = 0u;
 }
-inline uint32_t MatchStateInfo::_internal_remaining_time_ms() const {
-  return _impl_.remaining_time_ms_;
+inline uint32_t MatchStateInfo::_internal_remaining_time_seconds() const {
+  return _impl_.remaining_time_seconds_;
 }
-inline uint32_t MatchStateInfo::remaining_time_ms() const {
-  // @@protoc_insertion_point(field_get:Protocol.MatchStateInfo.remaining_time_ms)
-  return _internal_remaining_time_ms();
+inline uint32_t MatchStateInfo::remaining_time_seconds() const {
+  // @@protoc_insertion_point(field_get:Protocol.MatchStateInfo.remaining_time_seconds)
+  return _internal_remaining_time_seconds();
 }
-inline void MatchStateInfo::_internal_set_remaining_time_ms(uint32_t value) {
+inline void MatchStateInfo::_internal_set_remaining_time_seconds(uint32_t value) {
   
-  _impl_.remaining_time_ms_ = value;
+  _impl_.remaining_time_seconds_ = value;
 }
-inline void MatchStateInfo::set_remaining_time_ms(uint32_t value) {
-  _internal_set_remaining_time_ms(value);
-  // @@protoc_insertion_point(field_set:Protocol.MatchStateInfo.remaining_time_ms)
+inline void MatchStateInfo::set_remaining_time_seconds(uint32_t value) {
+  _internal_set_remaining_time_seconds(value);
+  // @@protoc_insertion_point(field_set:Protocol.MatchStateInfo.remaining_time_seconds)
 }
 
 // uint32 red_score = 3;

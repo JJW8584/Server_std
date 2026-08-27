@@ -231,7 +231,7 @@ bool Room::HandleStartMatch(PlayerRef player)
 	Protocol::MatchInfo matchInfo;
 
 	matchInfo.set_match_id(_roomInfo.room_id());
-	matchInfo.set_duration_seconds(300);
+	matchInfo.set_duration_seconds(60);
 	for (int i = 0; i < _roomInfo.players_size(); ++i)
 	{
 		Protocol::RoomPlayerInfo roomPlayerInfo = _roomInfo.players(i);
@@ -247,8 +247,8 @@ bool Room::HandleStartMatch(PlayerRef player)
 			moveInfo.set_z(100.f);
 			break;
 		case Protocol::TEAM_RED:
-			moveInfo.set_x(150.f * i);
-			moveInfo.set_y(150.f * i);
+			moveInfo.set_x(-150.f * i);
+			moveInfo.set_y(-150.f * i);
 			moveInfo.set_z(100.f);
 			break;
 		}
@@ -271,6 +271,8 @@ bool Room::HandleStartMatch(PlayerRef player)
 	SendBufferRef SendBuffer = ClientPacketHandler::MakeSendBuffer(matchPreparePkt);
 
 	Broadcast(SendBuffer);
+
+	DoTimer(100, &Room::UpdateTick);
 
 	return true;
 }
@@ -300,11 +302,92 @@ void Room::HandleMove(Protocol::C_MOVE pkt, const uint64 objectId)
 	}
 }
 
+void Room::HandleFire(PlayerRef player, Protocol::C_FIRE pkt)
+{
+	if (player->GetObjectId() != pkt.object_id())
+		return;
+
+	if (_players.find(player->GetObjectId()) == _players.end())
+		return;
+
+	if (player->fireTimer > 0.f)
+		return;
+
+	player->fireTimer = Player::FIRE_COOLDOWN_SECONDS;
+
+	Protocol::S_FIRE firePkt;
+	firePkt.set_object_id(pkt.object_id());
+	firePkt.set_spawn_x(pkt.spawn_x());
+	firePkt.set_spawn_y(pkt.spawn_y());
+	firePkt.set_spawn_z(pkt.spawn_z());
+	firePkt.set_direction_x(pkt.direction_x());
+	firePkt.set_direction_y(pkt.direction_y());
+	firePkt.set_direction_z(pkt.direction_z());
+
+	SendBufferRef sendBuffer = ClientPacketHandler::MakeSendBuffer(firePkt);
+	Broadcast(sendBuffer);
+}
+
+void Room::HandlePrepareMatch(PlayerRef player)
+{
+	if (player == nullptr)
+		return;
+
+	{
+		WRITE_LOCK;
+
+		if (_roomInfo.state() != Protocol::ROOM_STATE_LOADING)
+			return;
+
+		const uint64 objectId = player->GetObjectId();
+
+		if (_players.find(objectId) == _players.end())
+			return;
+
+		player->isPrepareMatch = true;
+
+		for (auto iter : _players)
+		{
+			if (iter.second->isPrepareMatch == false)
+				return;
+		}
+
+		_roomInfo.set_state(Protocol::ROOM_STATE_PLAYING);
+
+
+		for (auto iter : _players)
+			iter.second->isPrepareMatch = false;
+	}
+
+	Protocol::S_MATCH_START matchStartPkt;
+	Protocol::MatchStateInfo* matchStateInfo = matchStartPkt.mutable_match_state();
+	matchStateInfo->set_match_id(_roomInfo.room_id());
+	matchStateInfo->set_remaining_time_seconds(60);
+	matchStateInfo->set_red_score(0);
+	matchStateInfo->set_blue_score(0);
+
+	SendBufferRef sendBuffer = ClientPacketHandler::MakeSendBuffer(matchStartPkt);
+	Broadcast(sendBuffer);
+}
+
 void Room::UpdateTick()
 {
-	//cout << "Update Room" << endl;
+	if (_isClosing)
+		return;
 
-	// TODO
+	constexpr float TICK_SECONDS = 0.11f;
+
+	for (auto& [playerId, player] : _players)
+	{
+		if (player == nullptr)
+			continue;
+
+		if (player->fireTimer > 0.f)
+		{
+			player->fireTimer -= TICK_SECONDS;
+		}
+		
+	}
 
 	DoTimer(100, &Room::UpdateTick);
 }

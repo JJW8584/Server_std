@@ -3729,7 +3729,7 @@ class C_FIRE final :
   // accessors -------------------------------------------------------
 
   enum : int {
-    kClientFireIdFieldNumber = 1,
+    kObjectIdFieldNumber = 1,
     kSpawnXFieldNumber = 2,
     kSpawnYFieldNumber = 3,
     kSpawnZFieldNumber = 4,
@@ -3737,13 +3737,13 @@ class C_FIRE final :
     kDirectionYFieldNumber = 6,
     kDirectionZFieldNumber = 7,
   };
-  // uint32 client_fire_id = 1;
-  void clear_client_fire_id();
-  uint32_t client_fire_id() const;
-  void set_client_fire_id(uint32_t value);
+  // uint64 object_id = 1;
+  void clear_object_id();
+  uint64_t object_id() const;
+  void set_object_id(uint64_t value);
   private:
-  uint32_t _internal_client_fire_id() const;
-  void _internal_set_client_fire_id(uint32_t value);
+  uint64_t _internal_object_id() const;
+  void _internal_set_object_id(uint64_t value);
   public:
 
   // float spawn_x = 2;
@@ -3808,7 +3808,7 @@ class C_FIRE final :
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
   struct Impl_ {
-    uint32_t client_fire_id_;
+    uint64_t object_id_;
     float spawn_x_;
     float spawn_y_;
     float spawn_z_;
@@ -3943,7 +3943,7 @@ class S_FIRE final :
   // accessors -------------------------------------------------------
 
   enum : int {
-    kClientFireIdFieldNumber = 1,
+    kObjectIdFieldNumber = 1,
     kSpawnXFieldNumber = 2,
     kSpawnYFieldNumber = 3,
     kSpawnZFieldNumber = 4,
@@ -3951,13 +3951,13 @@ class S_FIRE final :
     kDirectionYFieldNumber = 6,
     kDirectionZFieldNumber = 7,
   };
-  // uint32 client_fire_id = 1;
-  void clear_client_fire_id();
-  uint32_t client_fire_id() const;
-  void set_client_fire_id(uint32_t value);
+  // uint64 object_id = 1;
+  void clear_object_id();
+  uint64_t object_id() const;
+  void set_object_id(uint64_t value);
   private:
-  uint32_t _internal_client_fire_id() const;
-  void _internal_set_client_fire_id(uint32_t value);
+  uint64_t _internal_object_id() const;
+  void _internal_set_object_id(uint64_t value);
   public:
 
   // float spawn_x = 2;
@@ -4022,7 +4022,7 @@ class S_FIRE final :
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
   struct Impl_ {
-    uint32_t client_fire_id_;
+    uint64_t object_id_;
     float spawn_x_;
     float spawn_y_;
     float spawn_z_;
@@ -6158,24 +6158,24 @@ inline void S_MOVE::set_allocated_player_info(::Protocol::PlayerInfo* player_inf
 
 // C_FIRE
 
-// uint32 client_fire_id = 1;
-inline void C_FIRE::clear_client_fire_id() {
-  _impl_.client_fire_id_ = 0u;
+// uint64 object_id = 1;
+inline void C_FIRE::clear_object_id() {
+  _impl_.object_id_ = uint64_t{0u};
 }
-inline uint32_t C_FIRE::_internal_client_fire_id() const {
-  return _impl_.client_fire_id_;
+inline uint64_t C_FIRE::_internal_object_id() const {
+  return _impl_.object_id_;
 }
-inline uint32_t C_FIRE::client_fire_id() const {
-  // @@protoc_insertion_point(field_get:Protocol.C_FIRE.client_fire_id)
-  return _internal_client_fire_id();
+inline uint64_t C_FIRE::object_id() const {
+  // @@protoc_insertion_point(field_get:Protocol.C_FIRE.object_id)
+  return _internal_object_id();
 }
-inline void C_FIRE::_internal_set_client_fire_id(uint32_t value) {
+inline void C_FIRE::_internal_set_object_id(uint64_t value) {
   
-  _impl_.client_fire_id_ = value;
+  _impl_.object_id_ = value;
 }
-inline void C_FIRE::set_client_fire_id(uint32_t value) {
-  _internal_set_client_fire_id(value);
-  // @@protoc_insertion_point(field_set:Protocol.C_FIRE.client_fire_id)
+inline void C_FIRE::set_object_id(uint64_t value) {
+  _internal_set_object_id(value);
+  // @@protoc_insertion_point(field_set:Protocol.C_FIRE.object_id)
 }
 
 // float spawn_x = 2;
@@ -6302,24 +6302,24 @@ inline void C_FIRE::set_direction_z(float value) {
 
 // S_FIRE
 
-// uint32 client_fire_id = 1;
-inline void S_FIRE::clear_client_fire_id() {
-  _impl_.client_fire_id_ = 0u;
+// uint64 object_id = 1;
+inline void S_FIRE::clear_object_id() {
+  _impl_.object_id_ = uint64_t{0u};
 }
-inline uint32_t S_FIRE::_internal_client_fire_id() const {
-  return _impl_.client_fire_id_;
+inline uint64_t S_FIRE::_internal_object_id() const {
+  return _impl_.object_id_;
 }
-inline uint32_t S_FIRE::client_fire_id() const {
-  // @@protoc_insertion_point(field_get:Protocol.S_FIRE.client_fire_id)
-  return _internal_client_fire_id();
+inline uint64_t S_FIRE::object_id() const {
+  // @@protoc_insertion_point(field_get:Protocol.S_FIRE.object_id)
+  return _internal_object_id();
 }
-inline void S_FIRE::_internal_set_client_fire_id(uint32_t value) {
+inline void S_FIRE::_internal_set_object_id(uint64_t value) {
   
-  _impl_.client_fire_id_ = value;
+  _impl_.object_id_ = value;
 }
-inline void S_FIRE::set_client_fire_id(uint32_t value) {
-  _internal_set_client_fire_id(value);
-  // @@protoc_insertion_point(field_set:Protocol.S_FIRE.client_fire_id)
+inline void S_FIRE::set_object_id(uint64_t value) {
+  _internal_set_object_id(value);
+  // @@protoc_insertion_point(field_set:Protocol.S_FIRE.object_id)
 }
 
 // float spawn_x = 2;
