@@ -46,6 +46,7 @@ bool Room::HandleEnterPlayer(PlayerRef player)
 		info->set_object_id(player->GetObjectId());
 		info->set_player_type(Protocol::PLAYER_TYPE_NONE);
 		info->set_team(Protocol::TEAM_NONE);
+		player->team = Protocol::TEAM_NONE;
 		info->set_ready(false);
 
 		snapshot.CopyFrom(_roomInfo);
@@ -119,6 +120,9 @@ bool Room::HandleChangeTeam(PlayerRef player, Protocol::C_CHANGE_TEAM pkt)
 	Protocol::RoomInfo snapshot;
 	{
 		WRITE_LOCK;
+		if (_roomInfo.state() != Protocol::ROOM_STATE_WAITING)
+			return false;
+
 		Protocol::RoomPlayerInfo* targetPlayerInfo = nullptr;
 		for (int32 i = 0; i < _roomInfo.players_size(); ++i)
 		{
@@ -139,9 +143,14 @@ bool Room::HandleChangeTeam(PlayerRef player, Protocol::C_CHANGE_TEAM pkt)
 
 		// 이미 같은 팀이면 성공 처리만 하고 종료
 		if (targetPlayerInfo->team() == pkt.team())
+		{
+			player->team = pkt.team();
 			return true;
+		}
 
 		targetPlayerInfo->set_team(pkt.team());
+		targetPlayerInfo->set_ready(false);
+		player->team = pkt.team();
 
 		snapshot.CopyFrom(_roomInfo);
 	}
@@ -232,6 +241,8 @@ bool Room::HandleStartMatch(PlayerRef player)
 
 	matchInfo.set_match_id(_roomInfo.room_id());
 	matchInfo.set_duration_seconds(60);
+	matchInfo.set_red_score(0);
+	matchInfo.set_blue_score(0);
 	for (int i = 0; i < _roomInfo.players_size(); ++i)
 	{
 		Protocol::RoomPlayerInfo roomPlayerInfo = _roomInfo.players(i);
@@ -262,6 +273,19 @@ bool Room::HandleStartMatch(PlayerRef player)
 		matchPlayerInfo.set_team(roomPlayerInfo.team());
 
 		matchInfo.add_match_players_info()->CopyFrom(matchPlayerInfo);
+
+		Protocol::MatchPlayerState matchPlayerState;
+		matchPlayerState.set_hp(100);
+		matchPlayerState.set_max_hp(100);
+		matchPlayerState.set_is_alive(true);
+		matchPlayerState.set_kill_count(0);
+		matchPlayerState.set_death_count(0);
+
+		matchInfo.add_match_players_state()->CopyFrom(matchPlayerState);
+
+		_players[roomPlayerInfo.object_id()]->matchPlayerState.CopyFrom(matchPlayerState);
+
+		_matchInfo.CopyFrom(matchInfo);
 	}
 	
 	_roomInfo.set_state(Protocol::ROOM_STATE_LOADING);
@@ -271,8 +295,6 @@ bool Room::HandleStartMatch(PlayerRef player)
 	SendBufferRef SendBuffer = ClientPacketHandler::MakeSendBuffer(matchPreparePkt);
 
 	Broadcast(SendBuffer);
-
-	DoTimer(100, &Room::UpdateTick);
 
 	return true;
 }
@@ -310,10 +332,10 @@ void Room::HandleFire(PlayerRef player, Protocol::C_FIRE pkt)
 	if (_players.find(player->GetObjectId()) == _players.end())
 		return;
 
-	if (player->fireTimer > 0.f)
+	if (!player->fireFlag)
 		return;
 
-	player->fireTimer = Player::FIRE_COOLDOWN_SECONDS;
+	player->fireFlag = false;
 
 	Protocol::S_FIRE firePkt;
 	firePkt.set_object_id(pkt.object_id());
@@ -326,6 +348,77 @@ void Room::HandleFire(PlayerRef player, Protocol::C_FIRE pkt)
 
 	SendBufferRef sendBuffer = ClientPacketHandler::MakeSendBuffer(firePkt);
 	Broadcast(sendBuffer);
+}
+
+void Room::HandleHit(PlayerRef player, Protocol::C_HIT pkt)
+{
+	if (player == nullptr)
+		return;
+
+	if (_players.find(pkt.target_object_id()) == _players.end())
+		return;
+
+	if (_players.find(player->GetObjectId()) == _players.end())
+		return;
+
+	Protocol::MatchPlayerState& playerState = _players[player->GetObjectId()]->matchPlayerState;
+	Protocol::MatchPlayerState& targetPlayerState = _players[pkt.target_object_id()]->matchPlayerState;
+	
+	if (_roomInfo.state() != Protocol::ROOM_STATE_PLAYING)
+		return;
+
+	if (_remainSeconds > 55) // 시작 대기 5초
+		return;
+
+	if (!targetPlayerState.is_alive())
+		return;
+	
+	if(player->team == _players[pkt.target_object_id()]->team)
+		return;
+
+	targetPlayerState.set_hp(targetPlayerState.hp() - 10);
+	if (targetPlayerState.hp() <= 0)
+	{
+		playerState.set_kill_count(playerState.kill_count() + 1);
+		targetPlayerState.set_death_count(targetPlayerState.death_count() + 1);
+		targetPlayerState.set_is_alive(false);
+
+		if (player->team == Protocol::TEAM_RED)
+		{
+			_matchInfo.set_red_score(_matchInfo.red_score() + 1);
+		}
+		else if (player->team == Protocol::TEAM_BLUE)
+		{
+			_matchInfo.set_blue_score(_matchInfo.blue_score() + 1);
+		}
+
+		Protocol::S_MATCH_STATE matchStatePkt;
+		auto matchState = matchStatePkt.mutable_match_state();
+		matchState->set_match_id(_matchInfo.match_id());
+		matchState->set_remaining_time_seconds(_remainSeconds);
+		matchState->set_red_score(_matchInfo.red_score());
+		matchState->set_blue_score(_matchInfo.blue_score());
+
+		Broadcast(ClientPacketHandler::MakeSendBuffer(matchStatePkt));
+	}	
+
+	{
+		Protocol::S_PLAYER_STATE playerStatePkt;
+		playerStatePkt.set_object_id(player->GetObjectId());
+		playerStatePkt.mutable_player_state()->CopyFrom(playerState);
+
+		SendBufferRef sendBuffer = ClientPacketHandler::MakeSendBuffer(playerStatePkt);
+		Broadcast(sendBuffer);
+	}
+
+	{
+		Protocol::S_PLAYER_STATE targetplayerStatePkt;
+		targetplayerStatePkt.set_object_id(pkt.target_object_id());
+		targetplayerStatePkt.mutable_player_state()->CopyFrom(targetPlayerState);
+
+		SendBufferRef sendBuffer = ClientPacketHandler::MakeSendBuffer(targetplayerStatePkt);
+		Broadcast(sendBuffer);
+	}
 }
 
 void Room::HandlePrepareMatch(PlayerRef player)
@@ -360,33 +453,78 @@ void Room::HandlePrepareMatch(PlayerRef player)
 	}
 
 	Protocol::S_MATCH_START matchStartPkt;
-	Protocol::MatchStateInfo* matchStateInfo = matchStartPkt.mutable_match_state();
-	matchStateInfo->set_match_id(_roomInfo.room_id());
-	matchStateInfo->set_remaining_time_seconds(60);
-	matchStateInfo->set_red_score(0);
-	matchStateInfo->set_blue_score(0);
+	matchStartPkt.set_match_id(_roomInfo.room_id());
 
 	SendBufferRef sendBuffer = ClientPacketHandler::MakeSendBuffer(matchStartPkt);
 	Broadcast(sendBuffer);
+
+	_remainSeconds = 60;
+	_sendRemainSecondsTimer = 10;
+	DoTimer(100, &Room::UpdateTick);
 }
 
 void Room::UpdateTick()
 {
 	if (_isClosing)
 		return;
-
-	constexpr float TICK_SECONDS = 0.11f;
-
+	
 	for (auto& [playerId, player] : _players)
 	{
 		if (player == nullptr)
 			continue;
 
-		if (player->fireTimer > 0.f)
+		if (--player->fireTimer <= 0)
 		{
-			player->fireTimer -= TICK_SECONDS;
+			player->fireFlag = true;
+			player->fireTimer = 10;
+		}		
+	}
+	
+	if (--_sendRemainSecondsTimer <= 0)
+	{
+		if (_remainSeconds <= 0)
+		{
+			Protocol::S_MATCH_END matchEndPkt;
+			Protocol::MatchResult* matchResult = matchEndPkt.mutable_result();
+
+			matchResult->set_match_id(_matchInfo.match_id());
+			if (_matchInfo.red_score() > _matchInfo.blue_score())
+			{
+				matchResult->set_winner_team(Protocol::TEAM_RED);
+			}
+			else if (_matchInfo.red_score() < _matchInfo.blue_score())
+			{
+				matchResult->set_winner_team(Protocol::TEAM_BLUE);
+			}
+			else
+				matchResult->set_winner_team(Protocol::TEAM_NONE);
+
+			matchResult->set_red_score(_matchInfo.red_score());
+			matchResult->set_blue_score(_matchInfo.blue_score());
+			//TODO: 플레이어 정보 넣기
+			for (auto iter : _players)
+			{
+				matchResult->add_player_results()->CopyFrom(iter.second->matchPlayerState);
+			}
+
+			SendBufferRef sendBuffer = ClientPacketHandler::MakeSendBuffer(matchEndPkt);
+			Broadcast(sendBuffer);
+
+			return;
 		}
-		
+		WRITE_LOCK;
+		_remainSeconds--;
+		_sendRemainSecondsTimer = 10;
+
+		Protocol::S_MATCH_STATE matchStatePkt;
+		Protocol::MatchStateInfo* matchStateInfo = matchStatePkt.mutable_match_state();
+		matchStateInfo->set_match_id(_roomInfo.room_id());
+		matchStateInfo->set_remaining_time_seconds(_remainSeconds);
+		matchStateInfo->set_red_score(_matchInfo.red_score());
+		matchStateInfo->set_blue_score(_matchInfo.blue_score());
+
+		SendBufferRef sendBuffer = ClientPacketHandler::MakeSendBuffer(matchStatePkt);
+		Broadcast(sendBuffer);
 	}
 
 	DoTimer(100, &Room::UpdateTick);
@@ -452,6 +590,8 @@ bool Room::LeavePlayer(uint64 objectId)
 	_roomInfo.mutable_players()->DeleteSubrange(playerIndex, 1);
 	// 플레이어에게서 룸 삭제
 	player->room.store(weak_ptr<Room>());
+	player->matchPlayerState.Clear();
+	player->team = Protocol::TEAM_NONE;
 	// 룸에서 플레이어 삭제
 	_players.erase(objectId);
 

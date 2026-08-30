@@ -53,7 +53,13 @@ message MatchInfo
 {
     uint64 match_id = 1;
     uint32 duration_seconds = 2;
-    repeated MatchPlayerInfo match_players_info = 3;
+
+    uint32 red_score = 3;
+    uint32 blue_score = 4;
+
+    repeated MatchPlayerInfo match_players_info = 5;
+
+    repeated MatchPlayerState match_players_state = 6;
 }
 
 // 플레이어별 인게임 상태

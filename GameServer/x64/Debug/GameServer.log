@@ -42,12 +42,12 @@
   Protocol.pb.cc
   Struct.pb.cc
   코드를 생성하고 있습니다...
+  ClientPacketHandler.cpp
   GameServer.cpp
   GameSession.cpp
   GameSessionManager.cpp
   ObjectUtils.cpp
   Player.cpp
-  ClientPacketHandler.cpp
   Room.cpp
   Utils.cpp
   코드를 생성하고 있습니다...

@@ -38,11 +38,12 @@ enum : uint16
 	PKT_S_MOVE = 1022,
 	PKT_C_FIRE = 1023,
 	PKT_S_FIRE = 1024,
-	PKT_S_PLAYER_DESPAWN = 1025,
-	PKT_S_MATCH_END = 1026,
-	PKT_S_RETURN_TO_ROOM = 1027,
-	PKT_C_CHAT = 1028,
-	PKT_S_CHAT = 1029,
+	PKT_C_HIT = 1025,
+	PKT_S_PLAYER_DESPAWN = 1026,
+	PKT_S_MATCH_END = 1027,
+	PKT_S_RETURN_TO_ROOM = 1028,
+	PKT_C_CHAT = 1029,
+	PKT_S_CHAT = 1030,
 };
 
 
@@ -60,6 +61,7 @@ bool Handle_C_START_MATCH(PacketSessionRef& session, Protocol::C_START_MATCH& pk
 bool Handle_C_MATCH_PREPARE(PacketSessionRef& session, Protocol::C_MATCH_PREPARE& pkt);
 bool Handle_C_MOVE(PacketSessionRef& session, Protocol::C_MOVE& pkt);
 bool Handle_C_FIRE(PacketSessionRef& session, Protocol::C_FIRE& pkt);
+bool Handle_C_HIT(PacketSessionRef& session, Protocol::C_HIT& pkt);
 bool Handle_C_CHAT(PacketSessionRef& session, Protocol::C_CHAT& pkt);
 
 
@@ -82,6 +84,7 @@ public:
 		GPacketHandler[PKT_C_MATCH_PREPARE] = [](PacketSessionRef& session, BYTE* buffer, int32 len) {	return HandlePacket<Protocol::C_MATCH_PREPARE>(Handle_C_MATCH_PREPARE, session, buffer, len);	};
 		GPacketHandler[PKT_C_MOVE] = [](PacketSessionRef& session, BYTE* buffer, int32 len) {	return HandlePacket<Protocol::C_MOVE>(Handle_C_MOVE, session, buffer, len);	};
 		GPacketHandler[PKT_C_FIRE] = [](PacketSessionRef& session, BYTE* buffer, int32 len) {	return HandlePacket<Protocol::C_FIRE>(Handle_C_FIRE, session, buffer, len);	};
+		GPacketHandler[PKT_C_HIT] = [](PacketSessionRef& session, BYTE* buffer, int32 len) {	return HandlePacket<Protocol::C_HIT>(Handle_C_HIT, session, buffer, len);	};
 		GPacketHandler[PKT_C_CHAT] = [](PacketSessionRef& session, BYTE* buffer, int32 len) {	return HandlePacket<Protocol::C_CHAT>(Handle_C_CHAT, session, buffer, len);	};		
 	}
 

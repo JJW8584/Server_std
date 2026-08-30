@@ -1147,11 +1147,14 @@ class MatchInfo final :
   // accessors -------------------------------------------------------
 
   enum : int {
-    kMatchPlayersInfoFieldNumber = 3,
+    kMatchPlayersInfoFieldNumber = 5,
+    kMatchPlayersStateFieldNumber = 6,
     kMatchIdFieldNumber = 1,
     kDurationSecondsFieldNumber = 2,
+    kRedScoreFieldNumber = 3,
+    kBlueScoreFieldNumber = 4,
   };
-  // repeated .Protocol.MatchPlayerInfo match_players_info = 3;
+  // repeated .Protocol.MatchPlayerInfo match_players_info = 5;
   int match_players_info_size() const;
   private:
   int _internal_match_players_info_size() const;
@@ -1168,6 +1171,24 @@ class MatchInfo final :
   ::Protocol::MatchPlayerInfo* add_match_players_info();
   const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::Protocol::MatchPlayerInfo >&
       match_players_info() const;
+
+  // repeated .Protocol.MatchPlayerState match_players_state = 6;
+  int match_players_state_size() const;
+  private:
+  int _internal_match_players_state_size() const;
+  public:
+  void clear_match_players_state();
+  ::Protocol::MatchPlayerState* mutable_match_players_state(int index);
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::Protocol::MatchPlayerState >*
+      mutable_match_players_state();
+  private:
+  const ::Protocol::MatchPlayerState& _internal_match_players_state(int index) const;
+  ::Protocol::MatchPlayerState* _internal_add_match_players_state();
+  public:
+  const ::Protocol::MatchPlayerState& match_players_state(int index) const;
+  ::Protocol::MatchPlayerState* add_match_players_state();
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::Protocol::MatchPlayerState >&
+      match_players_state() const;
 
   // uint64 match_id = 1;
   void clear_match_id();
@@ -1187,6 +1208,24 @@ class MatchInfo final :
   void _internal_set_duration_seconds(uint32_t value);
   public:
 
+  // uint32 red_score = 3;
+  void clear_red_score();
+  uint32_t red_score() const;
+  void set_red_score(uint32_t value);
+  private:
+  uint32_t _internal_red_score() const;
+  void _internal_set_red_score(uint32_t value);
+  public:
+
+  // uint32 blue_score = 4;
+  void clear_blue_score();
+  uint32_t blue_score() const;
+  void set_blue_score(uint32_t value);
+  private:
+  uint32_t _internal_blue_score() const;
+  void _internal_set_blue_score(uint32_t value);
+  public:
+
   // @@protoc_insertion_point(class_scope:Protocol.MatchInfo)
  private:
   class _Internal;
@@ -1196,8 +1235,11 @@ class MatchInfo final :
   typedef void DestructorSkippable_;
   struct Impl_ {
     ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::Protocol::MatchPlayerInfo > match_players_info_;
+    ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::Protocol::MatchPlayerState > match_players_state_;
     uint64_t match_id_;
     uint32_t duration_seconds_;
+    uint32_t red_score_;
+    uint32_t blue_score_;
     mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   };
   union { Impl_ _impl_; };
@@ -2438,7 +2480,47 @@ inline void MatchInfo::set_duration_seconds(uint32_t value) {
   // @@protoc_insertion_point(field_set:Protocol.MatchInfo.duration_seconds)
 }
 
-// repeated .Protocol.MatchPlayerInfo match_players_info = 3;
+// uint32 red_score = 3;
+inline void MatchInfo::clear_red_score() {
+  _impl_.red_score_ = 0u;
+}
+inline uint32_t MatchInfo::_internal_red_score() const {
+  return _impl_.red_score_;
+}
+inline uint32_t MatchInfo::red_score() const {
+  // @@protoc_insertion_point(field_get:Protocol.MatchInfo.red_score)
+  return _internal_red_score();
+}
+inline void MatchInfo::_internal_set_red_score(uint32_t value) {
+  
+  _impl_.red_score_ = value;
+}
+inline void MatchInfo::set_red_score(uint32_t value) {
+  _internal_set_red_score(value);
+  // @@protoc_insertion_point(field_set:Protocol.MatchInfo.red_score)
+}
+
+// uint32 blue_score = 4;
+inline void MatchInfo::clear_blue_score() {
+  _impl_.blue_score_ = 0u;
+}
+inline uint32_t MatchInfo::_internal_blue_score() const {
+  return _impl_.blue_score_;
+}
+inline uint32_t MatchInfo::blue_score() const {
+  // @@protoc_insertion_point(field_get:Protocol.MatchInfo.blue_score)
+  return _internal_blue_score();
+}
+inline void MatchInfo::_internal_set_blue_score(uint32_t value) {
+  
+  _impl_.blue_score_ = value;
+}
+inline void MatchInfo::set_blue_score(uint32_t value) {
+  _internal_set_blue_score(value);
+  // @@protoc_insertion_point(field_set:Protocol.MatchInfo.blue_score)
+}
+
+// repeated .Protocol.MatchPlayerInfo match_players_info = 5;
 inline int MatchInfo::_internal_match_players_info_size() const {
   return _impl_.match_players_info_.size();
 }
@@ -2476,6 +2558,46 @@ inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::Protocol::MatchPlayerI
 MatchInfo::match_players_info() const {
   // @@protoc_insertion_point(field_list:Protocol.MatchInfo.match_players_info)
   return _impl_.match_players_info_;
+}
+
+// repeated .Protocol.MatchPlayerState match_players_state = 6;
+inline int MatchInfo::_internal_match_players_state_size() const {
+  return _impl_.match_players_state_.size();
+}
+inline int MatchInfo::match_players_state_size() const {
+  return _internal_match_players_state_size();
+}
+inline void MatchInfo::clear_match_players_state() {
+  _impl_.match_players_state_.Clear();
+}
+inline ::Protocol::MatchPlayerState* MatchInfo::mutable_match_players_state(int index) {
+  // @@protoc_insertion_point(field_mutable:Protocol.MatchInfo.match_players_state)
+  return _impl_.match_players_state_.Mutable(index);
+}
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::Protocol::MatchPlayerState >*
+MatchInfo::mutable_match_players_state() {
+  // @@protoc_insertion_point(field_mutable_list:Protocol.MatchInfo.match_players_state)
+  return &_impl_.match_players_state_;
+}
+inline const ::Protocol::MatchPlayerState& MatchInfo::_internal_match_players_state(int index) const {
+  return _impl_.match_players_state_.Get(index);
+}
+inline const ::Protocol::MatchPlayerState& MatchInfo::match_players_state(int index) const {
+  // @@protoc_insertion_point(field_get:Protocol.MatchInfo.match_players_state)
+  return _internal_match_players_state(index);
+}
+inline ::Protocol::MatchPlayerState* MatchInfo::_internal_add_match_players_state() {
+  return _impl_.match_players_state_.Add();
+}
+inline ::Protocol::MatchPlayerState* MatchInfo::add_match_players_state() {
+  ::Protocol::MatchPlayerState* _add = _internal_add_match_players_state();
+  // @@protoc_insertion_point(field_add:Protocol.MatchInfo.match_players_state)
+  return _add;
+}
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::Protocol::MatchPlayerState >&
+MatchInfo::match_players_state() const {
+  // @@protoc_insertion_point(field_list:Protocol.MatchInfo.match_players_state)
+  return _impl_.match_players_state_;
 }
 
 // -------------------------------------------------------------------

@@ -18,9 +18,11 @@ public:
 	bool HandleStartMatch(PlayerRef player);
 	void HandleMove(Protocol::C_MOVE pkt, const uint64 objectId);
 	void HandleFire(PlayerRef player, Protocol::C_FIRE pkt);
+	void HandleHit(PlayerRef player, Protocol::C_HIT pkt);
 	void HandlePrepareMatch(PlayerRef player);
 
 public:
+	//0.1초마다 1번씩 실행
 	void UpdateTick();
 
 	RoomRef GetRoomRef();
@@ -39,8 +41,11 @@ private:
 	USE_LOCK;
 	Protocol::RoomInfo _roomInfo;
 
-	Protocol::MatchStateInfo _matchStateInfo;
+	Protocol::MatchInfo _matchInfo;
 	Protocol::MatchResult _matchResult;
+
+	uint32 _sendRemainSecondsTimer = 10;
+	uint32 _remainSeconds;
 };
 
 class RoomManager : public JobQueue

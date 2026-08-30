@@ -19,12 +19,13 @@ public:
 
 	Protocol::MoveInfo* moveInfo;
 
-	static constexpr float FIRE_COOLDOWN_SECONDS = 1.0f;
-	float fireTimer = 0.0f;
+	int32 fireTimer = 10;
+	bool fireFlag = true;
 
 public:
 	bool isPrepareMatch = false;
 
+	Protocol::Team team = Protocol::TEAM_NONE;
 	Protocol::MatchPlayerState matchPlayerState;
 
 private:
