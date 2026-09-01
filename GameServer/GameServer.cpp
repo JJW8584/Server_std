@@ -21,6 +21,7 @@
 #include "XmlParser.h"
 #include "DBSynchronizer.h"
 #include "GenProcedures.h"
+#include <sodium.h>
 
 enum
 {
@@ -47,6 +48,28 @@ void DoWorkerJob(ServerServiceRef& service)
 int main()
 {
 	ClientPacketHandler::Init();
+
+	if (::sodium_init() < 0)
+	{
+		std::cerr << "libsodium initialization failed" << std::endl;
+		return 1;
+	}
+
+	const WCHAR* connectionString =
+		L"DRIVER={MySQL ODBC 26.7 Unicode Driver};"
+		L"SERVER=127.0.0.1;"
+		L"PORT=3306;"
+		L"DATABASE=pvp_game;"
+		L"USER=pvp_server;"
+		L"PASSWORD=w19981025!;";
+
+	if (GDBConnectionPool->Connect(4, connectionString) == false)
+	{
+		std::cerr << "MySQL connection failed" << std::endl;
+		return 1;
+	}
+
+	std::cout << "MySQL connection success" << std::endl;
 
 	ServerServiceRef service = MakeShared<ServerService>(
 		NetAddress(L"127.0.0.1", 7777),

@@ -13,6 +13,11 @@ public:
 	uint64 GetObjectId() const { return _objectId; }
 	void SetObjectId(uint64 objectId) { _objectId = objectId; }
 
+	const string& GetNickname() const { return _nickname; }
+
+	void SetNickname(const string& nickname) { _nickname = nickname; }
+
+
 public:
 	atomic<weak_ptr<Room>> room;
 	weak_ptr<GameSession> session; // cycle
@@ -30,4 +35,5 @@ public:
 
 private:
 	uint64 _objectId = 0;
+	string _nickname;
 };

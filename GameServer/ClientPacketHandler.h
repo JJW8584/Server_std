@@ -15,41 +15,45 @@ enum : uint16
 {
 	PKT_C_LOGIN = 1000,
 	PKT_S_LOGIN = 1001,
-	PKT_C_ROOM_LIST = 1002,
-	PKT_S_ROOM_LIST = 1003,
-	PKT_C_CREATE_ROOM = 1004,
-	PKT_S_CREATE_ROOM = 1005,
-	PKT_C_ENTER_ROOM = 1006,
-	PKT_S_ENTER_ROOM = 1007,
-	PKT_C_LEAVE_ROOM = 1008,
-	PKT_S_LEAVE_ROOM = 1009,
-	PKT_C_CHANGE_PLAYER_TYPE = 1010,
-	PKT_C_CHANGE_TEAM = 1011,
-	PKT_C_READY = 1012,
-	PKT_S_ROOM_STATE = 1013,
-	PKT_C_START_MATCH = 1014,
-	PKT_S_MATCH_PREPARE = 1015,
-	PKT_C_MATCH_PREPARE = 1016,
-	PKT_S_MATCH_START = 1017,
-	PKT_S_MATCH_STATE = 1018,
-	PKT_S_PLAYER_STATE = 1019,
-	PKT_S_PLAYER_RESPAWN = 1020,
-	PKT_C_MOVE = 1021,
-	PKT_S_MOVE = 1022,
-	PKT_C_FIRE = 1023,
-	PKT_S_FIRE = 1024,
-	PKT_C_HIT = 1025,
-	PKT_S_PLAYER_DESPAWN = 1026,
-	PKT_S_MATCH_END = 1027,
-	PKT_S_RETURN_TO_ROOM = 1028,
-	PKT_C_CHAT = 1029,
-	PKT_S_CHAT = 1030,
+	PKT_C_REGISTER = 1002,
+	PKT_S_REGISTER = 1003,
+	PKT_C_ROOM_LIST = 1004,
+	PKT_S_ROOM_LIST = 1005,
+	PKT_C_CREATE_ROOM = 1006,
+	PKT_S_CREATE_ROOM = 1007,
+	PKT_C_ENTER_ROOM = 1008,
+	PKT_S_ENTER_ROOM = 1009,
+	PKT_C_LEAVE_ROOM = 1010,
+	PKT_S_LEAVE_ROOM = 1011,
+	PKT_C_CHANGE_PLAYER_TYPE = 1012,
+	PKT_C_CHANGE_TEAM = 1013,
+	PKT_C_READY = 1014,
+	PKT_S_ROOM_STATE = 1015,
+	PKT_C_START_MATCH = 1016,
+	PKT_S_MATCH_PREPARE = 1017,
+	PKT_C_MATCH_PREPARE = 1018,
+	PKT_S_MATCH_START = 1019,
+	PKT_S_MATCH_STATE = 1020,
+	PKT_S_PLAYER_STATE = 1021,
+	PKT_S_PLAYER_RESPAWN = 1022,
+	PKT_C_MOVE = 1023,
+	PKT_S_MOVE = 1024,
+	PKT_C_FIRE = 1025,
+	PKT_S_FIRE = 1026,
+	PKT_C_HIT = 1027,
+	PKT_S_PLAYER_DESPAWN = 1028,
+	PKT_S_MATCH_END = 1029,
+	PKT_C_RETURN_TO_ROOM = 1030,
+	PKT_S_RETURN_TO_ROOM = 1031,
+	PKT_C_CHAT = 1032,
+	PKT_S_CHAT = 1033,
 };
 
 
 // Custom Handlers
 bool Handle_INVALID(PacketSessionRef& session, BYTE* buffer, int32 len);
 bool Handle_C_LOGIN(PacketSessionRef& session, Protocol::C_LOGIN& pkt);
+bool Handle_C_REGISTER(PacketSessionRef& session, Protocol::C_REGISTER& pkt);
 bool Handle_C_ROOM_LIST(PacketSessionRef& session, Protocol::C_ROOM_LIST& pkt);
 bool Handle_C_CREATE_ROOM(PacketSessionRef& session, Protocol::C_CREATE_ROOM& pkt);
 bool Handle_C_ENTER_ROOM(PacketSessionRef& session, Protocol::C_ENTER_ROOM& pkt);
@@ -62,6 +66,7 @@ bool Handle_C_MATCH_PREPARE(PacketSessionRef& session, Protocol::C_MATCH_PREPARE
 bool Handle_C_MOVE(PacketSessionRef& session, Protocol::C_MOVE& pkt);
 bool Handle_C_FIRE(PacketSessionRef& session, Protocol::C_FIRE& pkt);
 bool Handle_C_HIT(PacketSessionRef& session, Protocol::C_HIT& pkt);
+bool Handle_C_RETURN_TO_ROOM(PacketSessionRef& session, Protocol::C_RETURN_TO_ROOM& pkt);
 bool Handle_C_CHAT(PacketSessionRef& session, Protocol::C_CHAT& pkt);
 
 
@@ -73,6 +78,7 @@ public:
 		for (int i = 0; i < UINT16_MAX; i++)
 			GPacketHandler[i] = Handle_INVALID;
 		GPacketHandler[PKT_C_LOGIN] = [](PacketSessionRef& session, BYTE* buffer, int32 len) {	return HandlePacket<Protocol::C_LOGIN>(Handle_C_LOGIN, session, buffer, len);	};
+		GPacketHandler[PKT_C_REGISTER] = [](PacketSessionRef& session, BYTE* buffer, int32 len) {	return HandlePacket<Protocol::C_REGISTER>(Handle_C_REGISTER, session, buffer, len);	};
 		GPacketHandler[PKT_C_ROOM_LIST] = [](PacketSessionRef& session, BYTE* buffer, int32 len) {	return HandlePacket<Protocol::C_ROOM_LIST>(Handle_C_ROOM_LIST, session, buffer, len);	};
 		GPacketHandler[PKT_C_CREATE_ROOM] = [](PacketSessionRef& session, BYTE* buffer, int32 len) {	return HandlePacket<Protocol::C_CREATE_ROOM>(Handle_C_CREATE_ROOM, session, buffer, len);	};
 		GPacketHandler[PKT_C_ENTER_ROOM] = [](PacketSessionRef& session, BYTE* buffer, int32 len) {	return HandlePacket<Protocol::C_ENTER_ROOM>(Handle_C_ENTER_ROOM, session, buffer, len);	};
@@ -85,6 +91,7 @@ public:
 		GPacketHandler[PKT_C_MOVE] = [](PacketSessionRef& session, BYTE* buffer, int32 len) {	return HandlePacket<Protocol::C_MOVE>(Handle_C_MOVE, session, buffer, len);	};
 		GPacketHandler[PKT_C_FIRE] = [](PacketSessionRef& session, BYTE* buffer, int32 len) {	return HandlePacket<Protocol::C_FIRE>(Handle_C_FIRE, session, buffer, len);	};
 		GPacketHandler[PKT_C_HIT] = [](PacketSessionRef& session, BYTE* buffer, int32 len) {	return HandlePacket<Protocol::C_HIT>(Handle_C_HIT, session, buffer, len);	};
+		GPacketHandler[PKT_C_RETURN_TO_ROOM] = [](PacketSessionRef& session, BYTE* buffer, int32 len) {	return HandlePacket<Protocol::C_RETURN_TO_ROOM>(Handle_C_RETURN_TO_ROOM, session, buffer, len);	};
 		GPacketHandler[PKT_C_CHAT] = [](PacketSessionRef& session, BYTE* buffer, int32 len) {	return HandlePacket<Protocol::C_CHAT>(Handle_C_CHAT, session, buffer, len);	};		
 	}
 
@@ -94,6 +101,7 @@ public:
 		return GPacketHandler[header->id](session, buffer, len);
 	}
 	static SendBufferRef MakeSendBuffer(Protocol::S_LOGIN& pkt) { return MakeSendBuffer(pkt, PKT_S_LOGIN); }
+	static SendBufferRef MakeSendBuffer(Protocol::S_REGISTER& pkt) { return MakeSendBuffer(pkt, PKT_S_REGISTER); }
 	static SendBufferRef MakeSendBuffer(Protocol::S_ROOM_LIST& pkt) { return MakeSendBuffer(pkt, PKT_S_ROOM_LIST); }
 	static SendBufferRef MakeSendBuffer(Protocol::S_CREATE_ROOM& pkt) { return MakeSendBuffer(pkt, PKT_S_CREATE_ROOM); }
 	static SendBufferRef MakeSendBuffer(Protocol::S_ENTER_ROOM& pkt) { return MakeSendBuffer(pkt, PKT_S_ENTER_ROOM); }

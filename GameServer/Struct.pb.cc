@@ -23,7 +23,8 @@ namespace _pbi = _pb::internal;
 namespace Protocol {
 PROTOBUF_CONSTEXPR RoomPlayerInfo::RoomPlayerInfo(
     ::_pbi::ConstantInitialized): _impl_{
-    /*decltype(_impl_.object_id_)*/uint64_t{0u}
+    /*decltype(_impl_.nickname_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
+  , /*decltype(_impl_.object_id_)*/uint64_t{0u}
   , /*decltype(_impl_.player_type_)*/0
   , /*decltype(_impl_.team_)*/0
   , /*decltype(_impl_.ready_)*/false
@@ -74,7 +75,8 @@ struct MoveInfoDefaultTypeInternal {
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 MoveInfoDefaultTypeInternal _MoveInfo_default_instance_;
 PROTOBUF_CONSTEXPR PlayerInfo::PlayerInfo(
     ::_pbi::ConstantInitialized): _impl_{
-    /*decltype(_impl_.move_info_)*/nullptr
+    /*decltype(_impl_.nickname_)*/{&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{}}
+  , /*decltype(_impl_.move_info_)*/nullptr
   , /*decltype(_impl_.object_id_)*/uint64_t{0u}
   , /*decltype(_impl_._cached_size_)*/{}} {}
 struct PlayerInfoDefaultTypeInternal {
@@ -185,6 +187,7 @@ const uint32_t TableStruct_Struct_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(p
   PROTOBUF_FIELD_OFFSET(::Protocol::RoomPlayerInfo, _impl_.player_type_),
   PROTOBUF_FIELD_OFFSET(::Protocol::RoomPlayerInfo, _impl_.team_),
   PROTOBUF_FIELD_OFFSET(::Protocol::RoomPlayerInfo, _impl_.ready_),
+  PROTOBUF_FIELD_OFFSET(::Protocol::RoomPlayerInfo, _impl_.nickname_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::Protocol::RoomInfo, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -216,6 +219,7 @@ const uint32_t TableStruct_Struct_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(p
   ~0u,  // no _inlined_string_donated_
   PROTOBUF_FIELD_OFFSET(::Protocol::PlayerInfo, _impl_.object_id_),
   PROTOBUF_FIELD_OFFSET(::Protocol::PlayerInfo, _impl_.move_info_),
+  PROTOBUF_FIELD_OFFSET(::Protocol::PlayerInfo, _impl_.nickname_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::Protocol::MatchPlayerInfo, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -272,14 +276,14 @@ const uint32_t TableStruct_Struct_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(p
 };
 static const ::_pbi::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, -1, sizeof(::Protocol::RoomPlayerInfo)},
-  { 10, -1, -1, sizeof(::Protocol::RoomInfo)},
-  { 22, -1, -1, sizeof(::Protocol::MoveInfo)},
-  { 33, -1, -1, sizeof(::Protocol::PlayerInfo)},
-  { 41, -1, -1, sizeof(::Protocol::MatchPlayerInfo)},
-  { 50, -1, -1, sizeof(::Protocol::MatchInfo)},
-  { 62, -1, -1, sizeof(::Protocol::MatchPlayerState)},
-  { 73, -1, -1, sizeof(::Protocol::MatchStateInfo)},
-  { 83, -1, -1, sizeof(::Protocol::MatchResult)},
+  { 11, -1, -1, sizeof(::Protocol::RoomInfo)},
+  { 23, -1, -1, sizeof(::Protocol::MoveInfo)},
+  { 34, -1, -1, sizeof(::Protocol::PlayerInfo)},
+  { 43, -1, -1, sizeof(::Protocol::MatchPlayerInfo)},
+  { 52, -1, -1, sizeof(::Protocol::MatchInfo)},
+  { 64, -1, -1, sizeof(::Protocol::MatchPlayerState)},
+  { 75, -1, -1, sizeof(::Protocol::MatchStateInfo)},
+  { 85, -1, -1, sizeof(::Protocol::MatchResult)},
 };
 
 static const ::_pb::Message* const file_default_instances[] = {
@@ -295,44 +299,45 @@ static const ::_pb::Message* const file_default_instances[] = {
 };
 
 const char descriptor_table_protodef_Struct_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
-  "\n\014Struct.proto\022\010Protocol\032\nEnum.proto\"{\n\016"
-  "RoomPlayerInfo\022\021\n\tobject_id\030\001 \001(\004\022)\n\013pla"
-  "yer_type\030\002 \001(\0162\024.Protocol.PlayerType\022\034\n\004"
-  "team\030\003 \001(\0162\016.Protocol.Team\022\r\n\005ready\030\004 \001("
-  "\010\"\257\001\n\010RoomInfo\022\017\n\007room_id\030\001 \001(\004\022\021\n\troom_"
-  "name\030\002 \001(\t\022\"\n\005state\030\003 \001(\0162\023.Protocol.Roo"
-  "mState\022\026\n\016host_object_id\030\004 \001(\004\022\030\n\020max_pl"
-  "ayer_count\030\005 \001(\r\022)\n\007players\030\006 \003(\0132\030.Prot"
-  "ocol.RoomPlayerInfo\"\\\n\010MoveInfo\022\t\n\001x\030\001 \001"
-  "(\002\022\t\n\001y\030\002 \001(\002\022\t\n\001z\030\003 \001(\002\022\013\n\003yaw\030\004 \001(\002\022\"\n"
-  "\005state\030\005 \001(\0162\023.Protocol.MoveState\"F\n\nPla"
-  "yerInfo\022\021\n\tobject_id\030\001 \001(\004\022%\n\tmove_info\030"
-  "\002 \001(\0132\022.Protocol.MoveInfo\"\205\001\n\017MatchPlaye"
-  "rInfo\022)\n\013player_info\030\001 \001(\0132\024.Protocol.Pl"
-  "ayerInfo\022)\n\013player_type\030\002 \001(\0162\024.Protocol"
-  ".PlayerType\022\034\n\004team\030\003 \001(\0162\016.Protocol.Tea"
-  "m\"\316\001\n\tMatchInfo\022\020\n\010match_id\030\001 \001(\004\022\030\n\020dur"
-  "ation_seconds\030\002 \001(\r\022\021\n\tred_score\030\003 \001(\r\022\022"
-  "\n\nblue_score\030\004 \001(\r\0225\n\022match_players_info"
-  "\030\005 \003(\0132\031.Protocol.MatchPlayerInfo\0227\n\023mat"
-  "ch_players_state\030\006 \003(\0132\032.Protocol.MatchP"
-  "layerState\"i\n\020MatchPlayerState\022\n\n\002hp\030\001 \001"
-  "(\005\022\016\n\006max_hp\030\002 \001(\005\022\020\n\010is_alive\030\003 \001(\010\022\022\n\n"
-  "kill_count\030\004 \001(\r\022\023\n\013death_count\030\005 \001(\r\"i\n"
-  "\016MatchStateInfo\022\020\n\010match_id\030\001 \001(\004\022\036\n\026rem"
-  "aining_time_seconds\030\002 \001(\r\022\021\n\tred_score\030\003"
-  " \001(\r\022\022\n\nblue_score\030\004 \001(\r\"\237\001\n\013MatchResult"
-  "\022\020\n\010match_id\030\001 \001(\004\022#\n\013winner_team\030\002 \001(\0162"
-  "\016.Protocol.Team\022\021\n\tred_score\030\003 \001(\r\022\022\n\nbl"
-  "ue_score\030\004 \001(\r\0222\n\016player_results\030\005 \003(\0132\032"
-  ".Protocol.MatchPlayerStateb\006proto3"
+  "\n\014Struct.proto\022\010Protocol\032\nEnum.proto\"\215\001\n"
+  "\016RoomPlayerInfo\022\021\n\tobject_id\030\001 \001(\004\022)\n\013pl"
+  "ayer_type\030\002 \001(\0162\024.Protocol.PlayerType\022\034\n"
+  "\004team\030\003 \001(\0162\016.Protocol.Team\022\r\n\005ready\030\004 \001"
+  "(\010\022\020\n\010nickname\030\005 \001(\t\"\257\001\n\010RoomInfo\022\017\n\007roo"
+  "m_id\030\001 \001(\004\022\021\n\troom_name\030\002 \001(\t\022\"\n\005state\030\003"
+  " \001(\0162\023.Protocol.RoomState\022\026\n\016host_object"
+  "_id\030\004 \001(\004\022\030\n\020max_player_count\030\005 \001(\r\022)\n\007p"
+  "layers\030\006 \003(\0132\030.Protocol.RoomPlayerInfo\"\\"
+  "\n\010MoveInfo\022\t\n\001x\030\001 \001(\002\022\t\n\001y\030\002 \001(\002\022\t\n\001z\030\003 "
+  "\001(\002\022\013\n\003yaw\030\004 \001(\002\022\"\n\005state\030\005 \001(\0162\023.Protoc"
+  "ol.MoveState\"X\n\nPlayerInfo\022\021\n\tobject_id\030"
+  "\001 \001(\004\022%\n\tmove_info\030\002 \001(\0132\022.Protocol.Move"
+  "Info\022\020\n\010nickname\030\003 \001(\t\"\205\001\n\017MatchPlayerIn"
+  "fo\022)\n\013player_info\030\001 \001(\0132\024.Protocol.Playe"
+  "rInfo\022)\n\013player_type\030\002 \001(\0162\024.Protocol.Pl"
+  "ayerType\022\034\n\004team\030\003 \001(\0162\016.Protocol.Team\"\316"
+  "\001\n\tMatchInfo\022\020\n\010match_id\030\001 \001(\004\022\030\n\020durati"
+  "on_seconds\030\002 \001(\r\022\021\n\tred_score\030\003 \001(\r\022\022\n\nb"
+  "lue_score\030\004 \001(\r\0225\n\022match_players_info\030\005 "
+  "\003(\0132\031.Protocol.MatchPlayerInfo\0227\n\023match_"
+  "players_state\030\006 \003(\0132\032.Protocol.MatchPlay"
+  "erState\"i\n\020MatchPlayerState\022\n\n\002hp\030\001 \001(\005\022"
+  "\016\n\006max_hp\030\002 \001(\005\022\020\n\010is_alive\030\003 \001(\010\022\022\n\nkil"
+  "l_count\030\004 \001(\r\022\023\n\013death_count\030\005 \001(\r\"i\n\016Ma"
+  "tchStateInfo\022\020\n\010match_id\030\001 \001(\004\022\036\n\026remain"
+  "ing_time_seconds\030\002 \001(\r\022\021\n\tred_score\030\003 \001("
+  "\r\022\022\n\nblue_score\030\004 \001(\r\"\237\001\n\013MatchResult\022\020\n"
+  "\010match_id\030\001 \001(\004\022#\n\013winner_team\030\002 \001(\0162\016.P"
+  "rotocol.Team\022\021\n\tred_score\030\003 \001(\r\022\022\n\nblue_"
+  "score\030\004 \001(\r\0222\n\016player_results\030\005 \003(\0132\032.Pr"
+  "otocol.MatchPlayerStateb\006proto3"
   ;
 static const ::_pbi::DescriptorTable* const descriptor_table_Struct_2eproto_deps[1] = {
   &::descriptor_table_Enum_2eproto,
 };
 static ::_pbi::once_flag descriptor_table_Struct_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_Struct_2eproto = {
-    false, false, 1234, descriptor_table_protodef_Struct_2eproto,
+    false, false, 1271, descriptor_table_protodef_Struct_2eproto,
     "Struct.proto",
     &descriptor_table_Struct_2eproto_once, descriptor_table_Struct_2eproto_deps, 1, 9,
     schemas, file_default_instances, TableStruct_Struct_2eproto::offsets,
@@ -363,13 +368,22 @@ RoomPlayerInfo::RoomPlayerInfo(const RoomPlayerInfo& from)
   : ::PROTOBUF_NAMESPACE_ID::Message() {
   RoomPlayerInfo* const _this = this; (void)_this;
   new (&_impl_) Impl_{
-      decltype(_impl_.object_id_){}
+      decltype(_impl_.nickname_){}
+    , decltype(_impl_.object_id_){}
     , decltype(_impl_.player_type_){}
     , decltype(_impl_.team_){}
     , decltype(_impl_.ready_){}
     , /*decltype(_impl_._cached_size_)*/{}};
 
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  _impl_.nickname_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.nickname_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (!from._internal_nickname().empty()) {
+    _this->_impl_.nickname_.Set(from._internal_nickname(), 
+      _this->GetArenaForAllocation());
+  }
   ::memcpy(&_impl_.object_id_, &from._impl_.object_id_,
     static_cast<size_t>(reinterpret_cast<char*>(&_impl_.ready_) -
     reinterpret_cast<char*>(&_impl_.object_id_)) + sizeof(_impl_.ready_));
@@ -381,12 +395,17 @@ inline void RoomPlayerInfo::SharedCtor(
   (void)arena;
   (void)is_message_owned;
   new (&_impl_) Impl_{
-      decltype(_impl_.object_id_){uint64_t{0u}}
+      decltype(_impl_.nickname_){}
+    , decltype(_impl_.object_id_){uint64_t{0u}}
     , decltype(_impl_.player_type_){0}
     , decltype(_impl_.team_){0}
     , decltype(_impl_.ready_){false}
     , /*decltype(_impl_._cached_size_)*/{}
   };
+  _impl_.nickname_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.nickname_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
 }
 
 RoomPlayerInfo::~RoomPlayerInfo() {
@@ -400,6 +419,7 @@ RoomPlayerInfo::~RoomPlayerInfo() {
 
 inline void RoomPlayerInfo::SharedDtor() {
   GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+  _impl_.nickname_.Destroy();
 }
 
 void RoomPlayerInfo::SetCachedSize(int size) const {
@@ -412,6 +432,7 @@ void RoomPlayerInfo::Clear() {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
+  _impl_.nickname_.ClearToEmpty();
   ::memset(&_impl_.object_id_, 0, static_cast<size_t>(
       reinterpret_cast<char*>(&_impl_.ready_) -
       reinterpret_cast<char*>(&_impl_.object_id_)) + sizeof(_impl_.ready_));
@@ -455,6 +476,16 @@ const char* RoomPlayerInfo::_InternalParse(const char* ptr, ::_pbi::ParseContext
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 32)) {
           _impl_.ready_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
           CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // string nickname = 5;
+      case 5:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 42)) {
+          auto str = _internal_mutable_nickname();
+          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
+          CHK_(ptr);
+          CHK_(::_pbi::VerifyUTF8(str, "Protocol.RoomPlayerInfo.nickname"));
         } else
           goto handle_unusual;
         continue;
@@ -513,6 +544,16 @@ uint8_t* RoomPlayerInfo::_InternalSerialize(
     target = ::_pbi::WireFormatLite::WriteBoolToArray(4, this->_internal_ready(), target);
   }
 
+  // string nickname = 5;
+  if (!this->_internal_nickname().empty()) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
+      this->_internal_nickname().data(), static_cast<int>(this->_internal_nickname().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
+      "Protocol.RoomPlayerInfo.nickname");
+    target = stream->WriteStringMaybeAliased(
+        5, this->_internal_nickname(), target);
+  }
+
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
@@ -528,6 +569,13 @@ size_t RoomPlayerInfo::ByteSizeLong() const {
   uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
+
+  // string nickname = 5;
+  if (!this->_internal_nickname().empty()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+        this->_internal_nickname());
+  }
 
   // uint64 object_id = 1;
   if (this->_internal_object_id() != 0) {
@@ -569,6 +617,9 @@ void RoomPlayerInfo::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const :
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
+  if (!from._internal_nickname().empty()) {
+    _this->_internal_set_nickname(from._internal_nickname());
+  }
   if (from._internal_object_id() != 0) {
     _this->_internal_set_object_id(from._internal_object_id());
   }
@@ -597,7 +648,13 @@ bool RoomPlayerInfo::IsInitialized() const {
 
 void RoomPlayerInfo::InternalSwap(RoomPlayerInfo* other) {
   using std::swap;
+  auto* lhs_arena = GetArenaForAllocation();
+  auto* rhs_arena = other->GetArenaForAllocation();
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
+      &_impl_.nickname_, lhs_arena,
+      &other->_impl_.nickname_, rhs_arena
+  );
   ::PROTOBUF_NAMESPACE_ID::internal::memswap<
       PROTOBUF_FIELD_OFFSET(RoomPlayerInfo, _impl_.ready_)
       + sizeof(RoomPlayerInfo::_impl_.ready_)
@@ -1315,11 +1372,20 @@ PlayerInfo::PlayerInfo(const PlayerInfo& from)
   : ::PROTOBUF_NAMESPACE_ID::Message() {
   PlayerInfo* const _this = this; (void)_this;
   new (&_impl_) Impl_{
-      decltype(_impl_.move_info_){nullptr}
+      decltype(_impl_.nickname_){}
+    , decltype(_impl_.move_info_){nullptr}
     , decltype(_impl_.object_id_){}
     , /*decltype(_impl_._cached_size_)*/{}};
 
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  _impl_.nickname_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.nickname_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (!from._internal_nickname().empty()) {
+    _this->_impl_.nickname_.Set(from._internal_nickname(), 
+      _this->GetArenaForAllocation());
+  }
   if (from._internal_has_move_info()) {
     _this->_impl_.move_info_ = new ::Protocol::MoveInfo(*from._impl_.move_info_);
   }
@@ -1332,10 +1398,15 @@ inline void PlayerInfo::SharedCtor(
   (void)arena;
   (void)is_message_owned;
   new (&_impl_) Impl_{
-      decltype(_impl_.move_info_){nullptr}
+      decltype(_impl_.nickname_){}
+    , decltype(_impl_.move_info_){nullptr}
     , decltype(_impl_.object_id_){uint64_t{0u}}
     , /*decltype(_impl_._cached_size_)*/{}
   };
+  _impl_.nickname_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    _impl_.nickname_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
 }
 
 PlayerInfo::~PlayerInfo() {
@@ -1349,6 +1420,7 @@ PlayerInfo::~PlayerInfo() {
 
 inline void PlayerInfo::SharedDtor() {
   GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+  _impl_.nickname_.Destroy();
   if (this != internal_default_instance()) delete _impl_.move_info_;
 }
 
@@ -1362,6 +1434,7 @@ void PlayerInfo::Clear() {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
+  _impl_.nickname_.ClearToEmpty();
   if (GetArenaForAllocation() == nullptr && _impl_.move_info_ != nullptr) {
     delete _impl_.move_info_;
   }
@@ -1389,6 +1462,16 @@ const char* PlayerInfo::_InternalParse(const char* ptr, ::_pbi::ParseContext* ct
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 18)) {
           ptr = ctx->ParseMessage(_internal_mutable_move_info(), ptr);
           CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // string nickname = 3;
+      case 3:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 26)) {
+          auto str = _internal_mutable_nickname();
+          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
+          CHK_(ptr);
+          CHK_(::_pbi::VerifyUTF8(str, "Protocol.PlayerInfo.nickname"));
         } else
           goto handle_unusual;
         continue;
@@ -1434,6 +1517,16 @@ uint8_t* PlayerInfo::_InternalSerialize(
         _Internal::move_info(this).GetCachedSize(), target, stream);
   }
 
+  // string nickname = 3;
+  if (!this->_internal_nickname().empty()) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
+      this->_internal_nickname().data(), static_cast<int>(this->_internal_nickname().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
+      "Protocol.PlayerInfo.nickname");
+    target = stream->WriteStringMaybeAliased(
+        3, this->_internal_nickname(), target);
+  }
+
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
@@ -1449,6 +1542,13 @@ size_t PlayerInfo::ByteSizeLong() const {
   uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
+
+  // string nickname = 3;
+  if (!this->_internal_nickname().empty()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+        this->_internal_nickname());
+  }
 
   // .Protocol.MoveInfo move_info = 2;
   if (this->_internal_has_move_info()) {
@@ -1480,6 +1580,9 @@ void PlayerInfo::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PRO
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
+  if (!from._internal_nickname().empty()) {
+    _this->_internal_set_nickname(from._internal_nickname());
+  }
   if (from._internal_has_move_info()) {
     _this->_internal_mutable_move_info()->::Protocol::MoveInfo::MergeFrom(
         from._internal_move_info());
@@ -1503,7 +1606,13 @@ bool PlayerInfo::IsInitialized() const {
 
 void PlayerInfo::InternalSwap(PlayerInfo* other) {
   using std::swap;
+  auto* lhs_arena = GetArenaForAllocation();
+  auto* rhs_arena = other->GetArenaForAllocation();
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
+      &_impl_.nickname_, lhs_arena,
+      &other->_impl_.nickname_, rhs_arena
+  );
   ::PROTOBUF_NAMESPACE_ID::internal::memswap<
       PROTOBUF_FIELD_OFFSET(PlayerInfo, _impl_.object_id_)
       + sizeof(PlayerInfo::_impl_.object_id_)

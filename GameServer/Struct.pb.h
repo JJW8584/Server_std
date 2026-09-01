@@ -210,11 +210,26 @@ class RoomPlayerInfo final :
   // accessors -------------------------------------------------------
 
   enum : int {
+    kNicknameFieldNumber = 5,
     kObjectIdFieldNumber = 1,
     kPlayerTypeFieldNumber = 2,
     kTeamFieldNumber = 3,
     kReadyFieldNumber = 4,
   };
+  // string nickname = 5;
+  void clear_nickname();
+  const std::string& nickname() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_nickname(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_nickname();
+  PROTOBUF_NODISCARD std::string* release_nickname();
+  void set_allocated_nickname(std::string* nickname);
+  private:
+  const std::string& _internal_nickname() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_nickname(const std::string& value);
+  std::string* _internal_mutable_nickname();
+  public:
+
   // uint64 object_id = 1;
   void clear_object_id();
   uint64_t object_id() const;
@@ -259,6 +274,7 @@ class RoomPlayerInfo final :
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
   struct Impl_ {
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr nickname_;
     uint64_t object_id_;
     int player_type_;
     int team_;
@@ -800,9 +816,24 @@ class PlayerInfo final :
   // accessors -------------------------------------------------------
 
   enum : int {
+    kNicknameFieldNumber = 3,
     kMoveInfoFieldNumber = 2,
     kObjectIdFieldNumber = 1,
   };
+  // string nickname = 3;
+  void clear_nickname();
+  const std::string& nickname() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_nickname(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_nickname();
+  PROTOBUF_NODISCARD std::string* release_nickname();
+  void set_allocated_nickname(std::string* nickname);
+  private:
+  const std::string& _internal_nickname() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_nickname(const std::string& value);
+  std::string* _internal_mutable_nickname();
+  public:
+
   // .Protocol.MoveInfo move_info = 2;
   bool has_move_info() const;
   private:
@@ -838,6 +869,7 @@ class PlayerInfo final :
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
   struct Impl_ {
+    ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr nickname_;
     ::Protocol::MoveInfo* move_info_;
     uint64_t object_id_;
     mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
@@ -1910,6 +1942,56 @@ inline void RoomPlayerInfo::set_ready(bool value) {
   // @@protoc_insertion_point(field_set:Protocol.RoomPlayerInfo.ready)
 }
 
+// string nickname = 5;
+inline void RoomPlayerInfo::clear_nickname() {
+  _impl_.nickname_.ClearToEmpty();
+}
+inline const std::string& RoomPlayerInfo::nickname() const {
+  // @@protoc_insertion_point(field_get:Protocol.RoomPlayerInfo.nickname)
+  return _internal_nickname();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void RoomPlayerInfo::set_nickname(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.nickname_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:Protocol.RoomPlayerInfo.nickname)
+}
+inline std::string* RoomPlayerInfo::mutable_nickname() {
+  std::string* _s = _internal_mutable_nickname();
+  // @@protoc_insertion_point(field_mutable:Protocol.RoomPlayerInfo.nickname)
+  return _s;
+}
+inline const std::string& RoomPlayerInfo::_internal_nickname() const {
+  return _impl_.nickname_.Get();
+}
+inline void RoomPlayerInfo::_internal_set_nickname(const std::string& value) {
+  
+  _impl_.nickname_.Set(value, GetArenaForAllocation());
+}
+inline std::string* RoomPlayerInfo::_internal_mutable_nickname() {
+  
+  return _impl_.nickname_.Mutable(GetArenaForAllocation());
+}
+inline std::string* RoomPlayerInfo::release_nickname() {
+  // @@protoc_insertion_point(field_release:Protocol.RoomPlayerInfo.nickname)
+  return _impl_.nickname_.Release();
+}
+inline void RoomPlayerInfo::set_allocated_nickname(std::string* nickname) {
+  if (nickname != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.nickname_.SetAllocated(nickname, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.nickname_.IsDefault()) {
+    _impl_.nickname_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:Protocol.RoomPlayerInfo.nickname)
+}
+
 // -------------------------------------------------------------------
 
 // RoomInfo
@@ -2300,6 +2382,56 @@ inline void PlayerInfo::set_allocated_move_info(::Protocol::MoveInfo* move_info)
   }
   _impl_.move_info_ = move_info;
   // @@protoc_insertion_point(field_set_allocated:Protocol.PlayerInfo.move_info)
+}
+
+// string nickname = 3;
+inline void PlayerInfo::clear_nickname() {
+  _impl_.nickname_.ClearToEmpty();
+}
+inline const std::string& PlayerInfo::nickname() const {
+  // @@protoc_insertion_point(field_get:Protocol.PlayerInfo.nickname)
+  return _internal_nickname();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void PlayerInfo::set_nickname(ArgT0&& arg0, ArgT... args) {
+ 
+ _impl_.nickname_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:Protocol.PlayerInfo.nickname)
+}
+inline std::string* PlayerInfo::mutable_nickname() {
+  std::string* _s = _internal_mutable_nickname();
+  // @@protoc_insertion_point(field_mutable:Protocol.PlayerInfo.nickname)
+  return _s;
+}
+inline const std::string& PlayerInfo::_internal_nickname() const {
+  return _impl_.nickname_.Get();
+}
+inline void PlayerInfo::_internal_set_nickname(const std::string& value) {
+  
+  _impl_.nickname_.Set(value, GetArenaForAllocation());
+}
+inline std::string* PlayerInfo::_internal_mutable_nickname() {
+  
+  return _impl_.nickname_.Mutable(GetArenaForAllocation());
+}
+inline std::string* PlayerInfo::release_nickname() {
+  // @@protoc_insertion_point(field_release:Protocol.PlayerInfo.nickname)
+  return _impl_.nickname_.Release();
+}
+inline void PlayerInfo::set_allocated_nickname(std::string* nickname) {
+  if (nickname != nullptr) {
+    
+  } else {
+    
+  }
+  _impl_.nickname_.SetAllocated(nickname, GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (_impl_.nickname_.IsDefault()) {
+    _impl_.nickname_.Set("", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:Protocol.PlayerInfo.nickname)
 }
 
 // -------------------------------------------------------------------

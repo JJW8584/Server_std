@@ -17,5 +17,7 @@ public:
 	virtual void OnSend(int32 len) override;
 
 public:
+	atomic<uint64> accountId = 0;
+	string nickname;
 	atomic<shared_ptr<Player>> player;
 };

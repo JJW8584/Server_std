@@ -44,6 +44,7 @@ bool Room::HandleEnterPlayer(PlayerRef player)
 		Protocol::RoomPlayerInfo* info = _roomInfo.add_players();
 
 		info->set_object_id(player->GetObjectId());
+		info->set_nickname(player->GetNickname());
 		info->set_player_type(Protocol::PLAYER_TYPE_NONE);
 		info->set_team(Protocol::TEAM_NONE);
 		player->team = Protocol::TEAM_NONE;
@@ -253,19 +254,20 @@ bool Room::HandleStartMatch(PlayerRef player)
 		switch (roomPlayerInfo.team())
 		{
 		case Protocol::TEAM_BLUE:
-			moveInfo.set_x(150.f * i);
-			moveInfo.set_y(150.f * i);
+			moveInfo.set_x(-1300.f + 100.f * i);
+			moveInfo.set_y(-1300.f + 100.f * i);
 			moveInfo.set_z(100.f);
 			break;
 		case Protocol::TEAM_RED:
-			moveInfo.set_x(-150.f * i);
-			moveInfo.set_y(-150.f * i);
+			moveInfo.set_x(1300.f + 100.f * i);
+			moveInfo.set_y(1300.f + 100.f * i);
 			moveInfo.set_z(100.f);
 			break;
 		}
 		moveInfo.set_yaw(0);
 
 		playerInfo.set_object_id(roomPlayerInfo.object_id());
+		playerInfo.set_nickname(roomPlayerInfo.nickname());
 		playerInfo.mutable_move_info()->CopyFrom(moveInfo);
 
 		matchPlayerInfo.mutable_player_info()->CopyFrom(playerInfo);
@@ -382,6 +384,7 @@ void Room::HandleHit(PlayerRef player, Protocol::C_HIT pkt)
 		playerState.set_kill_count(playerState.kill_count() + 1);
 		targetPlayerState.set_death_count(targetPlayerState.death_count() + 1);
 		targetPlayerState.set_is_alive(false);
+		targetPlayerState.set_hp(0);
 
 		if (player->team == Protocol::TEAM_RED)
 		{
@@ -391,6 +394,8 @@ void Room::HandleHit(PlayerRef player, Protocol::C_HIT pkt)
 		{
 			_matchInfo.set_blue_score(_matchInfo.blue_score() + 1);
 		}
+
+		
 
 		Protocol::S_MATCH_STATE matchStatePkt;
 		auto matchState = matchStatePkt.mutable_match_state();
@@ -419,6 +424,9 @@ void Room::HandleHit(PlayerRef player, Protocol::C_HIT pkt)
 		SendBufferRef sendBuffer = ClientPacketHandler::MakeSendBuffer(targetplayerStatePkt);
 		Broadcast(sendBuffer);
 	}
+
+	if(!targetPlayerState.is_alive())
+		PlayerDespawn(pkt.target_object_id());
 }
 
 void Room::HandlePrepareMatch(PlayerRef player)
@@ -463,6 +471,91 @@ void Room::HandlePrepareMatch(PlayerRef player)
 	DoTimer(100, &Room::UpdateTick);
 }
 
+void Room::PlayerDespawn(uint64 objectId)
+{
+	if (_roomInfo.state() != Protocol::ROOM_STATE_PLAYING)
+		return;
+
+	Protocol::S_PLAYER_DESPAWN pkt;
+
+	pkt.set_object_id(objectId);
+	Broadcast(ClientPacketHandler::MakeSendBuffer(pkt));
+
+	DoTimer(5000, &Room::PlayerRespawn, objectId);
+}
+
+void Room::PlayerRespawn(uint64 objectId)
+{
+	if (_roomInfo.state() != Protocol::ROOM_STATE_PLAYING)
+		return;
+
+	Protocol::S_PLAYER_RESPAWN pkt;
+
+	PlayerRef player = _players[objectId];
+
+	Protocol::PlayerInfo* playerInfo = pkt.mutable_player_info();
+	playerInfo->set_object_id(objectId);
+	playerInfo->set_nickname(player->GetNickname());
+	Protocol::MoveInfo* moveInfo = playerInfo->mutable_move_info();
+
+	if (_players.find(objectId) == _players.end())
+		return;
+
+	moveInfo->set_state(Protocol::MOVE_STATE_IDLE);
+	switch (player->team)
+	{
+	case Protocol::TEAM_BLUE:
+		moveInfo->set_x(-1300.f);
+		moveInfo->set_y(-1300.f);
+		moveInfo->set_z(100.f);
+		break;
+	case Protocol::TEAM_RED:
+		moveInfo->set_x(1300.f);
+		moveInfo->set_y(1300.f);
+		moveInfo->set_z(100.f);
+		break;
+	}
+	moveInfo->set_yaw(0);
+	player->moveInfo->CopyFrom(*moveInfo);
+
+	Protocol::MatchPlayerState* state = pkt.mutable_player_state();
+	player->matchPlayerState.set_hp(player->matchPlayerState.max_hp());
+	player->matchPlayerState.set_is_alive(true);
+	state->CopyFrom(player->matchPlayerState);
+
+	Broadcast(ClientPacketHandler::MakeSendBuffer(pkt));
+}
+
+void Room::HandleReturnRoom(GameSessionRef session)
+{
+	Protocol::RoomInfo snapShot;
+
+	{
+		WRITE_LOCK;
+		if (_roomInfo.state() == Protocol::ROOM_STATE_RESULT)
+		{
+			for (int32 i = 0; i < _roomInfo.players().size(); i++)
+			{
+				_roomInfo.mutable_players(i)->set_ready(false);
+			}
+
+			for (auto& [objectId, player] : _players)
+			{
+				player->isPrepareMatch = false;
+			}
+
+			_roomInfo.set_state(Protocol::ROOM_STATE_WAITING);
+		}
+
+		snapShot.CopyFrom(_roomInfo);
+	}
+
+	Protocol::S_RETURN_TO_ROOM pkt;
+	pkt.mutable_room_info()->CopyFrom(snapShot);
+
+	SEND_PACKET(pkt);
+}
+
 void Room::UpdateTick()
 {
 	if (_isClosing)
@@ -484,6 +577,8 @@ void Room::UpdateTick()
 	{
 		if (_remainSeconds <= 0)
 		{
+			_roomInfo.set_state(Protocol::ROOM_STATE_RESULT);
+
 			Protocol::S_MATCH_END matchEndPkt;
 			Protocol::MatchResult* matchResult = matchEndPkt.mutable_result();
 
@@ -501,7 +596,7 @@ void Room::UpdateTick()
 
 			matchResult->set_red_score(_matchInfo.red_score());
 			matchResult->set_blue_score(_matchInfo.blue_score());
-			//TODO: 플레이어 정보 넣기
+
 			for (auto iter : _players)
 			{
 				matchResult->add_player_results()->CopyFrom(iter.second->matchPlayerState);

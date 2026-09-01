@@ -1,6 +1,17 @@
 syntax = "proto3";
 package Protocol;
 
+enum AuthResult
+{
+    AUTH_RESULT_NONE = 0;
+    AUTH_RESULT_SUCCESS = 1;
+    AUTH_RESULT_INVALID_INPUT = 2;
+    AUTH_RESULT_DUPLICATE_LOGIN_ID = 3;
+    AUTH_RESULT_DUPLICATE_NICKNAME = 4;
+    AUTH_RESULT_INVALID_CREDENTIALS = 5;
+    AUTH_RESULT_SERVER_ERROR = 6;
+}
+
 enum Team
 {
 	TEAM_NONE = 0;
