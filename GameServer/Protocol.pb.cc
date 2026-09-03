@@ -328,7 +328,7 @@ struct S_PLAYER_RESPAWNDefaultTypeInternal {
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 S_PLAYER_RESPAWNDefaultTypeInternal _S_PLAYER_RESPAWN_default_instance_;
 PROTOBUF_CONSTEXPR C_MOVE::C_MOVE(
     ::_pbi::ConstantInitialized): _impl_{
-    /*decltype(_impl_.move_info_)*/nullptr
+    /*decltype(_impl_.move_input_)*/nullptr
   , /*decltype(_impl_._cached_size_)*/{}} {}
 struct C_MOVEDefaultTypeInternal {
   PROTOBUF_CONSTEXPR C_MOVEDefaultTypeInternal()
@@ -663,7 +663,7 @@ const uint32_t TableStruct_Protocol_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
   ~0u,  // no _inlined_string_donated_
-  PROTOBUF_FIELD_OFFSET(::Protocol::C_MOVE, _impl_.move_info_),
+  PROTOBUF_FIELD_OFFSET(::Protocol::C_MOVE, _impl_.move_input_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::Protocol::S_MOVE, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -855,23 +855,23 @@ const char descriptor_table_protodef_Protocol_2eproto[] PROTOBUF_SECTION_VARIABL
   "erState\"o\n\020S_PLAYER_RESPAWN\022)\n\013player_in"
   "fo\030\001 \001(\0132\024.Protocol.PlayerInfo\0220\n\014player"
   "_state\030\002 \001(\0132\032.Protocol.MatchPlayerState"
-  "\"/\n\006C_MOVE\022%\n\tmove_info\030\001 \001(\0132\022.Protocol"
-  ".MoveInfo\"3\n\006S_MOVE\022)\n\013player_info\030\001 \001(\013"
-  "2\024.Protocol.PlayerInfo\"\215\001\n\006C_FIRE\022\021\n\tobj"
-  "ect_id\030\001 \001(\004\022\017\n\007spawn_x\030\002 \001(\002\022\017\n\007spawn_y"
-  "\030\003 \001(\002\022\017\n\007spawn_z\030\004 \001(\002\022\023\n\013direction_x\030\005"
-  " \001(\002\022\023\n\013direction_y\030\006 \001(\002\022\023\n\013direction_z"
-  "\030\007 \001(\002\"\215\001\n\006S_FIRE\022\021\n\tobject_id\030\001 \001(\004\022\017\n\007"
-  "spawn_x\030\002 \001(\002\022\017\n\007spawn_y\030\003 \001(\002\022\017\n\007spawn_"
-  "z\030\004 \001(\002\022\023\n\013direction_x\030\005 \001(\002\022\023\n\013directio"
-  "n_y\030\006 \001(\002\022\023\n\013direction_z\030\007 \001(\002\"!\n\005C_HIT\022"
-  "\030\n\020target_object_id\030\001 \001(\004\"%\n\020S_PLAYER_DE"
-  "SPAWN\022\021\n\tobject_id\030\001 \001(\004\"4\n\013S_MATCH_END\022"
-  "%\n\006result\030\001 \001(\0132\025.Protocol.MatchResult\"\022"
-  "\n\020C_RETURN_TO_ROOM\"9\n\020S_RETURN_TO_ROOM\022%"
-  "\n\troom_info\030\001 \001(\0132\022.Protocol.RoomInfo\"\025\n"
-  "\006C_CHAT\022\013\n\003msg\030\001 \001(\t\"(\n\006S_CHAT\022\021\n\tplayer"
-  "_id\030\001 \001(\004\022\013\n\003msg\030\002 \001(\tb\006proto3"
+  "\"1\n\006C_MOVE\022\'\n\nmove_input\030\001 \001(\0132\023.Protoco"
+  "l.MoveInput\"3\n\006S_MOVE\022)\n\013player_info\030\001 \001"
+  "(\0132\024.Protocol.PlayerInfo\"\215\001\n\006C_FIRE\022\021\n\to"
+  "bject_id\030\001 \001(\004\022\017\n\007spawn_x\030\002 \001(\002\022\017\n\007spawn"
+  "_y\030\003 \001(\002\022\017\n\007spawn_z\030\004 \001(\002\022\023\n\013direction_x"
+  "\030\005 \001(\002\022\023\n\013direction_y\030\006 \001(\002\022\023\n\013direction"
+  "_z\030\007 \001(\002\"\215\001\n\006S_FIRE\022\021\n\tobject_id\030\001 \001(\004\022\017"
+  "\n\007spawn_x\030\002 \001(\002\022\017\n\007spawn_y\030\003 \001(\002\022\017\n\007spaw"
+  "n_z\030\004 \001(\002\022\023\n\013direction_x\030\005 \001(\002\022\023\n\013direct"
+  "ion_y\030\006 \001(\002\022\023\n\013direction_z\030\007 \001(\002\"!\n\005C_HI"
+  "T\022\030\n\020target_object_id\030\001 \001(\004\"%\n\020S_PLAYER_"
+  "DESPAWN\022\021\n\tobject_id\030\001 \001(\004\"4\n\013S_MATCH_EN"
+  "D\022%\n\006result\030\001 \001(\0132\025.Protocol.MatchResult"
+  "\"\022\n\020C_RETURN_TO_ROOM\"9\n\020S_RETURN_TO_ROOM"
+  "\022%\n\troom_info\030\001 \001(\0132\022.Protocol.RoomInfo\""
+  "\025\n\006C_CHAT\022\013\n\003msg\030\001 \001(\t\"(\n\006S_CHAT\022\021\n\tplay"
+  "er_id\030\001 \001(\004\022\013\n\003msg\030\002 \001(\tb\006proto3"
   ;
 static const ::_pbi::DescriptorTable* const descriptor_table_Protocol_2eproto_deps[2] = {
   &::descriptor_table_Enum_2eproto,
@@ -879,7 +879,7 @@ static const ::_pbi::DescriptorTable* const descriptor_table_Protocol_2eproto_de
 };
 static ::_pbi::once_flag descriptor_table_Protocol_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_Protocol_2eproto = {
-    false, false, 1990, descriptor_table_protodef_Protocol_2eproto,
+    false, false, 1992, descriptor_table_protodef_Protocol_2eproto,
     "Protocol.proto",
     &descriptor_table_Protocol_2eproto_once, descriptor_table_Protocol_2eproto_deps, 2, 34,
     schemas, file_default_instances, TableStruct_Protocol_2eproto::offsets,
@@ -5205,18 +5205,18 @@ void S_PLAYER_RESPAWN::InternalSwap(S_PLAYER_RESPAWN* other) {
 
 class C_MOVE::_Internal {
  public:
-  static const ::Protocol::MoveInfo& move_info(const C_MOVE* msg);
+  static const ::Protocol::MoveInput& move_input(const C_MOVE* msg);
 };
 
-const ::Protocol::MoveInfo&
-C_MOVE::_Internal::move_info(const C_MOVE* msg) {
-  return *msg->_impl_.move_info_;
+const ::Protocol::MoveInput&
+C_MOVE::_Internal::move_input(const C_MOVE* msg) {
+  return *msg->_impl_.move_input_;
 }
-void C_MOVE::clear_move_info() {
-  if (GetArenaForAllocation() == nullptr && _impl_.move_info_ != nullptr) {
-    delete _impl_.move_info_;
+void C_MOVE::clear_move_input() {
+  if (GetArenaForAllocation() == nullptr && _impl_.move_input_ != nullptr) {
+    delete _impl_.move_input_;
   }
-  _impl_.move_info_ = nullptr;
+  _impl_.move_input_ = nullptr;
 }
 C_MOVE::C_MOVE(::PROTOBUF_NAMESPACE_ID::Arena* arena,
                          bool is_message_owned)
@@ -5228,12 +5228,12 @@ C_MOVE::C_MOVE(const C_MOVE& from)
   : ::PROTOBUF_NAMESPACE_ID::Message() {
   C_MOVE* const _this = this; (void)_this;
   new (&_impl_) Impl_{
-      decltype(_impl_.move_info_){nullptr}
+      decltype(_impl_.move_input_){nullptr}
     , /*decltype(_impl_._cached_size_)*/{}};
 
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  if (from._internal_has_move_info()) {
-    _this->_impl_.move_info_ = new ::Protocol::MoveInfo(*from._impl_.move_info_);
+  if (from._internal_has_move_input()) {
+    _this->_impl_.move_input_ = new ::Protocol::MoveInput(*from._impl_.move_input_);
   }
   // @@protoc_insertion_point(copy_constructor:Protocol.C_MOVE)
 }
@@ -5243,7 +5243,7 @@ inline void C_MOVE::SharedCtor(
   (void)arena;
   (void)is_message_owned;
   new (&_impl_) Impl_{
-      decltype(_impl_.move_info_){nullptr}
+      decltype(_impl_.move_input_){nullptr}
     , /*decltype(_impl_._cached_size_)*/{}
   };
 }
@@ -5259,7 +5259,7 @@ C_MOVE::~C_MOVE() {
 
 inline void C_MOVE::SharedDtor() {
   GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
-  if (this != internal_default_instance()) delete _impl_.move_info_;
+  if (this != internal_default_instance()) delete _impl_.move_input_;
 }
 
 void C_MOVE::SetCachedSize(int size) const {
@@ -5272,10 +5272,10 @@ void C_MOVE::Clear() {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  if (GetArenaForAllocation() == nullptr && _impl_.move_info_ != nullptr) {
-    delete _impl_.move_info_;
+  if (GetArenaForAllocation() == nullptr && _impl_.move_input_ != nullptr) {
+    delete _impl_.move_input_;
   }
-  _impl_.move_info_ = nullptr;
+  _impl_.move_input_ = nullptr;
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
@@ -5285,10 +5285,10 @@ const char* C_MOVE::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
     uint32_t tag;
     ptr = ::_pbi::ReadTag(ptr, &tag);
     switch (tag >> 3) {
-      // .Protocol.MoveInfo move_info = 1;
+      // .Protocol.MoveInput move_input = 1;
       case 1:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 10)) {
-          ptr = ctx->ParseMessage(_internal_mutable_move_info(), ptr);
+          ptr = ctx->ParseMessage(_internal_mutable_move_input(), ptr);
           CHK_(ptr);
         } else
           goto handle_unusual;
@@ -5322,11 +5322,11 @@ uint8_t* C_MOVE::_InternalSerialize(
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // .Protocol.MoveInfo move_info = 1;
-  if (this->_internal_has_move_info()) {
+  // .Protocol.MoveInput move_input = 1;
+  if (this->_internal_has_move_input()) {
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
-      InternalWriteMessage(1, _Internal::move_info(this),
-        _Internal::move_info(this).GetCachedSize(), target, stream);
+      InternalWriteMessage(1, _Internal::move_input(this),
+        _Internal::move_input(this).GetCachedSize(), target, stream);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -5345,11 +5345,11 @@ size_t C_MOVE::ByteSizeLong() const {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  // .Protocol.MoveInfo move_info = 1;
-  if (this->_internal_has_move_info()) {
+  // .Protocol.MoveInput move_input = 1;
+  if (this->_internal_has_move_input()) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
-        *_impl_.move_info_);
+        *_impl_.move_input_);
   }
 
   return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
@@ -5370,9 +5370,9 @@ void C_MOVE::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBU
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  if (from._internal_has_move_info()) {
-    _this->_internal_mutable_move_info()->::Protocol::MoveInfo::MergeFrom(
-        from._internal_move_info());
+  if (from._internal_has_move_input()) {
+    _this->_internal_mutable_move_input()->::Protocol::MoveInput::MergeFrom(
+        from._internal_move_input());
   }
   _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
 }
@@ -5391,7 +5391,7 @@ bool C_MOVE::IsInitialized() const {
 void C_MOVE::InternalSwap(C_MOVE* other) {
   using std::swap;
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
-  swap(_impl_.move_info_, other->_impl_.move_info_);
+  swap(_impl_.move_input_, other->_impl_.move_input_);
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata C_MOVE::GetMetadata() const {

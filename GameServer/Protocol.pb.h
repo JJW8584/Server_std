@@ -3866,25 +3866,25 @@ class C_MOVE final :
   // accessors -------------------------------------------------------
 
   enum : int {
-    kMoveInfoFieldNumber = 1,
+    kMoveInputFieldNumber = 1,
   };
-  // .Protocol.MoveInfo move_info = 1;
-  bool has_move_info() const;
+  // .Protocol.MoveInput move_input = 1;
+  bool has_move_input() const;
   private:
-  bool _internal_has_move_info() const;
+  bool _internal_has_move_input() const;
   public:
-  void clear_move_info();
-  const ::Protocol::MoveInfo& move_info() const;
-  PROTOBUF_NODISCARD ::Protocol::MoveInfo* release_move_info();
-  ::Protocol::MoveInfo* mutable_move_info();
-  void set_allocated_move_info(::Protocol::MoveInfo* move_info);
+  void clear_move_input();
+  const ::Protocol::MoveInput& move_input() const;
+  PROTOBUF_NODISCARD ::Protocol::MoveInput* release_move_input();
+  ::Protocol::MoveInput* mutable_move_input();
+  void set_allocated_move_input(::Protocol::MoveInput* move_input);
   private:
-  const ::Protocol::MoveInfo& _internal_move_info() const;
-  ::Protocol::MoveInfo* _internal_mutable_move_info();
+  const ::Protocol::MoveInput& _internal_move_input() const;
+  ::Protocol::MoveInput* _internal_mutable_move_input();
   public:
-  void unsafe_arena_set_allocated_move_info(
-      ::Protocol::MoveInfo* move_info);
-  ::Protocol::MoveInfo* unsafe_arena_release_move_info();
+  void unsafe_arena_set_allocated_move_input(
+      ::Protocol::MoveInput* move_input);
+  ::Protocol::MoveInput* unsafe_arena_release_move_input();
 
   // @@protoc_insertion_point(class_scope:Protocol.C_MOVE)
  private:
@@ -3894,7 +3894,7 @@ class C_MOVE final :
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
   struct Impl_ {
-    ::Protocol::MoveInfo* move_info_;
+    ::Protocol::MoveInput* move_input_;
     mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   };
   union { Impl_ _impl_; };
@@ -7040,39 +7040,39 @@ inline void S_PLAYER_RESPAWN::set_allocated_player_state(::Protocol::MatchPlayer
 
 // C_MOVE
 
-// .Protocol.MoveInfo move_info = 1;
-inline bool C_MOVE::_internal_has_move_info() const {
-  return this != internal_default_instance() && _impl_.move_info_ != nullptr;
+// .Protocol.MoveInput move_input = 1;
+inline bool C_MOVE::_internal_has_move_input() const {
+  return this != internal_default_instance() && _impl_.move_input_ != nullptr;
 }
-inline bool C_MOVE::has_move_info() const {
-  return _internal_has_move_info();
+inline bool C_MOVE::has_move_input() const {
+  return _internal_has_move_input();
 }
-inline const ::Protocol::MoveInfo& C_MOVE::_internal_move_info() const {
-  const ::Protocol::MoveInfo* p = _impl_.move_info_;
-  return p != nullptr ? *p : reinterpret_cast<const ::Protocol::MoveInfo&>(
-      ::Protocol::_MoveInfo_default_instance_);
+inline const ::Protocol::MoveInput& C_MOVE::_internal_move_input() const {
+  const ::Protocol::MoveInput* p = _impl_.move_input_;
+  return p != nullptr ? *p : reinterpret_cast<const ::Protocol::MoveInput&>(
+      ::Protocol::_MoveInput_default_instance_);
 }
-inline const ::Protocol::MoveInfo& C_MOVE::move_info() const {
-  // @@protoc_insertion_point(field_get:Protocol.C_MOVE.move_info)
-  return _internal_move_info();
+inline const ::Protocol::MoveInput& C_MOVE::move_input() const {
+  // @@protoc_insertion_point(field_get:Protocol.C_MOVE.move_input)
+  return _internal_move_input();
 }
-inline void C_MOVE::unsafe_arena_set_allocated_move_info(
-    ::Protocol::MoveInfo* move_info) {
+inline void C_MOVE::unsafe_arena_set_allocated_move_input(
+    ::Protocol::MoveInput* move_input) {
   if (GetArenaForAllocation() == nullptr) {
-    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.move_info_);
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.move_input_);
   }
-  _impl_.move_info_ = move_info;
-  if (move_info) {
+  _impl_.move_input_ = move_input;
+  if (move_input) {
     
   } else {
     
   }
-  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:Protocol.C_MOVE.move_info)
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:Protocol.C_MOVE.move_input)
 }
-inline ::Protocol::MoveInfo* C_MOVE::release_move_info() {
+inline ::Protocol::MoveInput* C_MOVE::release_move_input() {
   
-  ::Protocol::MoveInfo* temp = _impl_.move_info_;
-  _impl_.move_info_ = nullptr;
+  ::Protocol::MoveInput* temp = _impl_.move_input_;
+  _impl_.move_input_ = nullptr;
 #ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
   auto* old =  reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
   temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
@@ -7084,45 +7084,45 @@ inline ::Protocol::MoveInfo* C_MOVE::release_move_info() {
 #endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
   return temp;
 }
-inline ::Protocol::MoveInfo* C_MOVE::unsafe_arena_release_move_info() {
-  // @@protoc_insertion_point(field_release:Protocol.C_MOVE.move_info)
+inline ::Protocol::MoveInput* C_MOVE::unsafe_arena_release_move_input() {
+  // @@protoc_insertion_point(field_release:Protocol.C_MOVE.move_input)
   
-  ::Protocol::MoveInfo* temp = _impl_.move_info_;
-  _impl_.move_info_ = nullptr;
+  ::Protocol::MoveInput* temp = _impl_.move_input_;
+  _impl_.move_input_ = nullptr;
   return temp;
 }
-inline ::Protocol::MoveInfo* C_MOVE::_internal_mutable_move_info() {
+inline ::Protocol::MoveInput* C_MOVE::_internal_mutable_move_input() {
   
-  if (_impl_.move_info_ == nullptr) {
-    auto* p = CreateMaybeMessage<::Protocol::MoveInfo>(GetArenaForAllocation());
-    _impl_.move_info_ = p;
+  if (_impl_.move_input_ == nullptr) {
+    auto* p = CreateMaybeMessage<::Protocol::MoveInput>(GetArenaForAllocation());
+    _impl_.move_input_ = p;
   }
-  return _impl_.move_info_;
+  return _impl_.move_input_;
 }
-inline ::Protocol::MoveInfo* C_MOVE::mutable_move_info() {
-  ::Protocol::MoveInfo* _msg = _internal_mutable_move_info();
-  // @@protoc_insertion_point(field_mutable:Protocol.C_MOVE.move_info)
+inline ::Protocol::MoveInput* C_MOVE::mutable_move_input() {
+  ::Protocol::MoveInput* _msg = _internal_mutable_move_input();
+  // @@protoc_insertion_point(field_mutable:Protocol.C_MOVE.move_input)
   return _msg;
 }
-inline void C_MOVE::set_allocated_move_info(::Protocol::MoveInfo* move_info) {
+inline void C_MOVE::set_allocated_move_input(::Protocol::MoveInput* move_input) {
   ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
   if (message_arena == nullptr) {
-    delete reinterpret_cast< ::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.move_info_);
+    delete reinterpret_cast< ::PROTOBUF_NAMESPACE_ID::MessageLite*>(_impl_.move_input_);
   }
-  if (move_info) {
+  if (move_input) {
     ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
         ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(
-                reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(move_info));
+                reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(move_input));
     if (message_arena != submessage_arena) {
-      move_info = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
-          message_arena, move_info, submessage_arena);
+      move_input = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, move_input, submessage_arena);
     }
     
   } else {
     
   }
-  _impl_.move_info_ = move_info;
-  // @@protoc_insertion_point(field_set_allocated:Protocol.C_MOVE.move_info)
+  _impl_.move_input_ = move_input;
+  // @@protoc_insertion_point(field_set_allocated:Protocol.C_MOVE.move_input)
 }
 
 // -------------------------------------------------------------------

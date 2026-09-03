@@ -2,7 +2,7 @@
 <Project>
   <ProjectOutputs>
     <ProjectOutput>
-      <FullPath>X:\Github\Server_std\Binary\Debug\GameServer.exe</FullPath>
+      <FullPath>X:\GitHub\Server_cpp\Binary\Debug\GameServer.exe</FullPath>
     </ProjectOutput>
   </ProjectOutputs>
   <ContentFiles />

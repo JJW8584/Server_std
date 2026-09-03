@@ -23,6 +23,9 @@ public:
 	weak_ptr<GameSession> session; // cycle
 
 	Protocol::MoveInfo* moveInfo;
+	Protocol::MoveInput moveInput;
+	uint32 lastMoveInputSeq = 0;
+	uint32 lastProcessedMoveInputSeq = 0;
 
 	int32 fireTimer = 10;
 	bool fireFlag = true;

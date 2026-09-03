@@ -147,7 +147,7 @@ message S_PLAYER_RESPAWN
 
 message C_MOVE
 {
-	MoveInfo move_info = 1;
+	MoveInput move_input = 1;
 }
 
 message S_MOVE

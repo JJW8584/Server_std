@@ -64,6 +64,9 @@ extern MatchStateInfoDefaultTypeInternal _MatchStateInfo_default_instance_;
 class MoveInfo;
 struct MoveInfoDefaultTypeInternal;
 extern MoveInfoDefaultTypeInternal _MoveInfo_default_instance_;
+class MoveInput;
+struct MoveInputDefaultTypeInternal;
+extern MoveInputDefaultTypeInternal _MoveInput_default_instance_;
 class PlayerInfo;
 struct PlayerInfoDefaultTypeInternal;
 extern PlayerInfoDefaultTypeInternal _PlayerInfo_default_instance_;
@@ -81,6 +84,7 @@ template<> ::Protocol::MatchPlayerState* Arena::CreateMaybeMessage<::Protocol::M
 template<> ::Protocol::MatchResult* Arena::CreateMaybeMessage<::Protocol::MatchResult>(Arena*);
 template<> ::Protocol::MatchStateInfo* Arena::CreateMaybeMessage<::Protocol::MatchStateInfo>(Arena*);
 template<> ::Protocol::MoveInfo* Arena::CreateMaybeMessage<::Protocol::MoveInfo>(Arena*);
+template<> ::Protocol::MoveInput* Arena::CreateMaybeMessage<::Protocol::MoveInput>(Arena*);
 template<> ::Protocol::PlayerInfo* Arena::CreateMaybeMessage<::Protocol::PlayerInfo>(Arena*);
 template<> ::Protocol::RoomInfo* Arena::CreateMaybeMessage<::Protocol::RoomInfo>(Arena*);
 template<> ::Protocol::RoomPlayerInfo* Arena::CreateMaybeMessage<::Protocol::RoomPlayerInfo>(Arena*);
@@ -503,6 +507,198 @@ class RoomInfo final :
 };
 // -------------------------------------------------------------------
 
+class MoveInput final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:Protocol.MoveInput) */ {
+ public:
+  inline MoveInput() : MoveInput(nullptr) {}
+  ~MoveInput() override;
+  explicit PROTOBUF_CONSTEXPR MoveInput(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  MoveInput(const MoveInput& from);
+  MoveInput(MoveInput&& from) noexcept
+    : MoveInput() {
+    *this = ::std::move(from);
+  }
+
+  inline MoveInput& operator=(const MoveInput& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline MoveInput& operator=(MoveInput&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const MoveInput& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const MoveInput* internal_default_instance() {
+    return reinterpret_cast<const MoveInput*>(
+               &_MoveInput_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    2;
+
+  friend void swap(MoveInput& a, MoveInput& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(MoveInput* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(MoveInput* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  MoveInput* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<MoveInput>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const MoveInput& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const MoveInput& from) {
+    MoveInput::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(MoveInput* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "Protocol.MoveInput";
+  }
+  protected:
+  explicit MoveInput(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kInputSeqFieldNumber = 1,
+    kClientTickFieldNumber = 2,
+    kAxisXFieldNumber = 3,
+    kAxisYFieldNumber = 4,
+    kStateFieldNumber = 5,
+  };
+  // uint32 input_seq = 1;
+  void clear_input_seq();
+  uint32_t input_seq() const;
+  void set_input_seq(uint32_t value);
+  private:
+  uint32_t _internal_input_seq() const;
+  void _internal_set_input_seq(uint32_t value);
+  public:
+
+  // uint32 client_tick = 2;
+  void clear_client_tick();
+  uint32_t client_tick() const;
+  void set_client_tick(uint32_t value);
+  private:
+  uint32_t _internal_client_tick() const;
+  void _internal_set_client_tick(uint32_t value);
+  public:
+
+  // int32 axis_x = 3;
+  void clear_axis_x();
+  int32_t axis_x() const;
+  void set_axis_x(int32_t value);
+  private:
+  int32_t _internal_axis_x() const;
+  void _internal_set_axis_x(int32_t value);
+  public:
+
+  // int32 axis_y = 4;
+  void clear_axis_y();
+  int32_t axis_y() const;
+  void set_axis_y(int32_t value);
+  private:
+  int32_t _internal_axis_y() const;
+  void _internal_set_axis_y(int32_t value);
+  public:
+
+  // .Protocol.MoveState state = 5;
+  void clear_state();
+  ::Protocol::MoveState state() const;
+  void set_state(::Protocol::MoveState value);
+  private:
+  ::Protocol::MoveState _internal_state() const;
+  void _internal_set_state(::Protocol::MoveState value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:Protocol.MoveInput)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    uint32_t input_seq_;
+    uint32_t client_tick_;
+    int32_t axis_x_;
+    int32_t axis_y_;
+    int state_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_Struct_2eproto;
+};
+// -------------------------------------------------------------------
+
 class MoveInfo final :
     public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:Protocol.MoveInfo) */ {
  public:
@@ -551,7 +747,7 @@ class MoveInfo final :
                &_MoveInfo_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    2;
+    3;
 
   friend void swap(MoveInfo& a, MoveInfo& b) {
     a.Swap(&b);
@@ -743,7 +939,7 @@ class PlayerInfo final :
                &_PlayerInfo_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    3;
+    4;
 
   friend void swap(PlayerInfo& a, PlayerInfo& b) {
     a.Swap(&b);
@@ -927,7 +1123,7 @@ class MatchPlayerInfo final :
                &_MatchPlayerInfo_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    4;
+    5;
 
   friend void swap(MatchPlayerInfo& a, MatchPlayerInfo& b) {
     a.Swap(&b);
@@ -1106,7 +1302,7 @@ class MatchInfo final :
                &_MatchInfo_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    5;
+    6;
 
   friend void swap(MatchInfo& a, MatchInfo& b) {
     a.Swap(&b);
@@ -1327,7 +1523,7 @@ class MatchPlayerState final :
                &_MatchPlayerState_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    6;
+    7;
 
   friend void swap(MatchPlayerState& a, MatchPlayerState& b) {
     a.Swap(&b);
@@ -1519,7 +1715,7 @@ class MatchStateInfo final :
                &_MatchStateInfo_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    7;
+    8;
 
   friend void swap(MatchStateInfo& a, MatchStateInfo& b) {
     a.Swap(&b);
@@ -1700,7 +1896,7 @@ class MatchResult final :
                &_MatchResult_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    8;
+    9;
 
   friend void swap(MatchResult& a, MatchResult& b) {
     a.Swap(&b);
@@ -2164,6 +2360,110 @@ inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::Protocol::RoomPlayerIn
 RoomInfo::players() const {
   // @@protoc_insertion_point(field_list:Protocol.RoomInfo.players)
   return _impl_.players_;
+}
+
+// -------------------------------------------------------------------
+
+// MoveInput
+
+// uint32 input_seq = 1;
+inline void MoveInput::clear_input_seq() {
+  _impl_.input_seq_ = 0u;
+}
+inline uint32_t MoveInput::_internal_input_seq() const {
+  return _impl_.input_seq_;
+}
+inline uint32_t MoveInput::input_seq() const {
+  // @@protoc_insertion_point(field_get:Protocol.MoveInput.input_seq)
+  return _internal_input_seq();
+}
+inline void MoveInput::_internal_set_input_seq(uint32_t value) {
+  
+  _impl_.input_seq_ = value;
+}
+inline void MoveInput::set_input_seq(uint32_t value) {
+  _internal_set_input_seq(value);
+  // @@protoc_insertion_point(field_set:Protocol.MoveInput.input_seq)
+}
+
+// uint32 client_tick = 2;
+inline void MoveInput::clear_client_tick() {
+  _impl_.client_tick_ = 0u;
+}
+inline uint32_t MoveInput::_internal_client_tick() const {
+  return _impl_.client_tick_;
+}
+inline uint32_t MoveInput::client_tick() const {
+  // @@protoc_insertion_point(field_get:Protocol.MoveInput.client_tick)
+  return _internal_client_tick();
+}
+inline void MoveInput::_internal_set_client_tick(uint32_t value) {
+  
+  _impl_.client_tick_ = value;
+}
+inline void MoveInput::set_client_tick(uint32_t value) {
+  _internal_set_client_tick(value);
+  // @@protoc_insertion_point(field_set:Protocol.MoveInput.client_tick)
+}
+
+// int32 axis_x = 3;
+inline void MoveInput::clear_axis_x() {
+  _impl_.axis_x_ = 0;
+}
+inline int32_t MoveInput::_internal_axis_x() const {
+  return _impl_.axis_x_;
+}
+inline int32_t MoveInput::axis_x() const {
+  // @@protoc_insertion_point(field_get:Protocol.MoveInput.axis_x)
+  return _internal_axis_x();
+}
+inline void MoveInput::_internal_set_axis_x(int32_t value) {
+  
+  _impl_.axis_x_ = value;
+}
+inline void MoveInput::set_axis_x(int32_t value) {
+  _internal_set_axis_x(value);
+  // @@protoc_insertion_point(field_set:Protocol.MoveInput.axis_x)
+}
+
+// int32 axis_y = 4;
+inline void MoveInput::clear_axis_y() {
+  _impl_.axis_y_ = 0;
+}
+inline int32_t MoveInput::_internal_axis_y() const {
+  return _impl_.axis_y_;
+}
+inline int32_t MoveInput::axis_y() const {
+  // @@protoc_insertion_point(field_get:Protocol.MoveInput.axis_y)
+  return _internal_axis_y();
+}
+inline void MoveInput::_internal_set_axis_y(int32_t value) {
+  
+  _impl_.axis_y_ = value;
+}
+inline void MoveInput::set_axis_y(int32_t value) {
+  _internal_set_axis_y(value);
+  // @@protoc_insertion_point(field_set:Protocol.MoveInput.axis_y)
+}
+
+// .Protocol.MoveState state = 5;
+inline void MoveInput::clear_state() {
+  _impl_.state_ = 0;
+}
+inline ::Protocol::MoveState MoveInput::_internal_state() const {
+  return static_cast< ::Protocol::MoveState >(_impl_.state_);
+}
+inline ::Protocol::MoveState MoveInput::state() const {
+  // @@protoc_insertion_point(field_get:Protocol.MoveInput.state)
+  return _internal_state();
+}
+inline void MoveInput::_internal_set_state(::Protocol::MoveState value) {
+  
+  _impl_.state_ = value;
+}
+inline void MoveInput::set_state(::Protocol::MoveState value) {
+  _internal_set_state(value);
+  // @@protoc_insertion_point(field_set:Protocol.MoveInput.state)
 }
 
 // -------------------------------------------------------------------
@@ -3047,6 +3347,8 @@ MatchResult::player_results() const {
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

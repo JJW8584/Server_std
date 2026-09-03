@@ -27,6 +27,17 @@ message RoomInfo
 }
 
 // 플레이어 위치/이동 데이터
+message MoveInput
+{
+    uint32 input_seq = 1;
+    uint32 client_tick = 2;
+
+    int32 axis_x = 3; // A=-1, D=1
+    int32 axis_y = 4; // S=-1, W=1
+
+    MoveState state = 5;
+}
+
 message MoveInfo
 { 
 	float x = 1;

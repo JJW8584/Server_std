@@ -309,21 +309,32 @@ void Room::HandleMove(Protocol::C_MOVE pkt, const uint64 objectId)
 	if (iter == _players.end() || iter->second == nullptr)
 		return;
 
+	if (!pkt.has_move_input())
+		return;
+
 	PlayerRef player = iter->second;
+	const Protocol::MoveInput& moveInput = pkt.move_input();
+	
+	// 클라에서 input_seq는 1부터 시작하는 걸 추천
+	if (moveInput.input_seq() <= player->lastMoveInputSeq)
+		return;
 
-	player->moveInfo->CopyFrom(pkt.move_info());
-	{
-		Protocol::S_MOVE movePkt;
-		{
-			Protocol::PlayerInfo* info = movePkt.mutable_player_info();
-			info->set_object_id(objectId);
-			Protocol::MoveInfo* moveInfo = info->mutable_move_info();
-			moveInfo->CopyFrom(pkt.move_info());
-		}
+	int32 axisX = moveInput.axis_x();
+	int32 axisY = moveInput.axis_y();
 
-		SendBufferRef sendBuffer = ClientPacketHandler::MakeSendBuffer(movePkt);
-		Broadcast(sendBuffer);
-	}
+	//player->moveInfo->CopyFrom(pkt.move_info());
+	//{
+	//	Protocol::S_MOVE movePkt;
+	//	{
+	//		Protocol::PlayerInfo* info = movePkt.mutable_player_info();
+	//		info->set_object_id(objectId);
+	//		Protocol::MoveInfo* moveInfo = info->mutable_move_info();
+	//		//moveInfo->CopyFrom(pkt.move_info());
+	//	}
+
+	//	SendBufferRef sendBuffer = ClientPacketHandler::MakeSendBuffer(movePkt);
+	//	Broadcast(sendBuffer);
+	//}
 }
 
 void Room::HandleFire(PlayerRef player, Protocol::C_FIRE pkt)
