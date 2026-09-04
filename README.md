@@ -75,7 +75,7 @@ flowchart TB
 
 ## 패킷 API 명세
 
-이 프로젝트는 HTTP API가 아니므로 URL과 HTTP Method가 없습니다. API 엔드포인트는 TCP `127.0.0.1:7777`이며, Method 역할은 16비트 패킷 ID가 담당합니다.
+API 엔드포인트는 TCP `127.0.0.1:7777`이며, Method 역할은 16비트 패킷 ID가 담당합니다.
 
 모든 프레임은 다음 형식입니다.
 
