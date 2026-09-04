@@ -34,17 +34,14 @@ message MoveInput
 
     int32 axis_x = 3; // A=-1, D=1
     int32 axis_y = 4; // S=-1, W=1
-
-    MoveState state = 5;
 }
 
 message MoveInfo
 { 
 	float x = 1;
 	float y = 2;
-	float z = 3;
-	float yaw = 4;
-	MoveState state = 5;
+
+	MoveState state = 3;
 }
 
 message PlayerInfo

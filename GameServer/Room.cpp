@@ -256,15 +256,12 @@ bool Room::HandleStartMatch(PlayerRef player)
 		case Protocol::TEAM_BLUE:
 			moveInfo.set_x(-1300.f + 100.f * i);
 			moveInfo.set_y(-1300.f + 100.f * i);
-			moveInfo.set_z(100.f);
 			break;
 		case Protocol::TEAM_RED:
-			moveInfo.set_x(1300.f + 100.f * i);
-			moveInfo.set_y(1300.f + 100.f * i);
-			moveInfo.set_z(100.f);
+			moveInfo.set_x(1200.f + 100.f * i);
+			moveInfo.set_y(1200.f + 100.f * i);
 			break;
 		}
-		moveInfo.set_yaw(0);
 
 		playerInfo.set_object_id(roomPlayerInfo.object_id());
 		playerInfo.set_nickname(roomPlayerInfo.nickname());
@@ -285,7 +282,14 @@ bool Room::HandleStartMatch(PlayerRef player)
 
 		matchInfo.add_match_players_state()->CopyFrom(matchPlayerState);
 
-		_players[roomPlayerInfo.object_id()]->matchPlayerState.CopyFrom(matchPlayerState);
+		PlayerRef player = _players[roomPlayerInfo.object_id()];
+
+		player->moveInfo->CopyFrom(moveInfo);
+		player->moveInput.Clear();
+		player->matchPlayerState.CopyFrom(matchPlayerState);
+
+		player->lastMoveInputSeq = 0;
+		player->lastProcessedMoveInputSeq = 0;
 
 		_matchInfo.CopyFrom(matchInfo);
 	}
@@ -313,14 +317,29 @@ void Room::HandleMove(Protocol::C_MOVE pkt, const uint64 objectId)
 		return;
 
 	PlayerRef player = iter->second;
+
+	if (!player->matchPlayerState.is_alive())
+		return;
+
 	const Protocol::MoveInput& moveInput = pkt.move_input();
+	const uint32 inputSeq = moveInput.input_seq();
 	
 	// 클라에서 input_seq는 1부터 시작하는 걸 추천
-	if (moveInput.input_seq() <= player->lastMoveInputSeq)
+	if (inputSeq <= player->lastMoveInputSeq)
 		return;
 
 	int32 axisX = moveInput.axis_x();
 	int32 axisY = moveInput.axis_y();
+
+	if (axisX < -1 || axisX > 1 || axisY < -1 || axisY > 1)
+		return;
+
+	player->lastMoveInputSeq = inputSeq;
+	player->moveInput.set_input_seq(inputSeq);
+	player->moveInput.set_client_tick(moveInput.client_tick());
+	player->moveInput.set_axis_x(axisX);
+	player->moveInput.set_axis_y(axisY);
+
 
 	//player->moveInfo->CopyFrom(pkt.move_info());
 	//{
@@ -335,6 +354,81 @@ void Room::HandleMove(Protocol::C_MOVE pkt, const uint64 objectId)
 	//	SendBufferRef sendBuffer = ClientPacketHandler::MakeSendBuffer(movePkt);
 	//	Broadcast(sendBuffer);
 	//}
+}
+
+void Room::UpdateMoveTick()
+{
+	if (_isClosing)
+		return;
+
+	if (_roomInfo.state() != Protocol::ROOM_STATE_PLAYING)
+		return;
+
+	constexpr uint64 MoveTickMilliseconds = 50;
+	constexpr float MoveTickSeconds = 0.05f;
+	constexpr float MoveSpeed = 500.f;
+
+
+	for (auto& [objectId, player] : _players)
+	{
+		if (player == nullptr || player->moveInfo == nullptr)
+		{
+			continue;
+		}
+
+		if (!player->matchPlayerState.is_alive())
+			continue;
+
+		const int32 axisX = player->moveInput.axis_x(); // A/D
+		const int32 axisY = player->moveInput.axis_y(); // S/W
+
+		const bool wasMoving = player->moveInfo->state() == Protocol::MOVE_STATE_MOVE;
+
+		const bool isMoving = axisX != 0 || axisY != 0;
+
+		if (isMoving)
+		{
+			float moveX = static_cast<float>(axisY);
+			float moveY = static_cast<float>(axisX);
+
+			const float length = std::sqrt(moveX * moveX + moveY * moveY);
+
+			// 대각선이 직선보다 빨라지는 것 방지
+			if (axisX != 0 && axisY != 0)
+			{
+				moveX /= length;
+				moveY /= length;
+			}
+
+			const float distance = MoveSpeed * MoveTickSeconds;
+			player->moveInfo->set_x(player->moveInfo->x() +	moveX * distance);
+			player->moveInfo->set_y(player->moveInfo->y() + moveY * distance);
+			player->moveInfo->set_state(Protocol::MOVE_STATE_MOVE);
+		}
+		else
+		{
+			player->moveInfo->set_state(Protocol::MOVE_STATE_IDLE);
+		}
+
+		player->lastProcessedMoveInputSeq = player->lastMoveInputSeq;
+
+		// 이동 중에는 위치를 계속 전송
+		// 이동하다 멈춘 순간에는 최종 위치를 한 번 전송
+		const bool shouldSend = isMoving || wasMoving;
+
+		if (!shouldSend)
+			continue;
+
+		Protocol::S_MOVE movePkt;
+		Protocol::PlayerInfo* playerInfo = movePkt.mutable_player_info();
+
+		playerInfo->set_object_id(objectId);
+		playerInfo->mutable_move_info()->CopyFrom(*player->moveInfo);
+
+		Broadcast(ClientPacketHandler::MakeSendBuffer(movePkt));
+	}
+
+	DoTimer(MoveTickMilliseconds, &Room::UpdateMoveTick);
 }
 
 void Room::HandleFire(PlayerRef player, Protocol::C_FIRE pkt)
@@ -479,6 +573,8 @@ void Room::HandlePrepareMatch(PlayerRef player)
 
 	_remainSeconds = 60;
 	_sendRemainSecondsTimer = 10;
+
+	DoTimer(50, &Room::UpdateMoveTick);
 	DoTimer(100, &Room::UpdateTick);
 }
 
@@ -502,6 +598,9 @@ void Room::PlayerRespawn(uint64 objectId)
 
 	Protocol::S_PLAYER_RESPAWN pkt;
 
+	if (_players.find(objectId) == _players.end())
+		return;
+
 	PlayerRef player = _players[objectId];
 
 	Protocol::PlayerInfo* playerInfo = pkt.mutable_player_info();
@@ -509,8 +608,7 @@ void Room::PlayerRespawn(uint64 objectId)
 	playerInfo->set_nickname(player->GetNickname());
 	Protocol::MoveInfo* moveInfo = playerInfo->mutable_move_info();
 
-	if (_players.find(objectId) == _players.end())
-		return;
+	
 
 	moveInfo->set_state(Protocol::MOVE_STATE_IDLE);
 	switch (player->team)
@@ -518,16 +616,16 @@ void Room::PlayerRespawn(uint64 objectId)
 	case Protocol::TEAM_BLUE:
 		moveInfo->set_x(-1300.f);
 		moveInfo->set_y(-1300.f);
-		moveInfo->set_z(100.f);
 		break;
 	case Protocol::TEAM_RED:
 		moveInfo->set_x(1300.f);
 		moveInfo->set_y(1300.f);
-		moveInfo->set_z(100.f);
 		break;
 	}
-	moveInfo->set_yaw(0);
 	player->moveInfo->CopyFrom(*moveInfo);
+
+	player->moveInput.set_axis_x(0);
+	player->moveInput.set_axis_y(0);
 
 	Protocol::MatchPlayerState* state = pkt.mutable_player_state();
 	player->matchPlayerState.set_hp(player->matchPlayerState.max_hp());

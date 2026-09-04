@@ -632,7 +632,6 @@ class MoveInput final :
     kClientTickFieldNumber = 2,
     kAxisXFieldNumber = 3,
     kAxisYFieldNumber = 4,
-    kStateFieldNumber = 5,
   };
   // uint32 input_seq = 1;
   void clear_input_seq();
@@ -670,15 +669,6 @@ class MoveInput final :
   void _internal_set_axis_y(int32_t value);
   public:
 
-  // .Protocol.MoveState state = 5;
-  void clear_state();
-  ::Protocol::MoveState state() const;
-  void set_state(::Protocol::MoveState value);
-  private:
-  ::Protocol::MoveState _internal_state() const;
-  void _internal_set_state(::Protocol::MoveState value);
-  public:
-
   // @@protoc_insertion_point(class_scope:Protocol.MoveInput)
  private:
   class _Internal;
@@ -691,7 +681,6 @@ class MoveInput final :
     uint32_t client_tick_;
     int32_t axis_x_;
     int32_t axis_y_;
-    int state_;
     mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   };
   union { Impl_ _impl_; };
@@ -822,9 +811,7 @@ class MoveInfo final :
   enum : int {
     kXFieldNumber = 1,
     kYFieldNumber = 2,
-    kZFieldNumber = 3,
-    kYawFieldNumber = 4,
-    kStateFieldNumber = 5,
+    kStateFieldNumber = 3,
   };
   // float x = 1;
   void clear_x();
@@ -844,25 +831,7 @@ class MoveInfo final :
   void _internal_set_y(float value);
   public:
 
-  // float z = 3;
-  void clear_z();
-  float z() const;
-  void set_z(float value);
-  private:
-  float _internal_z() const;
-  void _internal_set_z(float value);
-  public:
-
-  // float yaw = 4;
-  void clear_yaw();
-  float yaw() const;
-  void set_yaw(float value);
-  private:
-  float _internal_yaw() const;
-  void _internal_set_yaw(float value);
-  public:
-
-  // .Protocol.MoveState state = 5;
+  // .Protocol.MoveState state = 3;
   void clear_state();
   ::Protocol::MoveState state() const;
   void set_state(::Protocol::MoveState value);
@@ -881,8 +850,6 @@ class MoveInfo final :
   struct Impl_ {
     float x_;
     float y_;
-    float z_;
-    float yaw_;
     int state_;
     mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   };
@@ -2446,26 +2413,6 @@ inline void MoveInput::set_axis_y(int32_t value) {
   // @@protoc_insertion_point(field_set:Protocol.MoveInput.axis_y)
 }
 
-// .Protocol.MoveState state = 5;
-inline void MoveInput::clear_state() {
-  _impl_.state_ = 0;
-}
-inline ::Protocol::MoveState MoveInput::_internal_state() const {
-  return static_cast< ::Protocol::MoveState >(_impl_.state_);
-}
-inline ::Protocol::MoveState MoveInput::state() const {
-  // @@protoc_insertion_point(field_get:Protocol.MoveInput.state)
-  return _internal_state();
-}
-inline void MoveInput::_internal_set_state(::Protocol::MoveState value) {
-  
-  _impl_.state_ = value;
-}
-inline void MoveInput::set_state(::Protocol::MoveState value) {
-  _internal_set_state(value);
-  // @@protoc_insertion_point(field_set:Protocol.MoveInput.state)
-}
-
 // -------------------------------------------------------------------
 
 // MoveInfo
@@ -2510,47 +2457,7 @@ inline void MoveInfo::set_y(float value) {
   // @@protoc_insertion_point(field_set:Protocol.MoveInfo.y)
 }
 
-// float z = 3;
-inline void MoveInfo::clear_z() {
-  _impl_.z_ = 0;
-}
-inline float MoveInfo::_internal_z() const {
-  return _impl_.z_;
-}
-inline float MoveInfo::z() const {
-  // @@protoc_insertion_point(field_get:Protocol.MoveInfo.z)
-  return _internal_z();
-}
-inline void MoveInfo::_internal_set_z(float value) {
-  
-  _impl_.z_ = value;
-}
-inline void MoveInfo::set_z(float value) {
-  _internal_set_z(value);
-  // @@protoc_insertion_point(field_set:Protocol.MoveInfo.z)
-}
-
-// float yaw = 4;
-inline void MoveInfo::clear_yaw() {
-  _impl_.yaw_ = 0;
-}
-inline float MoveInfo::_internal_yaw() const {
-  return _impl_.yaw_;
-}
-inline float MoveInfo::yaw() const {
-  // @@protoc_insertion_point(field_get:Protocol.MoveInfo.yaw)
-  return _internal_yaw();
-}
-inline void MoveInfo::_internal_set_yaw(float value) {
-  
-  _impl_.yaw_ = value;
-}
-inline void MoveInfo::set_yaw(float value) {
-  _internal_set_yaw(value);
-  // @@protoc_insertion_point(field_set:Protocol.MoveInfo.yaw)
-}
-
-// .Protocol.MoveState state = 5;
+// .Protocol.MoveState state = 3;
 inline void MoveInfo::clear_state() {
   _impl_.state_ = 0;
 }

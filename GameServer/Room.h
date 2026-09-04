@@ -17,6 +17,7 @@ public:
 	bool HandleReadyState(PlayerRef player, bool ready);
 	bool HandleStartMatch(PlayerRef player);
 	void HandleMove(Protocol::C_MOVE pkt, const uint64 objectId);
+	void UpdateMoveTick();
 	void HandleFire(PlayerRef player, Protocol::C_FIRE pkt);
 	void HandleHit(PlayerRef player, Protocol::C_HIT pkt);
 	void HandlePrepareMatch(PlayerRef player);

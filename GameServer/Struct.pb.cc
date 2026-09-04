@@ -62,7 +62,6 @@ PROTOBUF_CONSTEXPR MoveInput::MoveInput(
   , /*decltype(_impl_.client_tick_)*/0u
   , /*decltype(_impl_.axis_x_)*/0
   , /*decltype(_impl_.axis_y_)*/0
-  , /*decltype(_impl_.state_)*/0
   , /*decltype(_impl_._cached_size_)*/{}} {}
 struct MoveInputDefaultTypeInternal {
   PROTOBUF_CONSTEXPR MoveInputDefaultTypeInternal()
@@ -77,8 +76,6 @@ PROTOBUF_CONSTEXPR MoveInfo::MoveInfo(
     ::_pbi::ConstantInitialized): _impl_{
     /*decltype(_impl_.x_)*/0
   , /*decltype(_impl_.y_)*/0
-  , /*decltype(_impl_.z_)*/0
-  , /*decltype(_impl_.yaw_)*/0
   , /*decltype(_impl_.state_)*/0
   , /*decltype(_impl_._cached_size_)*/{}} {}
 struct MoveInfoDefaultTypeInternal {
@@ -227,7 +224,6 @@ const uint32_t TableStruct_Struct_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(p
   PROTOBUF_FIELD_OFFSET(::Protocol::MoveInput, _impl_.client_tick_),
   PROTOBUF_FIELD_OFFSET(::Protocol::MoveInput, _impl_.axis_x_),
   PROTOBUF_FIELD_OFFSET(::Protocol::MoveInput, _impl_.axis_y_),
-  PROTOBUF_FIELD_OFFSET(::Protocol::MoveInput, _impl_.state_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::Protocol::MoveInfo, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -236,8 +232,6 @@ const uint32_t TableStruct_Struct_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(p
   ~0u,  // no _inlined_string_donated_
   PROTOBUF_FIELD_OFFSET(::Protocol::MoveInfo, _impl_.x_),
   PROTOBUF_FIELD_OFFSET(::Protocol::MoveInfo, _impl_.y_),
-  PROTOBUF_FIELD_OFFSET(::Protocol::MoveInfo, _impl_.z_),
-  PROTOBUF_FIELD_OFFSET(::Protocol::MoveInfo, _impl_.yaw_),
   PROTOBUF_FIELD_OFFSET(::Protocol::MoveInfo, _impl_.state_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::Protocol::PlayerInfo, _internal_metadata_),
@@ -306,13 +300,13 @@ static const ::_pbi::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protode
   { 0, -1, -1, sizeof(::Protocol::RoomPlayerInfo)},
   { 11, -1, -1, sizeof(::Protocol::RoomInfo)},
   { 23, -1, -1, sizeof(::Protocol::MoveInput)},
-  { 34, -1, -1, sizeof(::Protocol::MoveInfo)},
-  { 45, -1, -1, sizeof(::Protocol::PlayerInfo)},
-  { 54, -1, -1, sizeof(::Protocol::MatchPlayerInfo)},
-  { 63, -1, -1, sizeof(::Protocol::MatchInfo)},
-  { 75, -1, -1, sizeof(::Protocol::MatchPlayerState)},
-  { 86, -1, -1, sizeof(::Protocol::MatchStateInfo)},
-  { 96, -1, -1, sizeof(::Protocol::MatchResult)},
+  { 33, -1, -1, sizeof(::Protocol::MoveInfo)},
+  { 42, -1, -1, sizeof(::Protocol::PlayerInfo)},
+  { 51, -1, -1, sizeof(::Protocol::MatchPlayerInfo)},
+  { 60, -1, -1, sizeof(::Protocol::MatchInfo)},
+  { 72, -1, -1, sizeof(::Protocol::MatchPlayerState)},
+  { 83, -1, -1, sizeof(::Protocol::MatchStateInfo)},
+  { 93, -1, -1, sizeof(::Protocol::MatchResult)},
 };
 
 static const ::_pb::Message* const file_default_instances[] = {
@@ -337,40 +331,39 @@ const char descriptor_table_protodef_Struct_2eproto[] PROTOBUF_SECTION_VARIABLE(
   "m_id\030\001 \001(\004\022\021\n\troom_name\030\002 \001(\t\022\"\n\005state\030\003"
   " \001(\0162\023.Protocol.RoomState\022\026\n\016host_object"
   "_id\030\004 \001(\004\022\030\n\020max_player_count\030\005 \001(\r\022)\n\007p"
-  "layers\030\006 \003(\0132\030.Protocol.RoomPlayerInfo\"w"
+  "layers\030\006 \003(\0132\030.Protocol.RoomPlayerInfo\"S"
   "\n\tMoveInput\022\021\n\tinput_seq\030\001 \001(\r\022\023\n\013client"
   "_tick\030\002 \001(\r\022\016\n\006axis_x\030\003 \001(\005\022\016\n\006axis_y\030\004 "
-  "\001(\005\022\"\n\005state\030\005 \001(\0162\023.Protocol.MoveState\""
-  "\\\n\010MoveInfo\022\t\n\001x\030\001 \001(\002\022\t\n\001y\030\002 \001(\002\022\t\n\001z\030\003"
-  " \001(\002\022\013\n\003yaw\030\004 \001(\002\022\"\n\005state\030\005 \001(\0162\023.Proto"
-  "col.MoveState\"X\n\nPlayerInfo\022\021\n\tobject_id"
-  "\030\001 \001(\004\022%\n\tmove_info\030\002 \001(\0132\022.Protocol.Mov"
-  "eInfo\022\020\n\010nickname\030\003 \001(\t\"\205\001\n\017MatchPlayerI"
-  "nfo\022)\n\013player_info\030\001 \001(\0132\024.Protocol.Play"
-  "erInfo\022)\n\013player_type\030\002 \001(\0162\024.Protocol.P"
-  "layerType\022\034\n\004team\030\003 \001(\0162\016.Protocol.Team\""
-  "\316\001\n\tMatchInfo\022\020\n\010match_id\030\001 \001(\004\022\030\n\020durat"
-  "ion_seconds\030\002 \001(\r\022\021\n\tred_score\030\003 \001(\r\022\022\n\n"
-  "blue_score\030\004 \001(\r\0225\n\022match_players_info\030\005"
-  " \003(\0132\031.Protocol.MatchPlayerInfo\0227\n\023match"
-  "_players_state\030\006 \003(\0132\032.Protocol.MatchPla"
-  "yerState\"i\n\020MatchPlayerState\022\n\n\002hp\030\001 \001(\005"
-  "\022\016\n\006max_hp\030\002 \001(\005\022\020\n\010is_alive\030\003 \001(\010\022\022\n\nki"
-  "ll_count\030\004 \001(\r\022\023\n\013death_count\030\005 \001(\r\"i\n\016M"
-  "atchStateInfo\022\020\n\010match_id\030\001 \001(\004\022\036\n\026remai"
-  "ning_time_seconds\030\002 \001(\r\022\021\n\tred_score\030\003 \001"
-  "(\r\022\022\n\nblue_score\030\004 \001(\r\"\237\001\n\013MatchResult\022\020"
-  "\n\010match_id\030\001 \001(\004\022#\n\013winner_team\030\002 \001(\0162\016."
-  "Protocol.Team\022\021\n\tred_score\030\003 \001(\r\022\022\n\nblue"
-  "_score\030\004 \001(\r\0222\n\016player_results\030\005 \003(\0132\032.P"
-  "rotocol.MatchPlayerStateb\006proto3"
+  "\001(\005\"D\n\010MoveInfo\022\t\n\001x\030\001 \001(\002\022\t\n\001y\030\002 \001(\002\022\"\n"
+  "\005state\030\003 \001(\0162\023.Protocol.MoveState\"X\n\nPla"
+  "yerInfo\022\021\n\tobject_id\030\001 \001(\004\022%\n\tmove_info\030"
+  "\002 \001(\0132\022.Protocol.MoveInfo\022\020\n\010nickname\030\003 "
+  "\001(\t\"\205\001\n\017MatchPlayerInfo\022)\n\013player_info\030\001"
+  " \001(\0132\024.Protocol.PlayerInfo\022)\n\013player_typ"
+  "e\030\002 \001(\0162\024.Protocol.PlayerType\022\034\n\004team\030\003 "
+  "\001(\0162\016.Protocol.Team\"\316\001\n\tMatchInfo\022\020\n\010mat"
+  "ch_id\030\001 \001(\004\022\030\n\020duration_seconds\030\002 \001(\r\022\021\n"
+  "\tred_score\030\003 \001(\r\022\022\n\nblue_score\030\004 \001(\r\0225\n\022"
+  "match_players_info\030\005 \003(\0132\031.Protocol.Matc"
+  "hPlayerInfo\0227\n\023match_players_state\030\006 \003(\013"
+  "2\032.Protocol.MatchPlayerState\"i\n\020MatchPla"
+  "yerState\022\n\n\002hp\030\001 \001(\005\022\016\n\006max_hp\030\002 \001(\005\022\020\n\010"
+  "is_alive\030\003 \001(\010\022\022\n\nkill_count\030\004 \001(\r\022\023\n\013de"
+  "ath_count\030\005 \001(\r\"i\n\016MatchStateInfo\022\020\n\010mat"
+  "ch_id\030\001 \001(\004\022\036\n\026remaining_time_seconds\030\002 "
+  "\001(\r\022\021\n\tred_score\030\003 \001(\r\022\022\n\nblue_score\030\004 \001"
+  "(\r\"\237\001\n\013MatchResult\022\020\n\010match_id\030\001 \001(\004\022#\n\013"
+  "winner_team\030\002 \001(\0162\016.Protocol.Team\022\021\n\tred"
+  "_score\030\003 \001(\r\022\022\n\nblue_score\030\004 \001(\r\0222\n\016play"
+  "er_results\030\005 \003(\0132\032.Protocol.MatchPlayerS"
+  "tateb\006proto3"
   ;
 static const ::_pbi::DescriptorTable* const descriptor_table_Struct_2eproto_deps[1] = {
   &::descriptor_table_Enum_2eproto,
 };
 static ::_pbi::once_flag descriptor_table_Struct_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_Struct_2eproto = {
-    false, false, 1392, descriptor_table_protodef_Struct_2eproto,
+    false, false, 1332, descriptor_table_protodef_Struct_2eproto,
     "Struct.proto",
     &descriptor_table_Struct_2eproto_once, descriptor_table_Struct_2eproto_deps, 1, 10,
     schemas, file_default_instances, TableStruct_Struct_2eproto::offsets,
@@ -1070,13 +1063,12 @@ MoveInput::MoveInput(const MoveInput& from)
     , decltype(_impl_.client_tick_){}
     , decltype(_impl_.axis_x_){}
     , decltype(_impl_.axis_y_){}
-    , decltype(_impl_.state_){}
     , /*decltype(_impl_._cached_size_)*/{}};
 
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
   ::memcpy(&_impl_.input_seq_, &from._impl_.input_seq_,
-    static_cast<size_t>(reinterpret_cast<char*>(&_impl_.state_) -
-    reinterpret_cast<char*>(&_impl_.input_seq_)) + sizeof(_impl_.state_));
+    static_cast<size_t>(reinterpret_cast<char*>(&_impl_.axis_y_) -
+    reinterpret_cast<char*>(&_impl_.input_seq_)) + sizeof(_impl_.axis_y_));
   // @@protoc_insertion_point(copy_constructor:Protocol.MoveInput)
 }
 
@@ -1089,7 +1081,6 @@ inline void MoveInput::SharedCtor(
     , decltype(_impl_.client_tick_){0u}
     , decltype(_impl_.axis_x_){0}
     , decltype(_impl_.axis_y_){0}
-    , decltype(_impl_.state_){0}
     , /*decltype(_impl_._cached_size_)*/{}
   };
 }
@@ -1118,8 +1109,8 @@ void MoveInput::Clear() {
   (void) cached_has_bits;
 
   ::memset(&_impl_.input_seq_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&_impl_.state_) -
-      reinterpret_cast<char*>(&_impl_.input_seq_)) + sizeof(_impl_.state_));
+      reinterpret_cast<char*>(&_impl_.axis_y_) -
+      reinterpret_cast<char*>(&_impl_.input_seq_)) + sizeof(_impl_.axis_y_));
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
@@ -1158,15 +1149,6 @@ const char* MoveInput::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 32)) {
           _impl_.axis_y_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
           CHK_(ptr);
-        } else
-          goto handle_unusual;
-        continue;
-      // .Protocol.MoveState state = 5;
-      case 5:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 40)) {
-          uint64_t val = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
-          CHK_(ptr);
-          _internal_set_state(static_cast<::Protocol::MoveState>(val));
         } else
           goto handle_unusual;
         continue;
@@ -1223,13 +1205,6 @@ uint8_t* MoveInput::_InternalSerialize(
     target = ::_pbi::WireFormatLite::WriteInt32ToArray(4, this->_internal_axis_y(), target);
   }
 
-  // .Protocol.MoveState state = 5;
-  if (this->_internal_state() != 0) {
-    target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteEnumToArray(
-      5, this->_internal_state(), target);
-  }
-
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
@@ -1266,12 +1241,6 @@ size_t MoveInput::ByteSizeLong() const {
     total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_axis_y());
   }
 
-  // .Protocol.MoveState state = 5;
-  if (this->_internal_state() != 0) {
-    total_size += 1 +
-      ::_pbi::WireFormatLite::EnumSize(this->_internal_state());
-  }
-
   return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
 }
 
@@ -1302,9 +1271,6 @@ void MoveInput::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROT
   if (from._internal_axis_y() != 0) {
     _this->_internal_set_axis_y(from._internal_axis_y());
   }
-  if (from._internal_state() != 0) {
-    _this->_internal_set_state(from._internal_state());
-  }
   _this->_internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
 }
 
@@ -1323,8 +1289,8 @@ void MoveInput::InternalSwap(MoveInput* other) {
   using std::swap;
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
   ::PROTOBUF_NAMESPACE_ID::internal::memswap<
-      PROTOBUF_FIELD_OFFSET(MoveInput, _impl_.state_)
-      + sizeof(MoveInput::_impl_.state_)
+      PROTOBUF_FIELD_OFFSET(MoveInput, _impl_.axis_y_)
+      + sizeof(MoveInput::_impl_.axis_y_)
       - PROTOBUF_FIELD_OFFSET(MoveInput, _impl_.input_seq_)>(
           reinterpret_cast<char*>(&_impl_.input_seq_),
           reinterpret_cast<char*>(&other->_impl_.input_seq_));
@@ -1354,8 +1320,6 @@ MoveInfo::MoveInfo(const MoveInfo& from)
   new (&_impl_) Impl_{
       decltype(_impl_.x_){}
     , decltype(_impl_.y_){}
-    , decltype(_impl_.z_){}
-    , decltype(_impl_.yaw_){}
     , decltype(_impl_.state_){}
     , /*decltype(_impl_._cached_size_)*/{}};
 
@@ -1373,8 +1337,6 @@ inline void MoveInfo::SharedCtor(
   new (&_impl_) Impl_{
       decltype(_impl_.x_){0}
     , decltype(_impl_.y_){0}
-    , decltype(_impl_.z_){0}
-    , decltype(_impl_.yaw_){0}
     , decltype(_impl_.state_){0}
     , /*decltype(_impl_._cached_size_)*/{}
   };
@@ -1431,25 +1393,9 @@ const char* MoveInfo::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx)
         } else
           goto handle_unusual;
         continue;
-      // float z = 3;
+      // .Protocol.MoveState state = 3;
       case 3:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 29)) {
-          _impl_.z_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<float>(ptr);
-          ptr += sizeof(float);
-        } else
-          goto handle_unusual;
-        continue;
-      // float yaw = 4;
-      case 4:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 37)) {
-          _impl_.yaw_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<float>(ptr);
-          ptr += sizeof(float);
-        } else
-          goto handle_unusual;
-        continue;
-      // .Protocol.MoveState state = 5;
-      case 5:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 40)) {
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 24)) {
           uint64_t val = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
           CHK_(ptr);
           _internal_set_state(static_cast<::Protocol::MoveState>(val));
@@ -1505,31 +1451,11 @@ uint8_t* MoveInfo::_InternalSerialize(
     target = ::_pbi::WireFormatLite::WriteFloatToArray(2, this->_internal_y(), target);
   }
 
-  // float z = 3;
-  static_assert(sizeof(uint32_t) == sizeof(float), "Code assumes uint32_t and float are the same size.");
-  float tmp_z = this->_internal_z();
-  uint32_t raw_z;
-  memcpy(&raw_z, &tmp_z, sizeof(tmp_z));
-  if (raw_z != 0) {
-    target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteFloatToArray(3, this->_internal_z(), target);
-  }
-
-  // float yaw = 4;
-  static_assert(sizeof(uint32_t) == sizeof(float), "Code assumes uint32_t and float are the same size.");
-  float tmp_yaw = this->_internal_yaw();
-  uint32_t raw_yaw;
-  memcpy(&raw_yaw, &tmp_yaw, sizeof(tmp_yaw));
-  if (raw_yaw != 0) {
-    target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteFloatToArray(4, this->_internal_yaw(), target);
-  }
-
-  // .Protocol.MoveState state = 5;
+  // .Protocol.MoveState state = 3;
   if (this->_internal_state() != 0) {
     target = stream->EnsureSpace(target);
     target = ::_pbi::WireFormatLite::WriteEnumToArray(
-      5, this->_internal_state(), target);
+      3, this->_internal_state(), target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -1566,25 +1492,7 @@ size_t MoveInfo::ByteSizeLong() const {
     total_size += 1 + 4;
   }
 
-  // float z = 3;
-  static_assert(sizeof(uint32_t) == sizeof(float), "Code assumes uint32_t and float are the same size.");
-  float tmp_z = this->_internal_z();
-  uint32_t raw_z;
-  memcpy(&raw_z, &tmp_z, sizeof(tmp_z));
-  if (raw_z != 0) {
-    total_size += 1 + 4;
-  }
-
-  // float yaw = 4;
-  static_assert(sizeof(uint32_t) == sizeof(float), "Code assumes uint32_t and float are the same size.");
-  float tmp_yaw = this->_internal_yaw();
-  uint32_t raw_yaw;
-  memcpy(&raw_yaw, &tmp_yaw, sizeof(tmp_yaw));
-  if (raw_yaw != 0) {
-    total_size += 1 + 4;
-  }
-
-  // .Protocol.MoveState state = 5;
+  // .Protocol.MoveState state = 3;
   if (this->_internal_state() != 0) {
     total_size += 1 +
       ::_pbi::WireFormatLite::EnumSize(this->_internal_state());
@@ -1621,20 +1529,6 @@ void MoveInfo::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTO
   memcpy(&raw_y, &tmp_y, sizeof(tmp_y));
   if (raw_y != 0) {
     _this->_internal_set_y(from._internal_y());
-  }
-  static_assert(sizeof(uint32_t) == sizeof(float), "Code assumes uint32_t and float are the same size.");
-  float tmp_z = from._internal_z();
-  uint32_t raw_z;
-  memcpy(&raw_z, &tmp_z, sizeof(tmp_z));
-  if (raw_z != 0) {
-    _this->_internal_set_z(from._internal_z());
-  }
-  static_assert(sizeof(uint32_t) == sizeof(float), "Code assumes uint32_t and float are the same size.");
-  float tmp_yaw = from._internal_yaw();
-  uint32_t raw_yaw;
-  memcpy(&raw_yaw, &tmp_yaw, sizeof(tmp_yaw));
-  if (raw_yaw != 0) {
-    _this->_internal_set_yaw(from._internal_yaw());
   }
   if (from._internal_state() != 0) {
     _this->_internal_set_state(from._internal_state());
