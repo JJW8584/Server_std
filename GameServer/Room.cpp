@@ -338,6 +338,7 @@ void Room::HandleFire(PlayerRef player, Protocol::C_FIRE pkt)
 		return;
 
 	player->fireFlag = false;
+	player->fireTimer = 10;
 
 	Protocol::S_FIRE firePkt;
 	firePkt.set_object_id(pkt.object_id());
