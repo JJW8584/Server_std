@@ -46,7 +46,7 @@ IOCP가 네트워크 I/O를 비동기로 처리하고, `RoomManager`와 각 `Roo
 - 60초 팀 매치, HP, Kill/Death, 팀 점수 관리
 - 이동 상태 중계와 초기 스폰·리스폰 위치 관리
 - 1초 발사 제한, 피격, 사망, 5초 리스폰
-- 채팅 패킷 브로드캐스트
+- Room JobQueue 기반 방 단위 실시간 채팅 브로드캐스트
 - 메모리·객체·전송 버퍼 풀링
 
 ## 아키텍처
@@ -105,6 +105,26 @@ API 엔드포인트는 TCP `127.0.0.1:7777`이며, Method 역할은 16비트 패
 
 매치 중 서버가 보내는 Push 이벤트에는 `S_MATCH_STATE`(1020), `S_PLAYER_RESPAWN`(1022), `S_PLAYER_DESPAWN`(1028), `S_MATCH_END`(1029)가 있습니다. 전체 필드는 `Common/Protobuf/bin/Protocol.proto`, `Struct.proto`, `Enum.proto`를 기준으로 합니다.
 
+### 채팅 처리 흐름
+
+```mermaid
+sequenceDiagram
+    participant C as 발신 클라이언트
+    participant H as ClientPacketHandler
+    participant R as Room JobQueue
+    participant P as 같은 방 플레이어들
+
+    C->>H: C_CHAT(msg)
+    H->>H: Player와 Room 존재 여부 확인
+    H->>R: DoAsync(HandleChat)
+    R->>R: S_CHAT(player_id, msg) 생성
+    R-->>P: 방 전체 Broadcast
+```
+
+채팅은 인증 후 Player가 생성되고 Room에 들어간 Session만 보낼 수 있습니다. 서버는 클라이언트가 보낸 발신자 정보를 신뢰하지 않고 Session의 Player Object ID를 `player_id`로 설정합니다. 브로드캐스트 범위는 전체 접속자가 아니라 현재 Room이며, 대기방과 매치 모두 같은 Room을 유지하므로 양쪽에서 사용할 수 있습니다.
+
+현재 서버에는 메시지 길이 제한, 전송 빈도 제한, 금칙어 필터링, 신고·차단과 채팅 내역 저장이 구현되어 있지 않습니다.
+
 ### 인증 결과
 
 `S_LOGIN`과 `S_REGISTER`의 `result`는 성공, 잘못된 입력, 로그인 ID 중복, 닉네임 중복, 잘못된 자격 증명, 서버 오류를 구분합니다. 로그인 성공 직전 `GameSessionManager::TryLogin`이 Session 목록을 쓰기 잠금으로 검사하고 계정 ID를 등록하므로, 같은 계정의 동시 로그인은 `AUTH_RESULT_DUPLICATE_LOGIN_ID`로 거부됩니다.
@@ -162,7 +182,9 @@ erDiagram
 3. 같은 계정으로 동시에 로그인해 두 번째 Session이 거부되는지 확인합니다.
 4. 방 생성·입장·퇴장, 팀 변경, Ready, 비호스트의 시작 요청을 순서대로 검증합니다.
 5. 모든 클라이언트의 로딩 완료 후에만 매치가 시작되는지 확인합니다.
-6. 이동, 1초 발사 제한, 아군 피격 방지, 사망, 5초 리스폰, 60초 종료 결과를 비교합니다.
+6. 같은 방의 여러 클라이언트에서 채팅을 보내 발신자 ID와 메시지가 모두에게 동일하게 전달되는지 확인합니다.
+7. 다른 방의 클라이언트에는 메시지가 전달되지 않고, 방 밖의 Session이 보낸 채팅은 처리되지 않는지 확인합니다.
+8. 이동, 1초 발사 제한, 아군 피격 방지, 사망, 5초 리스폰, 60초 종료 결과를 비교합니다.
 
 ## 문제 해결
 
@@ -191,6 +213,11 @@ erDiagram
 - 문제: 발사 시 `fireFlag`만 끄고 남은 Tick을 재설정하지 않으면 이전 Timer 값에 따라 다음 Tick에서 바로 발사 가능 상태가 될 수 있었습니다.
 - 해결: 발사 성공 시 `fireTimer = 10`으로 재설정하고 100ms Tick에서 감소시켜 항상 1초 제한을 적용했습니다.
 
+### 채팅의 방 격리와 이벤트 순서
+
+- 문제: 전체 Session 브로드캐스트를 사용하면 다른 방에도 메시지가 노출되고, Worker에서 즉시 전송하면 같은 방의 입장·퇴장 이벤트와 순서가 엇갈릴 수 있습니다.
+- 해결: Handler에서 발신자의 Player와 Room을 확인한 뒤 `Room::HandleChat`을 해당 Room JobQueue에 등록하고, Room의 플레이어에게만 `S_CHAT`을 브로드캐스트하도록 구현했습니다.
+
 ## 개선 계획
 
 - DB 접속 정보를 환경 변수 또는 Secret으로 분리
@@ -200,4 +227,5 @@ erDiagram
 - 클라이언트 예측·재조정과 원격 스냅샷 보간
 - 서버 권위 Projectile, swept collision, lag compensation
 - 인증 및 게임 패킷 rate limit과 잘못된 상태 전이 방어
+- 채팅 길이·빈도 제한, 금칙어 필터링, 신고·차단 기능
 - 단위·통합 테스트와 100개 이상 동시 접속 부하 테스트 자동화
