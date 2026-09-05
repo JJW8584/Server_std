@@ -259,8 +259,8 @@ bool Room::HandleStartMatch(PlayerRef player)
 			moveInfo.set_z(100.f);
 			break;
 		case Protocol::TEAM_RED:
-			moveInfo.set_x(1300.f + 100.f * i);
-			moveInfo.set_y(1300.f + 100.f * i);
+			moveInfo.set_x(1200.f + 100.f * i);
+			moveInfo.set_y(1200.f + 100.f * i);
 			moveInfo.set_z(100.f);
 			break;
 		}
@@ -511,8 +511,8 @@ void Room::PlayerRespawn(uint64 objectId)
 		moveInfo->set_z(100.f);
 		break;
 	case Protocol::TEAM_RED:
-		moveInfo->set_x(1300.f);
-		moveInfo->set_y(1300.f);
+		moveInfo->set_x(1200.f);
+		moveInfo->set_y(1200.f);
 		moveInfo->set_z(100.f);
 		break;
 	}
@@ -555,6 +555,15 @@ void Room::HandleReturnRoom(GameSessionRef session)
 	pkt.mutable_room_info()->CopyFrom(snapShot);
 
 	SEND_PACKET(pkt);
+}
+
+void Room::HandleChat(PlayerRef player, Protocol::C_CHAT pkt)
+{
+	Protocol::S_CHAT chatPkt;
+	chatPkt.set_player_id(player->GetObjectId());
+	chatPkt.set_msg(pkt.msg());
+
+	Broadcast(ClientPacketHandler::MakeSendBuffer(chatPkt));
 }
 
 void Room::UpdateTick()

@@ -8,6 +8,7 @@
 #include "DBConnectionPool.h"
 #include "DBBind.h"
 #include "FileUtils.h"
+#include "GameSessionManager.h"
 #include <sodium.h>
 #include <cwctype>
 
@@ -238,7 +239,13 @@ bool Handle_C_LOGIN(PacketSessionRef& session, Protocol::C_LOGIN& pkt)
 		return true;
 	}
 
-	gameSession->accountId.store(static_cast<uint64>(accountId));
+	if (!GSessionManager.TryLogin(static_cast<uint64>(accountId), gameSession))
+	{
+		loginPkt.set_result(Protocol::AUTH_RESULT_DUPLICATE_LOGIN_ID);
+
+		SEND_PACKET(loginPkt);
+		return true;
+	}
 	gameSession->nickname = WideToUtf8(nickname);
 
 	PlayerRef existingPlayer = gameSession->player.load();
@@ -651,7 +658,19 @@ bool Handle_C_RETURN_TO_ROOM(PacketSessionRef& session, Protocol::C_RETURN_TO_RO
 
 bool Handle_C_CHAT(PacketSessionRef& session, Protocol::C_CHAT& pkt)
 {
-	cout << pkt.msg() << endl;
+	auto gameSession = static_pointer_cast<GameSession>(session);
+
+	PlayerRef player = gameSession->player.load();
+	if (player == nullptr)
+		return false;
+
+	RoomRef room = player->room.load().lock();
+	if (room == nullptr)
+		return false;
+
+	room->DoAsync(&Room::HandleChat, player, pkt);
+
+	
 
 	return true;
 }

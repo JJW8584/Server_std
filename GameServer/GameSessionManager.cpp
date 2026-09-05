@@ -24,3 +24,20 @@ void GameSessionManager::Broadcast(SendBufferRef sendBuffer)
 		session->Send(sendBuffer);
 	}
 }
+
+bool GameSessionManager::TryLogin(uint64 accountId, GameSessionRef session)
+{
+    WRITE_LOCK;
+
+    for (const GameSessionRef& existing : _sessions)
+    {
+        if (existing != session &&
+            existing->accountId.load() == accountId)
+        {
+            return false;
+        }
+    }
+
+    session->accountId.store(accountId);
+    return true;
+}

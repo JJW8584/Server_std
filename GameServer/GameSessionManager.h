@@ -10,6 +10,7 @@ public:
 	void Add(GameSessionRef session);
 	void Remove(GameSessionRef session);
 	void Broadcast(SendBufferRef sendBuffer);
+	bool TryLogin(uint64 accountId, GameSessionRef session);
 
 private:
 	USE_LOCK;

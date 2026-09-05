@@ -23,6 +23,7 @@ public:
 	void PlayerDespawn(uint64 objectId);
 	void PlayerRespawn(uint64 objectId);
 	void HandleReturnRoom(GameSessionRef session);
+	void HandleChat(PlayerRef player, Protocol::C_CHAT pkt);
 
 public:
 	//0.1초마다 1번씩 실행
